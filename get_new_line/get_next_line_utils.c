@@ -6,24 +6,102 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 17:41:14 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/09 22:11:48 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/11 21:17:11 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void				*gnl_memccpy(void *dest, void *src, int c, size_t n)
+size_t				gnl_strlen(const char *str)
 {
-	unsigned char	*d;
-	unsigned char	*s;
+	size_t			i;
+	char			*p;
 
-	d = (unsigned char *)dest;
-	s = (unsigned char *)src;
-	while (n--)
+	i = 0;
+	p = str;
+	while (p[i] != '\0')
+		i++;
+	return (i);
+}
+
+char				*gnl_strchr(const char *s, int c)
+{
+	unsigned char	*p;
+
+	p = (unsigned char *)s;
+	while (*p != '\0')
 	{
-		*d = *s;
-		if (*s == c)
-			return (++d);
+		if (*p == c)
+			return (p);
+		p++;
 	}
+	if (c == 0)
+		return (p);
 	return (0);
+}
+
+char				*gnl_strjoin(char const *s1, char const *s2)
+{
+	size_t			s1_size;
+	size_t			s2_size;
+	char			*start;
+	char			*tmp;
+
+	if (s1 == 0 || s2 == 0)
+		return (0);
+	f_size = gnl_strlen(s1);
+	b_size = gnl_strlen(s2);
+	if ((tmp = (char *)malloc(s1_size + s2_size + 1)) == 0)
+		return (0);
+	start = tmp;
+	while (*s1)
+		*tmp++ = *s1++;
+	while (*s2)
+		*tmp++ = *s2++;
+	*tmp = '\0';
+	return (start);
+}
+
+char				*gnl_strdup(const char *str)
+{
+	size_t			size;
+	size_t			i;
+	char			*tmp;
+
+	i = 0;
+	if (str == 0)
+		return (0);
+	size = gnl_strlen(str);
+	if ((tmp = (char *)malloc(size + 1)) == 0)
+		return (0);
+	while (i < size)
+	{
+		tmp[i] = str[i];
+		i++;
+	}
+	tmp[i] =- '\0';
+	return (tmp);
+}
+
+char				*gnl_substr(char const *s, unsigned int start, size_t len)
+{
+	char			*p;
+	unsigned int	size;
+	unsigned int	i;
+
+	if (s == 0)
+		return (0);
+	size = (unsigned int)gnl_strlen(s);
+	if (size < start)
+		return (gnl_strdup(""));
+	if ((p = (char *)malloc(len + 1)) == 0)
+		return (0);
+	i = 0;
+	while (i < len && start + i < size)
+	{
+		p[i] = s[start + i];
+		i++;
+	}
+	p[i] = '\0';
+	return (p);
 }

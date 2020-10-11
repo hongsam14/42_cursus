@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 17:41:49 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/09 20:53:19 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/11 21:17:20 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void	*gnl_memccpy(void *dest, void *src, int c, size_t n);
+size_t	gnl_strlen(const char *str);
+char	*gnl_strchr(const char *s, int c);
+char	*gnl_strjoin(char const *s1, char const *s2);
+char	*gnl_strdup(const char *str);
+char	*gnl_substr(char const *s, unsigned int start, size_t len);
 int		get_next_line(int fd, char **line);
 
 #endif

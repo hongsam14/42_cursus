@@ -6,35 +6,46 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 17:39:18 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/09 22:11:22 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/11 21:17:08 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int							get_next_line(int fd, char **line)
+static int			free_left(char *str)
 {
-	static char	*tmp;
-	static ssize_t			r_size;
-	static char	*start;
-	static int				i;
+	free(str);
+	return (-1);
+}
 
-	tmp = (char *)malloc(BUFFER_SIZE);
-	if (tmp == 0)
-		return (-1);
-	r_size = read(fd, tmp, BUFFER_SIZE);
-	if (r_size < 0)
-		return (-1);
+static size_t		equal_count(const char *str, int c, ssize_t size)
+{
+	size_t			i;
+
 	i = 0;
-	start = tmp;
-	start = (char *)gnl_memccpy(line[i], start, '\n', r_size);
-	if (start)
+	while (size--)
 	{
-		r_size -= start - tmp;
-		i++;
-		return (1);
+		if (*str == c)
+			i++;
+		str++;
 	}
-	free(tmp);
-	tmp = 0;
-	return (0);
+	return (i);
+}
+
+static void			
+
+int					get_next_line(int fd, char **line)
+{
+	static size_t	count = 0;
+	ssize_t			r_size;
+	char			*buffer;
+
+	if ((buffer = (char *)malloc(BUFFER_SIZE)) == 0)
+		return (free_left(remain));
+	if ((r_size = read(fd, buffer, BUFFER_SIZE)) < 0)
+	{
+		free(buffer);
+		return (free_left(remain));
+	}
+	count += equal_count(buffer, '\n', r_size);
 }
