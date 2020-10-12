@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/12 22:25:18 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/12 23:40:54 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "get_next_line_utils.c"
-#define BUFFER_SIZE 1
+#define BUFFER_SIZE 5
 
 static char			*cut_buffer(char **buffer, size_t buf_size)
 {
@@ -51,33 +51,55 @@ int					count_equal(char *str, int c, size_t size)
 	return (count);
 }
 
-int					get_line(int fd, char **line)
+void				join_str(char **origin, char *add)
+{
+	char			*o_tmp;
+	char			*a_tmp;
+
+	if (*origin == 0)
+	{
+		*origin = add;
+		return ;
+	}
+	o_tmp = *origin;
+	a_tmp = add;
+	*origin = gnl_strjoin(o_tmp, a_tmp);
+	free(o_tmp);
+	free(a_tmp);
+}
+
+int					get_line(int fd)
 {
 	static char		*buffer = 0;
 	static ssize_t	size = BUFFER_SIZE;
 	static int		index = 0;
-	char			*
 
 	if (size == BUFFER_SIZE)
 	{
-		while (count_equal(buffer, '\n', size) != 0)
+		if((buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE))) == 0)
 		{
-			if((buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))) == 0)
-				return (-1);
-			if ((size = read(fd, buffer, BUFFER_SIZE)) == 0)
-				return (0);
+			return (-1);
+		}
+		if ((size = read(fd, buffer, BUFFER_SIZE)) == 0)
+		{
+			printf("%s\n", buffer);
+			return (0);
 		}
 	}
-	line[i++] = cut_buffer(&buffer, size);
+	index++;
+	printf("%s\n", cut_buffer(&buffer, size));
 	return (1);
 }
 
 int					main(void)
 {
 	int				fd;
+	char			*tmp = "abcde";
 
 	fd = open("test.txt", O_RDONLY);
 	get_line(fd);
-	get_line(fd);
+	//join_str(&tmp, "123");
+	//tmp = gnl_strjoin(tmp, "1234");
+	//printf("%s\n", tmp);
 	return (0);
 }
