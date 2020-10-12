@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 17:41:14 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/11 21:17:11 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/12 19:49:22 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t				gnl_strlen(const char *str)
 	char			*p;
 
 	i = 0;
-	p = str;
+	p = (char *)str;
 	while (p[i] != '\0')
 		i++;
 	return (i);
@@ -32,11 +32,11 @@ char				*gnl_strchr(const char *s, int c)
 	while (*p != '\0')
 	{
 		if (*p == c)
-			return (p);
+			return ((char *)p);
 		p++;
 	}
 	if (c == 0)
-		return (p);
+		return ((char *)p);
 	return (0);
 }
 
@@ -49,8 +49,8 @@ char				*gnl_strjoin(char const *s1, char const *s2)
 
 	if (s1 == 0 || s2 == 0)
 		return (0);
-	f_size = gnl_strlen(s1);
-	b_size = gnl_strlen(s2);
+	s1_size = gnl_strlen(s1);
+	s2_size = gnl_strlen(s2);
 	if ((tmp = (char *)malloc(s1_size + s2_size + 1)) == 0)
 		return (0);
 	start = tmp;
@@ -79,7 +79,7 @@ char				*gnl_strdup(const char *str)
 		tmp[i] = str[i];
 		i++;
 	}
-	tmp[i] =- '\0';
+	tmp[i] = '\0';
 	return (tmp);
 }
 
