@@ -1,51 +1,74 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/09 17:39:18 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/11 21:17:08 by suhong           ###   ########.fr       */
+/*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
+/*   Updated: 2020/10/14 16:53:15 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_h"
 
-static int			free_left(char *str)
+static char			*cut_buffer(char **buffer, size_t buf_size)
 {
-	free(str);
-	return (-1);
+	char			*out;
+	char			*buf_start;
+	char			*n_point;
+	size_t			out_size;
+
+	buf_start = *buffer;
+	n_point = gnl_strchr(*buffer, '\n');
+	if (n_point == 0)
+		return (0);
+	out_size = n_point - buf_start;
+	out = gnl_substr(buf_start, 0, out_size);
+	*buffer = gnl_substr(n_point + 1, 0, buf_size - out_size);
+	free(buf_start);
+	return (out);
 }
 
-static size_t		equal_count(const char *str, int c, ssize_t size)
+static char			*join_buffer(char *origin, char *add)
 {
-	size_t			i;
+	char			*o_tmp;
+	char			*tmp;
 
-	i = 0;
-	while (size--)
-	{
-		if (*str == c)
-			i++;
-		str++;
-	}
-	return (i);
+	if (origin == 0)
+		return (add);
+	o_tmp = origin;
+	tmp = gnl_strjoin(o_tmp, add);
+	free(o_tmp);
+	free(add);
+	return (tmp);
 }
-
-static void			
 
 int					get_next_line(int fd, char **line)
 {
-	static size_t	count = 0;
-	ssize_t			r_size;
-	char			*buffer;
+	static char		*buffer = 0;
+	static ssize_t	size = BUFFER_SIZE;
+	static int		index = 0;
+	char			*tmp;
+	char			*output;
 
-	if ((buffer = (char *)malloc(BUFFER_SIZE)) == 0)
-		return (free_left(remain));
-	if ((r_size = read(fd, buffer, BUFFER_SIZE)) < 0)
+	output = 0;
+	while (output == 0)
 	{
-		free(buffer);
-		return (free_left(remain));
+		if (size == BUFFER_SIZE)
+		{
+			if((tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))) == 0)
+			{
+				free(buffer);
+				return (-1);
+			}
+			if ((size = read(fd, tmp, BUFFER_SIZE)) == 0)
+				return (0);
+			tmp[BUFFER_SIZE] = '\0';
+			buffer = join_buffer(buffer, tmp);
+		}
+		output = cut_buffer(&buffer, gnl_strlen(buffer));
 	}
-	count += equal_count(buffer, '\n', r_size);
+	line[index++] = output;
+	return (1);
 }
