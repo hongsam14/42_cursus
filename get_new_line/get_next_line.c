@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/14 16:53:15 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/14 17:02:00 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int					get_next_line(int fd, char **line)
 	{
 		if (size == BUFFER_SIZE)
 		{
-			if((tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))) == 0)
+			if ((tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))) == 0)
 			{
 				free(buffer);
 				return (-1);

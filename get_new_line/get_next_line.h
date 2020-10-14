@@ -6,16 +6,16 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 17:41:49 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/11 21:17:20 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/14 17:01:39 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#include <stddef.h>
-#include <unistd.h>
-#include <stdlib.h>
+# include <stddef.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 size_t	gnl_strlen(const char *str);
 char	*gnl_strchr(const char *s, int c);
