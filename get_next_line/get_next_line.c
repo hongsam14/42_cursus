@@ -6,11 +6,26 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/14 17:02:00 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/14 19:54:45 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_h"
+#include "get_next_line.h"
+
+static void			*gnl_calloc(size_t nmemb, size_t size)
+{
+	void			*p;
+	unsigned char	*c;
+	size_t			i;
+
+	i = 0;
+	if ((p = (void *)malloc(nmemb * size)) == 0)
+		return (0);
+	c = p;
+	while (i++ < nmemb * size)
+		*c++ = 0;
+	return (p);
+}
 
 static char			*cut_buffer(char **buffer, size_t buf_size)
 {
@@ -32,9 +47,10 @@ static char			*cut_buffer(char **buffer, size_t buf_size)
 
 static char			*join_buffer(char *origin, char *add)
 {
-	char			*o_tmp;
-	char			*tmp;
+	char		*o_tmp;
+	char		*tmp;
 
+	tmp = 0;
 	if (origin == 0)
 		return (add);
 	o_tmp = origin;
@@ -53,22 +69,22 @@ int					get_next_line(int fd, char **line)
 	char			*output;
 
 	output = 0;
-	while (output == 0)
+	while (output == 0 && size == BUFFER_SIZE)
 	{
-		if (size == BUFFER_SIZE)
+		if ((tmp = (char *)gnl_calloc(sizeof(char), BUFFER_SIZE + 1)) == 0)
 		{
-			if ((tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))) == 0)
-			{
-				free(buffer);
-				return (-1);
-			}
-			if ((size = read(fd, tmp, BUFFER_SIZE)) == 0)
-				return (0);
-			tmp[BUFFER_SIZE] = '\0';
-			buffer = join_buffer(buffer, tmp);
+			free(buffer);
+			return (-1);
 		}
-		output = cut_buffer(&buffer, gnl_strlen(buffer));
+		size = read(fd, tmp, BUFFER_SIZE);
+		buffer = join_buffer(buffer, tmp);
 	}
+	output = cut_buffer(&buffer, gnl_strlen(buffer));
 	line[index++] = output;
+	if (size < BUFFER_SIZE && *buffer == 0)
+	{
+		free(buffer);
+		return (0);
+	}
 	return (1);
 }

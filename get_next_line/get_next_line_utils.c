@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 17:41:14 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/14 17:02:42 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/14 19:13:46 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,26 @@
 size_t				gnl_strlen(const char *str)
 {
 	size_t			i;
-	char			*p;
 
 	i = 0;
-	p = (char *)str;
-	while (p[i] != '\0')
+	while (str[i] != '\0')
 		i++;
 	return (i);
 }
 
 char				*gnl_strchr(const char *s, int c)
 {
-	unsigned char	*p;
+	char			*p;
 
-	p = (unsigned char *)s;
+	p = (char *)s;
 	while (*p != '\0')
 	{
 		if (*p == c)
-			return ((char *)p);
+			return (p);
 		p++;
 	}
 	if (c == 0)
-		return ((char *)p);
+		return (p);
 	return (0);
 }
 
@@ -44,22 +42,26 @@ char				*gnl_strjoin(char const *s1, char const *s2)
 {
 	size_t			s1_size;
 	size_t			s2_size;
-	char			*start;
 	char			*tmp;
+	size_t			i;
 
 	if (s1 == 0 || s2 == 0)
 		return (0);
 	s1_size = gnl_strlen(s1);
 	s2_size = gnl_strlen(s2);
-	if ((tmp = (char *)malloc(s1_size + s2_size + 1)) == 0)
+	i = 0;
+	if ((tmp = (char *)malloc(sizeof(char) * (s1_size + s2_size + 1))) == 0)
 		return (0);
-	start = tmp;
-	while (*s1)
-		*tmp++ = *s1++;
-	while (*s2)
-		*tmp++ = *s2++;
-	*tmp = '\0';
-	return (start);
+	while (i < s1_size + s2_size)
+	{
+		if (i < s1_size)
+			tmp[i] = s1[i];
+		else
+			tmp[i] = s2[i - s1_size];
+		i++;
+	}
+	tmp[i] = '\0';
+	return (tmp);
 }
 
 char				*gnl_strdup(const char *str)
@@ -69,10 +71,8 @@ char				*gnl_strdup(const char *str)
 	char			*tmp;
 
 	i = 0;
-	if (str == 0)
-		return (0);
 	size = gnl_strlen(str);
-	if ((tmp = (char *)malloc(size + 1)) == 0)
+	if ((tmp = (char *)malloc(sizeof(char) * (size + 1))) == 0)
 		return (0);
 	while (i < size)
 	{
