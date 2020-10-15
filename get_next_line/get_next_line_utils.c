@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 17:41:14 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/14 19:13:46 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/15 23:32:23 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char				*gnl_strchr(const char *s, int c)
 {
 	char			*p;
 
+	if (s == 0)
+		return (0);
 	p = (char *)s;
 	while (*p != '\0')
 	{
