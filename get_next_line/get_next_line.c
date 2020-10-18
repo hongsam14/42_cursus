@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/19 01:12:02 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/19 01:28:55 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,20 @@ int					get_next_line(int fd, char **line)
 	static char		*buffer = 0;
 	char			*tmp;
 	char			*output;
-	char			*n_point;
 	ssize_t			read_size;
 
 	output = 0;
 	while (output == 0)
 	{
-		if ((n_point = gnl_strchr(buffer, '\n')) == 0)
+		if ((output = gnl_strchr(buffer, '\n')) == 0)
 		{
 			if ((tmp = (char *)malloc(BUFFER_SIZE + 1)) == 0)
 			{
 				if (buffer != 0)
+				{
 					free(buffer);
+					buffer = 0;
+				}
 				return (-1);
 			}
 			if ((read_size = read(fd, tmp, BUFFER_SIZE)) == 0)
@@ -70,7 +72,7 @@ int					get_next_line(int fd, char **line)
 			tmp[read_size] = '\0';
 			buffer = join_buffer(buffer, tmp);
 		}
-		output = cut_buffer(&buffer, n_point);
+		output = cut_buffer(&buffer, output);
 	}
 	*line = output;
 	return (1);
