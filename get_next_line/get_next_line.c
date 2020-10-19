@@ -6,13 +6,11 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/19 01:28:55 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/20 00:42:28 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 
 static char			*cut_buffer(char **buffer, char *n_point)
 {
@@ -49,6 +47,8 @@ int					get_next_line(int fd, char **line)
 	char			*output;
 	ssize_t			read_size;
 
+	if (fd > FOPEN_MAX)
+		return (-1);
 	output = 0;
 	while (output == 0)
 	{
@@ -65,8 +65,17 @@ int					get_next_line(int fd, char **line)
 			}
 			if ((read_size = read(fd, tmp, BUFFER_SIZE)) == 0)
 			{
-				*line = buffer;
+				if (buffer == 0)
+				{
+					free(tmp);
+					*line = gnl_strdup("");
+					return (0);
+				}
+				output = gnl_strdup(buffer);
+				*line = output;
+				free(buffer);
 				free(tmp);
+				buffer = 0;
 				return (0);
 			}
 			tmp[read_size] = '\0';
@@ -76,20 +85,4 @@ int					get_next_line(int fd, char **line)
 	}
 	*line = output;
 	return (1);
-}
-
-int					main(void)
-{
-	int				fd;
-	char			*line;
-
-	fd = open("test.txt", O_RDONLY);
-	while (get_next_line(fd, &line) > 0)
-	{
-		printf("%s\n", line);
-		free(line);
-	}
-	printf("%s\n", line);
-	free(line);
-	return (0);
 }
