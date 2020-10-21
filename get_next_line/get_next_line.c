@@ -6,46 +6,95 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/20 00:42:28 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/21 14:52:05 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char			*cut_buffer(char **buffer, char *n_point)
+int				cut_buffer(char **buffer, char **out, char *n_point)
 {
-	char			*out;
-	char			*buf_start;
+	char		*buf_start;
 
 	if (n_point == 0)
-		return (0);
+	{
+		*out = 0;
+		return (1);
+	}
 	buf_start = *buffer;
-	out = gnl_substr(buf_start, 0, n_point - buf_start);
+	*out = gnl_substr(buf_start, 0, n_point - buf_start);
 	*buffer = gnl_strdup(n_point + 1);
 	free(buf_start);
-	return (out);
+	if (*out == 0 || *buffer == 0)
+	{
+		if (*out != 0)
+			free(*out);
+		if (*buffer != 0)
+		{
+			free(*buffer);
+			*buffer = 0;
+		}
+		return (-1);
+	}
+	return (1);
 }
 
-static char			*join_buffer(char *buffer, char *add)
+int				join_buffer(char **buffer, char *add)
 {
 	char		*b_tmp;
-	char		*tmp;
 
-	if (buffer == 0)
-		return (add);
-	b_tmp = buffer;
-	tmp = gnl_strjoin(b_tmp, add);
+	if (*buffer == 0)
+	{
+		*buffer = add;
+		return (1);
+	}
+	b_tmp = *buffer;
+	*buffer = gnl_strjoin(b_tmp, add);
 	free(b_tmp);
 	free(add);
-	return (tmp);
+	if (*buffer == 0)
+		return (-1);
+	return (1);
 }
 
-int					get_next_line(int fd, char **line)
+int				free_buffer(char *buffer)
 {
-	static char		*buffer = 0;
-	char			*tmp;
-	char			*output;
-	ssize_t			read_size;
+	if (buffer != 0)
+	{
+		free(buffer);
+		buffer = 0;
+	}
+	return (-1);
+}
+
+int				meet_eof(char **buffer, char *tmp, char **line)
+{
+	char		*out;
+
+	if (*buffer == 0)
+	{
+		free(tmp);
+		if ((out = gnl_strdup("")) == 0)
+			return (-1);
+		*line = out;
+		return (0);
+	}
+	out = gnl_strdup(*buffer);
+	free(tmp);
+	free(*buffer);
+	*buffer = 0;
+	if (out == 0)
+		return (-1);
+	*line = out;
+	return (0);
+}
+
+int				get_next_line(int fd, char **line)
+{
+	static char	*buffer = 0;
+	char		*tmp;
+	char		*output;
+	ssize_t		read_size;
 
 	if (fd > FOPEN_MAX)
 		return (-1);
@@ -55,33 +104,15 @@ int					get_next_line(int fd, char **line)
 		if ((output = gnl_strchr(buffer, '\n')) == 0)
 		{
 			if ((tmp = (char *)malloc(BUFFER_SIZE + 1)) == 0)
-			{
-				if (buffer != 0)
-				{
-					free(buffer);
-					buffer = 0;
-				}
-				return (-1);
-			}
+				return (free_buffer(buffer));
 			if ((read_size = read(fd, tmp, BUFFER_SIZE)) == 0)
-			{
-				if (buffer == 0)
-				{
-					free(tmp);
-					*line = gnl_strdup("");
-					return (0);
-				}
-				output = gnl_strdup(buffer);
-				*line = output;
-				free(buffer);
-				free(tmp);
-				buffer = 0;
-				return (0);
-			}
+				return (meet_eof(&buffer, tmp, line));
 			tmp[read_size] = '\0';
-			buffer = join_buffer(buffer, tmp);
+			if ((join_buffer(&buffer, tmp)) == -1)
+				return (-1);
 		}
-		output = cut_buffer(&buffer, output);
+		if ((cut_buffer(&buffer, &output, output)) == 0)
+			return (-1);
 	}
 	*line = output;
 	return (1);
