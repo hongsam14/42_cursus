@@ -6,16 +6,18 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/21 14:52:05 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/21 19:37:41 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int				cut_buffer(char **buffer, char **out, char *n_point)
+int				cut_buffer(char **buffer, char **out)
 {
 	char		*buf_start;
+	char		*n_point;
 
+	n_point = gnl_strchr(*buffer, '\n');
 	if (n_point == 0)
 	{
 		*out = 0;
@@ -67,7 +69,7 @@ int				free_buffer(char *buffer)
 	return (-1);
 }
 
-int				meet_eof(char **buffer, char *tmp, char **line)
+int				meet_eof(char **buffer, char *tmp, char **line, ssize_t r_size)
 {
 	char		*out;
 
@@ -83,7 +85,7 @@ int				meet_eof(char **buffer, char *tmp, char **line)
 	free(tmp);
 	free(*buffer);
 	*buffer = 0;
-	if (out == 0)
+	if (out == 0 || r_size == -1)
 		return (-1);
 	*line = out;
 	return (0);
@@ -96,23 +98,23 @@ int				get_next_line(int fd, char **line)
 	char		*output;
 	ssize_t		read_size;
 
-	if (fd > FOPEN_MAX)
+	if (line == 0 || fd < 0 || fd > FOPEN_MAX || BUFFER_SIZE <= 0)
 		return (-1);
 	output = 0;
 	while (output == 0)
 	{
-		if ((output = gnl_strchr(buffer, '\n')) == 0)
+		if ((cut_buffer(&buffer, &output)) == -1)
+			return (-1);
+		if (output == 0)
 		{
 			if ((tmp = (char *)malloc(BUFFER_SIZE + 1)) == 0)
 				return (free_buffer(buffer));
-			if ((read_size = read(fd, tmp, BUFFER_SIZE)) == 0)
-				return (meet_eof(&buffer, tmp, line));
+			if ((read_size = read(fd, tmp, BUFFER_SIZE)) <= 0)
+				return (meet_eof(&buffer, tmp, line, read_size));
 			tmp[read_size] = '\0';
 			if ((join_buffer(&buffer, tmp)) == -1)
 				return (-1);
 		}
-		if ((cut_buffer(&buffer, &output, output)) == 0)
-			return (-1);
 	}
 	*line = output;
 	return (1);
