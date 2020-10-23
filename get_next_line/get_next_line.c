@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/21 19:37:41 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/23 14:47:43 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ int				cut_buffer(char **buffer, char **out)
 
 	n_point = gnl_strchr(*buffer, '\n');
 	if (n_point == 0)
-	{
-		*out = 0;
-		return (1);
-	}
+		return (0);
 	buf_start = *buffer;
 	*out = gnl_substr(buf_start, 0, n_point - buf_start);
 	*buffer = gnl_strdup(n_point + 1);
@@ -95,27 +92,22 @@ int				get_next_line(int fd, char **line)
 {
 	static char	*buffer = 0;
 	char		*tmp;
-	char		*output;
 	ssize_t		read_size;
+	int			result;
 
-	if (line == 0 || fd < 0 || fd > FOPEN_MAX || BUFFER_SIZE <= 0)
+	if (line == 0 || fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
 		return (-1);
-	output = 0;
-	while (output == 0)
+	while ((result = cut_buffer(&buffer, line)) == 0)
 	{
-		if ((cut_buffer(&buffer, &output)) == -1)
-			return (-1);
-		if (output == 0)
-		{
-			if ((tmp = (char *)malloc(BUFFER_SIZE + 1)) == 0)
-				return (free_buffer(buffer));
-			if ((read_size = read(fd, tmp, BUFFER_SIZE)) <= 0)
-				return (meet_eof(&buffer, tmp, line, read_size));
-			tmp[read_size] = '\0';
-			if ((join_buffer(&buffer, tmp)) == -1)
-				return (-1);
-		}
+		if ((tmp = (char *)malloc(BUFFER_SIZE + 1)) == 0)
+			return (free_buffer(buffer));
+		if ((read_size = read(fd, tmp, BUFFER_SIZE)) <= 0)
+			return (meet_eof(&buffer, tmp, line, read_size));
+		tmp[read_size] = '\0';
+		if ((result = join_buffer(&buffer, tmp)) == -1)
+			break ;
 	}
-	*line = output;
+	if (result == -1)
+		return (-1);
 	return (1);
 }
