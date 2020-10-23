@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/23 16:20:41 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/23 16:23:22 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int				cut_buffer(char **buffer, char **out)
 {
@@ -90,21 +90,21 @@ int				meet_eof(char **buffer, char *tmp, char **line, ssize_t r_size)
 
 int				get_next_line(int fd, char **line)
 {
-	static char	*buffer = 0;
+	static char	*buffer[1024] = { NULL };
 	char		*tmp;
 	ssize_t		read_size;
 	int			result;
 
 	if (line == 0 || fd < 0 || fd > FOPEN_MAX || BUFFER_SIZE <= 0)
 		return (-1);
-	while ((result = cut_buffer(&buffer, line)) == 0)
+	while ((result = cut_buffer(&buffer[fd], line)) == 0)
 	{
 		if ((tmp = (char *)malloc(BUFFER_SIZE + 1)) == 0)
-			return (free_buffer(buffer));
+			return (free_buffer(buffer[fd]));
 		if ((read_size = read(fd, tmp, BUFFER_SIZE)) <= 0)
-			return (meet_eof(&buffer, tmp, line, read_size));
+			return (meet_eof(&buffer[fd], tmp, line, read_size));
 		tmp[read_size] = '\0';
-		if ((result = join_buffer(&buffer, tmp)) == -1)
+		if ((result = join_buffer(&buffer[fd], tmp)) == -1)
 			break ;
 	}
 	if (result == -1)
