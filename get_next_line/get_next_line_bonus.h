@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 17:41:49 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/23 16:24:51 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/24 10:32:10 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stddef.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
+# include <limits.h>
 
 size_t	gnl_strlen(const char *str);
 char	*gnl_strchr(const char *s, int c);

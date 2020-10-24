@@ -6,13 +6,13 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/23 16:20:41 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/24 10:26:58 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int				cut_buffer(char **buffer, char **out)
+static int		cut_buffer(char **buffer, char **out)
 {
 	char		*buf_start;
 	char		*n_point;
@@ -38,7 +38,7 @@ int				cut_buffer(char **buffer, char **out)
 	return (1);
 }
 
-int				join_buffer(char **buffer, char *add)
+static int		join_buffer(char **buffer, char *add)
 {
 	char		*b_tmp;
 
@@ -56,7 +56,7 @@ int				join_buffer(char **buffer, char *add)
 	return (1);
 }
 
-int				free_buffer(char *buffer)
+static int		free_buffer(char *buffer)
 {
 	if (buffer != 0)
 	{
@@ -66,14 +66,14 @@ int				free_buffer(char *buffer)
 	return (-1);
 }
 
-int				meet_eof(char **buffer, char *tmp, char **line, ssize_t r_size)
+static int		meet_eof(char **buffer, char *tmp, char **line, ssize_t r_size)
 {
 	char		*out;
 
 	if (*buffer == 0)
 	{
 		free(tmp);
-		if ((out = gnl_strdup("")) == 0)
+		if ((out = gnl_strdup("")) == 0 || r_size == -1)
 			return (-1);
 		*line = out;
 		return (0);
@@ -82,7 +82,7 @@ int				meet_eof(char **buffer, char *tmp, char **line, ssize_t r_size)
 	free(tmp);
 	free(*buffer);
 	*buffer = 0;
-	if (out == 0 || r_size == -1)
+	if (out == 0 || r_size <= -1)
 		return (-1);
 	*line = out;
 	return (0);
@@ -95,7 +95,7 @@ int				get_next_line(int fd, char **line)
 	ssize_t		read_size;
 	int			result;
 
-	if (line == 0 || fd < 0 || fd > FOPEN_MAX || BUFFER_SIZE <= 0)
+	if (line == 0 || fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
 		return (-1);
 	while ((result = cut_buffer(&buffer, line)) == 0)
 	{
