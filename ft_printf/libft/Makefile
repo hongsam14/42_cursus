@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/04 17:42:17 by suhong            #+#    #+#              #
-#    Updated: 2020/10/08 19:27:13 by suhong           ###   ########.fr        #
+#    Updated: 2020/10/31 15:54:11 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ OBJ_BONUS = $(SRC_BONUS:.c=.o)
 RM = rm -f
 
 %.o : %.c Makefile
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC)
+	$(CC) $(CFLAGS) -c $< -o $@ -include $(INC)
 
 $(NAME) : ${OBJ}
 	ar rcs $@ $^
