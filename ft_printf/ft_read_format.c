@@ -6,11 +6,13 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 17:42:27 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/03 16:54:42 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/04 13:21:50 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "ft_printf_utils.c"
+#include <stdio.h>
 
 static int		read_specifier(char **format, t_format *f_info)
 {
@@ -31,7 +33,7 @@ static int		read_specifier(char **format, t_format *f_info)
 static int		read_decimal(char **format, t_format *f_info)
 {
 	char		*tmp;
-	int		read_dec;
+	int			read_dec;
 
 	tmp = *format;
 	read_dec = 0;
@@ -49,15 +51,14 @@ static int		read_decimal(char **format, t_format *f_info)
 		f_info->decimal = read_dec;
 	}
 	*format = tmp;
-	return (read_specifier(&tmp, f_info));
+	return (read_specifier(format, f_info));
 }
 
 static int		read_width(char **format, t_format *f_info)
 {
 	char		*tmp;
-	int		read_int;
-	
-	tmp = *format;
+	int			read_int;
+
 	read_int = 0;
 	while (*tmp >= '0' && *tmp <= '9')
 	{
@@ -68,15 +69,15 @@ static int		read_width(char **format, t_format *f_info)
 		return (0);
 	f_info->width = read_int;
 	*format = tmp;
-	return (read_decimal(&tmp, f_info));
+	return (read_decimal(format, f_info));
 }
 
-static int		read_flag(char	**format, t_format *f_info)
+static int		read_flag(char **format, t_format *f_info)
 {
 	char		*tmp;
-	int		tmp_flag;
+	int			tmp_flag;
 
-	tmp = *format;
+	tmp = *format + 1;
 	tmp_flag = 0;
 	while (ft_strchr("-0*", *tmp))
 	{
@@ -86,37 +87,31 @@ static int		read_flag(char	**format, t_format *f_info)
 			tmp_flag = flag_zero;
 		else if (*tmp == '*')
 			tmp_flag = flag_star;
-		if ((*f_info).flag & tmp_flag == tmp_flag)
+		if ((f_info->flag & tmp_flag) == tmp_flag)
 			return (0);
 		else
 			f_info->flag |= tmp_flag;
 		tmp++;
 	}
 	*format = tmp;
-	return (read_width(&tmp, f_info));
+	return (read_width(format, f_info));
 }
 
-int			read_format(char *format, t_format *format_info)
+int				read_format(char *format, t_format *f_info)
 {
 	char		*tmp;
-	t_format	*f_info;
-	t_format	*f_tmp;
+	t_format	*f_start;
 
 	tmp = format;
-	f_info = format_info;
-	while (tmp = ft_strchr(tmp, '%'))
+	f_start = f_info;
+	while ((tmp = ft_strchr(tmp, '%')))
 	{
-		tmp++;
-		if ((read_flag(&tmp, f_info)) < 1 || f_info->flag == 3 || f_info->flag == 12)
+		if (add_t_format(&f_info, f_start, del_t_format) < 1)
 			return (0);
-		if ((f_tmp = (t_format *)malloc(sizeof(t_format))) == 0)
-		{
-			return (0);
-		}
-		f_tmp->next = 0;
-		f_info->next = f_tmp;
-		f_info = f_info->next
-		tmp++;
+		if ((read_flag(&tmp, f_info)) < 1
+				|| f_info->flag == 3 || f_info->flag == 12)
+			return (del_t_format(f_start));
+		printf("%d, %d, %d, %c\n", f_info->flag, f_info->width, f_info->decimal, f_info->specifier);
 	}
 	return (1);
 }
