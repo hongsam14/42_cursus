@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 17:42:27 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/05 20:10:54 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/06 17:47:37 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ static int		read_specifier(char **format, t_format *f_info)
 	char		*tmp;
 
 	tmp = *format;
-	if (ft_strchr("cspdiuxX", *tmp))
+	if (ft_strchr("cspdiuxX", *tmp) || *tmp == '%')
+	{
 		f_info->specifier = *tmp;
+		tmp++;
+	}
 	else
 	{
 		f_info->specifier = 0;

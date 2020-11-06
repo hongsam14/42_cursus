@@ -6,14 +6,24 @@
 /*   By: suhong <ghdtjdgus14@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 10:57:42 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/05 20:53:49 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/06 17:09:52 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <stdarg.h>
 
-int		main(void)
+void		test(int count, ...)
 {
-	printf("%p\n", "abcdef");
+	va_list	lst;
+
+	va_start(lst, count);
+	printf("%d\n", va_arg(lst, int));
+	va_end(lst);
+}
+
+int			main(void)
+{
+	printf("%0*%", 10);
 	return (0);
 }
