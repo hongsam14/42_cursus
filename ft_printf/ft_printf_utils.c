@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 15:48:02 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/04 22:03:31 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/08 14:09:02 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int				init_t_format(t_format **new_f)
 		return (0);
 	(*new_f)->flag = 0;
 	(*new_f)->width = 0;
-	(*new_f)->decimal = 0;
+	(*new_f)->precision = 0;
 	(*new_f)->specifier = 0;
 	(*new_f)->next = 0;
 	return (1);

@@ -6,13 +6,12 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 17:42:27 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/06 17:47:37 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/08 18:41:07 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "ft_printf_utils.c"
-#include <stdio.h>
 
 static int		read_specifier(char **format, t_format *f_info)
 {
@@ -21,6 +20,14 @@ static int		read_specifier(char **format, t_format *f_info)
 	tmp = *format;
 	if (ft_strchr("cspdiuxX", *tmp) || *tmp == '%')
 	{
+		if ((f_info->flag & FLAG_ZERO) == FLAG_ZERO)
+			if (ft_strchr("csp", *tmp))
+				return (0);
+		if ((f_info->flag & FLAG_DOT) == FLAG_DOT)
+			if (ft_strchr("cp", *tmp))
+				return (0);
+		if ((f_info->flag & 3) == 3 && *tmp != '%')
+			return (0);
 		f_info->specifier = *tmp;
 		tmp++;
 	}
@@ -33,30 +40,30 @@ static int		read_specifier(char **format, t_format *f_info)
 	return (1);
 }
 
-static int		read_decimal(char **format, t_format *f_info, va_list *v_lst)
+static int		read_precision(char **format, t_format *f_info, va_list *v_lst)
 {
 	char		*tmp;
-	int			read_dec;
+	int			read_pre;
 
-	read_dec = 0;
+	read_pre = 0;
 	if (*(tmp = *format) == '.')
 	{
 		f_info->flag |= FLAG_DOT;
 		if (*(++tmp) == '*')
 		{
 			tmp++;
-			read_dec = va_arg(*v_lst, int);
-			if (((f_info->flag & FLAG_ZERO) == FLAG_ZERO) && read_dec < 0)
+			read_pre = va_arg(*v_lst, int);
+			if (((f_info->flag & FLAG_ZERO) == FLAG_ZERO) && read_pre < 0)
 				return (0);
 		}
 		else
 		{
 			while (*tmp >= '0' && *tmp <= '9')
-				read_dec = (read_dec * 10) + (*(tmp++) - '0');
-			if (read_dec < 0)
+				read_pre = (read_pre * 10) + (*(tmp++) - '0');
+			if (read_pre < 0)
 				return (0);
 		}
-		f_info->decimal = read_dec;
+		f_info->precision = read_pre;
 	}
 	*format = tmp;
 	return (read_specifier(format, f_info));
@@ -88,7 +95,7 @@ static int		read_width(char **format, t_format *f_info, va_list *v_lst)
 	}
 	f_info->width = read_int;
 	*format = tmp;
-	return (read_decimal(format, f_info, v_lst));
+	return (read_precision(format, f_info, v_lst));
 }
 
 static int		read_flag(char **format, t_format *f_info, va_list *v_lst)
@@ -100,15 +107,11 @@ static int		read_flag(char **format, t_format *f_info, va_list *v_lst)
 	{
 		if (*tmp == '-')
 		{
-			if ((f_info->flag & FLAG_ZERO) == FLAG_ZERO)
-				return (0);
 			f_info->flag |= FLAG_MINUS;
 			tmp++;
 		}
 		else
 		{
-			if ((f_info->flag & FLAG_MINUS) == FLAG_MINUS)
-				return (0);
 			f_info->flag |= FLAG_ZERO;
 			tmp++;
 		}
@@ -136,7 +139,6 @@ int				read_format(char *format, t_format **f_info, va_list *v_lst)
 			return (del_t_format(&output));
 		}
 		add_back_t_format(&output, f_tmp);
-		printf("flag :%d, width :%d, decimal :%d, specifier :%c\n", f_tmp->flag, f_tmp->width, f_tmp->decimal, f_tmp->specifier);
 	}
 	*f_info = output;
 	return (1);

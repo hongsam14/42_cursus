@@ -6,7 +6,7 @@
 /*   By: suhong <ghdtjdgus14@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 10:57:42 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/06 17:09:52 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/08 18:23:08 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ void		test(int count, ...)
 
 int			main(void)
 {
-	printf("%0*%", 10);
+	printf("%d\n", printf("%00%"));
 	return (0);
 }
