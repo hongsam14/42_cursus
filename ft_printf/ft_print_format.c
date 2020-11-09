@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:34:52 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/08 18:42:55 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/09 20:54:34 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "read_c_type.c"
 #include "read_s_type.c"
 #include "read_percent_type.c"
+#include "read_p_type.c"
 
 static int	print_by_specifier(va_list *v_lst, t_format f_info)
 {
@@ -24,9 +25,9 @@ static int	print_by_specifier(va_list *v_lst, t_format f_info)
 		return (read_c_type(va_arg(*v_lst, int), f_info));
 	if (specifier == 's')
 		return (read_s_type(va_arg(*v_lst, char *), f_info));
-	/*
 	if (specifier == 'p')
-		return (read_p_type(va_arg(*v_lst, long long), f_info));
+		return (read_p_type(va_arg(*v_lst, void *), f_info));
+	/*
 	if (specifier == 'd' || specifier == 'i')
 		return (read_di_type(va_arg(*v_lst, int), f_info));
 	if (specifier == 'u' || specifier == 'x' || specifier == 'X')

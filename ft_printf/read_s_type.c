@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 12:19:20 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/08 17:52:44 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/08 20:56:32 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 static int	decide_str_len(char *src, t_format f_info)
 {
-	int		len;
 	int		src_len;
 
-	len = 0;
 	src_len = ft_strlen(src);
 	if ((f_info.flag & FLAG_DOT) == FLAG_DOT)
 	{
