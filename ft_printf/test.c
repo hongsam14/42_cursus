@@ -6,7 +6,7 @@
 /*   By: suhong <ghdtjdgus14@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 10:57:42 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/09 20:58:36 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/10 12:01:21 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int			main(void)
 {
 	//char		c = 'A';
 
-	printf("%d\n", printf("%20p\n", ""));
+	printf("%d\n", printf("%p\n", ""));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 12:19:20 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/08 20:56:32 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/10 14:08:38 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ static int	decide_str_len(char *src, t_format f_info)
 {
 	int		src_len;
 
-	src_len = ft_strlen(src);
+	if (src == 0)
+		src_len = 6;
+	else
+		src_len = ft_strlen(src);
 	if ((f_info.flag & FLAG_DOT) == FLAG_DOT)
 	{
 		if (f_info.precision > src_len)
@@ -26,6 +29,14 @@ static int	decide_str_len(char *src, t_format f_info)
 	}
 	else
 		return (src_len);
+}
+
+static void		print_src(char *src, int len)
+{
+	if (src == 0)
+		write(1, "(null)", len);
+	else
+		write(1, src, len);
 }
 
 int			read_s_type(char *src, t_format f_info)
@@ -42,14 +53,14 @@ int			read_s_type(char *src, t_format f_info)
 		if ((f_info.flag & FLAG_MINUS) == FLAG_MINUS)
 		{
 			if (byte++ == 0)
-				write(1, src, s_len);
+				print_src(src, s_len);
 			else
 				ft_putchar_fd(' ', 1);
 		}
 		else
 		{
 			if (byte++ == total_len - s_len)
-				write(1, src, s_len);
+				print_src(src, s_len);
 			else
 				ft_putchar_fd(' ', 1);
 		}

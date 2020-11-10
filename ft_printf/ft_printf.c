@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 17:42:27 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/09 23:28:24 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/10 14:13:50 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ int				ft_printf(const char *format, ...)
 
 int				main(void)
 {
-	char			c = 'A';
+	char			*s = 0;
 
-	printf("%d\n", ft_printf("abcd%-2cabcd%-4sab%%abcd%-16p\n", 'A', "ABCD", &c));
-	printf("%d\n", printf("abcd%-2cabcd%-4sab%%abcd%-16p\n", 'A', "ABCD", &c));
+	ft_printf("abcdefg%.2s\n", s);
+	printf("abcdefg%.2s\n", s);
+	//ft_printf("abcdefg%5p\n", s);
+	//printf("abcdefg%5p\n", s);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 16:00:16 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/10 02:29:25 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/10 13:57:31 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ static void		print_hex(unsigned long address)
 	return ;
 }
 
+static void		print_address(unsigned long address)
+{
+	if (!address)
+		ft_putstr_fd("0x0", 1);
+	else
+		print_hex(address);
+}
+
 int			read_p_type(void *src, t_format f_info)
 {
 	unsigned long	address;
@@ -51,7 +59,7 @@ int			read_p_type(void *src, t_format f_info)
 
 	byte = 0;
 	address = (unsigned long)src;
-	ad_size = count_hex(address);
+	ad_size = address == 0 ? 3 : count_hex(address);
 	width = ad_size > f_info.width ? ad_size : f_info.width;
 	while (byte <= width - ad_size)
 	{
@@ -59,7 +67,7 @@ int			read_p_type(void *src, t_format f_info)
 					&& (f_info.flag & FLAG_MINUS) == FLAG_MINUS)
 				|| (byte == width - ad_size
 					&& (f_info.flag & FLAG_MINUS) != FLAG_MINUS))
-			print_hex(address);
+			print_address(address);
 		else
 			ft_putchar_fd(' ', 1);
 		byte++;
