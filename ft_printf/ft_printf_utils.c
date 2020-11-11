@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 15:48:02 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/09 20:57:09 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/12 01:47:46 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int				init_t_format(t_format **new_f)
 	return (1);
 }
 
-char				change_2_hex(int value, int capital)
+char			change_2_hex(int value, int capital)
 {
-	char			output;
+	char		output;
 
 	if (capital)
 		output = "0123456789ABCDEF"[value];

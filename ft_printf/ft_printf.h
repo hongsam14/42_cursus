@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 17:43:43 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/09 20:57:26 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/12 01:48:06 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdarg.h>
 # include <stdlib.h>
+# include <limits.h>
 # include "./libft/libft.h"
 
 # define FLAG_MINUS	1
@@ -43,6 +44,8 @@ char				change_2_hex(int value, int capital);
 int					read_c_type(char src, t_format f_info);
 int					read_s_type(char *src, t_format f_info);
 int					read_percent_type(t_format f_info);
-int					read_p_type(void * src, t_format f_info);
+int					read_p_type(void *src, t_format f_info);
+int					read_di_type(int src, t_format f_info);
+int					read_ux_type(unsigned int src, t_format f_info);
 
 #endif

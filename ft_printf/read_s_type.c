@@ -6,15 +6,15 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 12:19:20 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/10 14:08:38 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/11 05:34:34 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	decide_str_len(char *src, t_format f_info)
+static int		decide_str_len(char *src, t_format f_info)
 {
-	int		src_len;
+	int			src_len;
 
 	if (src == 0)
 		src_len = 6;
@@ -39,11 +39,11 @@ static void		print_src(char *src, int len)
 		write(1, src, len);
 }
 
-int			read_s_type(char *src, t_format f_info)
+int				read_s_type(char *src, t_format f_info)
 {
-	int		byte;
-	int		s_len;
-	int		total_len;
+	int			byte;
+	int			s_len;
+	int			total_len;
 
 	byte = 0;
 	s_len = decide_str_len(src, f_info);
