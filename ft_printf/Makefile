@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 17:46:48 by suhong            #+#    #+#              #
-#    Updated: 2020/11/12 04:54:16 by suhong           ###   ########.fr        #
+#    Updated: 2020/11/13 12:21:30 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,22 +34,24 @@ SRCS = ft_print_format.c \
 
 OBJS = $(SRCS:.c=.o)
 
+all : $(NAME)
+
+$(LIBFT) :
+	cd $(LIBDIR); $(MAKE) all
+
 %.o : %.c
 	$(CC) $(CFLAG) -c $< -o $@
 
-$(LIBFT) :
-	cd $(LIBDIR); $(MAKE)
-
-$(NAME) : $(OBJS) $(MAKE)
+$(NAME) : $(LIBFT) $(OBJS)
+	cp $(LIBDIR)/$(LIBFT) ./$(NAME)
 	ar rcs $(NAME) $(OBJS)
-	ranlib $(NAME)
-
-all : $(NAME)
 
 clean :
-	cd ./libft; $(MAKE) clean
+	cd $(LIBDIR); $(MAKE) clean
 	rm -f $(OBJS)
 
 fclean : clean
-	rm -f ./libft/$(LIBFT)
+	rm -f $(LIBDIR)/$(LIBFT)
 	rm -f $(NAME)
+
+.PHONY : re fclean clean all
