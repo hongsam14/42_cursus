@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 01:47:06 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/11 22:09:17 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/15 10:13:51 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ static void	print_di(int src, int len, int s_len)
 
 	i = 0;
 	if (src < 0)
-	{
 		ft_putchar_fd('-', 1);
-		s_len--;
-	}
 	while (i++ < len - s_len)
 		ft_putchar_fd('0', 1);
 	if (len > 0)

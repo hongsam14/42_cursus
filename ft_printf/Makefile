@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 17:46:48 by suhong            #+#    #+#              #
-#    Updated: 2020/11/13 12:21:30 by suhong           ###   ########.fr        #
+#    Updated: 2020/11/13 12:56:50 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ CC = gcc
 CFLAG = -Wall -Wextra -Werror
 
 LIBDIR = ./libft
+
+INC = ft_printf.h
 
 SRCS = ft_print_format.c \
 		ft_printf.c \
@@ -40,11 +42,12 @@ $(LIBFT) :
 	cd $(LIBDIR); $(MAKE) all
 
 %.o : %.c
-	$(CC) $(CFLAG) -c $< -o $@
+	$(CC) $(CFLAG) -c $< -o $@ -include $(INC)
 
 $(NAME) : $(LIBFT) $(OBJS)
-	cp $(LIBDIR)/$(LIBFT) ./$(NAME)
+	cp $(LIBDIR)/$(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJS)
+	ranlib $(NAME)
 
 clean :
 	cd $(LIBDIR); $(MAKE) clean
