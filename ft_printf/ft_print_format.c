@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:34:52 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/12 01:46:20 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/16 12:45:01 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	print_by_specifier(va_list *v_lst, t_format f_info)
 		return (read_ux_type(va_arg(*v_lst, unsigned int), f_info));
 	if (specifier == '%')
 		return (read_percent_type(f_info));
-	return (0);
+	return (-1);
 }
 
 void		jump_flag(char **format)
@@ -65,8 +65,8 @@ int			print_format(char *format, t_format *f_info, va_list *v_lst)
 		{
 			format++;
 			jump_flag(&format);
-			if ((spec_byte = print_by_specifier(v_lst, *f_info)) == 0)
-				return (0);
+			if ((spec_byte = print_by_specifier(v_lst, *f_info)) < 0)
+				return (-1);
 			read_byte += spec_byte;
 			f_info = f_info->next;
 		}

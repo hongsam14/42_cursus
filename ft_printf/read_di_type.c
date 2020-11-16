@@ -6,96 +6,108 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 01:47:06 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/15 10:13:51 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/16 17:12:58 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	digit_size(int src)
+static int	read_digit(int src)
 {
-	int		i;
+	int		digit;
 
-	i = 0;
+	digit = 1;
 	if (src == -2147483648)
-		return (11);
-	if (src == 0)
-		return (1);
+		return (10);
 	if (src < 0)
-	{
 		src *= -1;
-		i++;
-	}
-	while (src)
-	{
-		src = src / 10;
-		i++;
-	}
-	return (i);
+	while ((src = src / 10))
+		digit++;
+	return (digit);
 }
 
-static int	precision_size(int src, int s_size, t_format f_info)
+static int	size_prec(int src, t_format f_info)
 {
-	if ((f_info.flag & FLAG_DOT) == FLAG_DOT)
+	int		num_size;
+	int		total;
+
+	num_size = read_digit(src);
+	if ((f_info.flag & FLAG_DOT))
 	{
-		if (s_size > f_info.precision)
-		{
-			if (src == 0)
-				return (0);
-			else
-				return (s_size);
-		}
-		return (f_info.precision);
+		if (num_size > f_info.precision)
+			return (total = src == 0 ? 0 : num_size);
+		else
+			return (f_info.precision);
 	}
-	return (s_size);
+	else
+		return (num_size);
 }
 
-static void	print_di(int src, int len, int s_len)
+static int	print_num(int src, int num_len)
 {
-	int		i;
+	int		remain;
+	int		byte;
 
-	i = 0;
+	byte = 1;
+	if (num_len == 0)
+		return (0);
 	if (src < 0)
-		ft_putchar_fd('-', 1);
-	while (i++ < len - s_len)
-		ft_putchar_fd('0', 1);
-	if (len > 0)
 	{
 		if (src == -2147483648)
 		{
+			byte = 10 + print_num(0, num_len - 10);
 			ft_putstr_fd("2147483648", 1);
-			return ;
+			return (byte);
 		}
-		src = src > 0 ? src : -src;
-		ft_putnbr_fd(src, 1);
+		src *= -1;
 	}
+	remain = src % 10;
+	byte += print_num(src / 10, --num_len);
+	ft_putchar_fd('0' + remain, 1);
+	return (byte);
+}
+
+static int	print_di(int src, t_format f_info)
+{
+	int		byte;
+	int		num_len;
+
+	byte = 0;
+	num_len = size_prec(src, f_info);
+	if (src < 0 && !(f_info.flag & FLAG_ZERO))
+	{
+		ft_putchar_fd('-', 1);
+		byte++;
+	}
+	byte += print_num(src, num_len);
+	return (byte);
 }
 
 int			read_di_type(int src, t_format f_info)
 {
-	int		s_len;
-	int		len;
 	int		width;
-	int		i;
+	int		num_len;
+	int		byte;
+	int		total;
 
-	i = 0;
-	s_len = digit_size(src);
-	len = precision_size(src, s_len, f_info);
-	width = len > f_info.width ? len : f_info.width;
-	while (i <= width - len)
+	byte = 0;
+	num_len = src < 0 ? size_prec(src, f_info) + 1 : size_prec(src, f_info);
+	width = num_len > f_info.width ? num_len : f_info.width;
+	total = width - num_len;
+	if (src < 0 && (f_info.flag & FLAG_ZERO))
 	{
-		if ((i == 0 && (f_info.flag & FLAG_MINUS) == FLAG_MINUS)
-				|| (i == width - len
-					&& (f_info.flag & FLAG_MINUS) != FLAG_MINUS))
-			print_di(src, len, s_len);
-		else
-		{
-			if ((f_info.flag & FLAG_ZERO) == FLAG_ZERO)
-				ft_putchar_fd('0', 1);
-			else
-				ft_putchar_fd(' ', 1);
-		}
-		i++;
+		ft_putchar_fd('-', 1);
+		byte++;
 	}
-	return (width);
+	while (total >= 0)
+	{
+		if (total == width - num_len && (f_info.flag & FLAG_MINUS))
+			byte += print_di(src, f_info);
+		else if (total == 0 && !(f_info.flag & FLAG_MINUS))
+			byte += print_di(src, f_info);
+		else
+			byte += print_space_by_flag(f_info);
+		total--;
+	}
+	return (byte);
 }

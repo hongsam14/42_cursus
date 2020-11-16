@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 15:48:02 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/12 01:47:46 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/16 16:22:45 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ int				del_t_format(t_format **f_info)
 	t_format	*f_tmp;
 
 	if (*f_info == 0)
-		return (0);
+		return (-1);
 	while (*f_info)
 	{
 		f_tmp = (*f_info)->next;
 		free(*f_info);
 		*f_info = f_tmp;
 	}
-	return (0);
+	return (-1);
 }
 
 void			add_back_t_format(t_format **f_info, t_format *new_f)
@@ -46,7 +46,7 @@ int				init_t_format(t_format **new_f)
 {
 	*new_f = (t_format *)malloc(sizeof(t_format));
 	if (*new_f == 0)
-		return (0);
+		return (-1);
 	(*new_f)->flag = 0;
 	(*new_f)->width = 0;
 	(*new_f)->precision = 0;
@@ -64,4 +64,13 @@ char			change_2_hex(int value, int capital)
 	else
 		output = "0123456789abcdef"[value];
 	return (output);
+}
+
+int				print_space_by_flag(t_format f_info)
+{
+	if ((f_info.flag & FLAG_ZERO))
+		ft_putchar_fd('0', 1);
+	else
+		ft_putchar_fd(' ', 1);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 17:42:27 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/13 12:57:42 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/15 14:13:42 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int				ft_printf(const char *format, ...)
 	f_info = 0;
 	read_byte = 0;
 	va_start(lst, format);
-	if (read_format(tmp, &f_info, &lst) < 1)
-		return (0);
-	if ((read_byte = print_format(tmp, f_info, &lst)) < 1)
-		return (0);
+	if (read_format(tmp, &f_info, &lst) < 0)
+		return (-1);
+	if ((read_byte = print_format(tmp, f_info, &lst)) < 0)
+		return (-1);
 	va_end(lst);
 	del_t_format(&f_info);
 	return (read_byte);

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:59:55 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/08 18:37:58 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/15 14:19:25 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int			read_percent_type(t_format f_info)
 			if (byte == 0)
 				ft_putchar_fd('%', 1);
 			else
-				ft_putchar_fd(' ', 1);
+				print_space_by_flag(f_info);
 		}
 		else
 		{
 			if (byte == width - 1)
 				ft_putchar_fd('%', 1);
 			else
-				ft_putchar_fd(' ', 1);
+				print_space_by_flag(f_info);
 		}
 		byte++;
 	}
