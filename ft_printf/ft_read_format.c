@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 17:42:27 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/16 17:14:42 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/16 21:51:06 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,6 @@ static int		read_specifier(char **format, t_format *f_info)
 					&& (f_info->flag & FLAG_ZERO))
 				f_info->flag -= FLAG_ZERO;
 		}
-		/*
-		if ((f_info->flag & FLAG_DOT))
-			if (ft_strchr("cp", *tmp))
-				return (-1);
-		*/
 		f_info->specifier = *tmp;
 		tmp++;
 	}
@@ -55,16 +50,12 @@ static int		read_precision(char **format, t_format *f_info, va_list *v_lst)
 		{
 			tmp++;
 			read_pre = va_arg(*v_lst, int);
-			if (((f_info->flag & FLAG_ZERO) == FLAG_ZERO) && read_pre < 0)
-				return (-1);
+			if (read_pre < 0)
+				read_pre = 0;
 		}
 		else
-		{
 			while (*tmp >= '0' && *tmp <= '9')
 				read_pre = (read_pre * 10) + (*(tmp++) - '0');
-			if (read_pre < 0)
-				return (-1);
-		}
 		f_info->precision = read_pre;
 	}
 	*format = tmp;
@@ -82,19 +73,15 @@ static int		read_width(char **format, t_format *f_info, va_list *v_lst)
 	{
 		tmp++;
 		read_int = va_arg(*v_lst, int);
-		if (((f_info->flag & FLAG_ZERO) == FLAG_ZERO) && read_int < 0)
-			return (-1);
+		if (read_int < 0)
+		{
+			f_info->flag |= FLAG_MINUS;
+			read_int *= -1;
+		}
 	}
 	else
-	{
 		while (*tmp >= '0' && *tmp <= '9')
-		{
-			read_int = (read_int * 10) + (*tmp - '0');
-			tmp++;
-		}
-		if (read_int < 0)
-			return (-1);
-	}
+			read_int = (read_int * 10) + (*tmp++ - '0');
 	f_info->width = read_int;
 	*format = tmp;
 	return (read_precision(format, f_info, v_lst));

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 01:47:06 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/13 12:50:06 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/16 21:16:53 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,17 @@ static int			digit_size_ux(unsigned int src, t_format f_info)
 	int				i;
 	int				deno;
 
-	i = 0;
+	i = 1;
 	deno = f_info.specifier == 'u' ? 10 : 16;
-	if (src == 0)
-		return (1);
-	while (src)
-	{
-		src = src / deno;
+	while ((src = src / deno))
 		i++;
-	}
 	return (i);
 }
 
 static int			precision_size_ux(unsigned int src
 		, int s_size, t_format f_info)
 {
-	if ((f_info.flag & FLAG_DOT) == FLAG_DOT)
+	if ((f_info.flag & FLAG_DOT))
 	{
 		if (s_size > f_info.precision)
 		{
@@ -100,9 +95,9 @@ int					read_ux_type(unsigned int src, t_format f_info)
 	width = len > f_info.width ? len : f_info.width;
 	while (i <= width - len)
 	{
-		if ((i == 0 && (f_info.flag & FLAG_MINUS) == FLAG_MINUS)
+		if ((i == 0 && (f_info.flag & FLAG_MINUS))
 				|| (i == width - len
-					&& (f_info.flag & FLAG_MINUS) != FLAG_MINUS))
+					&& !(f_info.flag & FLAG_MINUS)))
 			print_ux(src, len, s_len, f_info);
 		else
 		{

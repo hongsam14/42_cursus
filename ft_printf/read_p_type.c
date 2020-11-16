@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 16:00:16 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/16 17:12:40 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/16 20:58:12 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,49 @@
 
 static int			count_hex(unsigned long address)
 {
-	unsigned long	quata;
 	int				byte;
 
-	if (!address)
-		return (2);
 	byte = 1;
-	quata = address / 16;
-	byte += count_hex(quata);
+	while ((address = address / 16))
+		byte++;
 	return (byte);
 }
 
-static void			print_hex(unsigned long address)
+static int			prec_size(unsigned long address, t_format f_info)
+{
+	int				size;
+
+	size = count_hex(address);
+	if ((f_info.flag & FLAG_DOT))
+	{
+		if (!f_info.precision && !address)
+			return (0);
+		if (size > f_info.precision)
+			return (size);
+		else
+			return (f_info.precision);
+	}
+	else
+		return (size);
+}
+
+static int			print_hex(unsigned long address, int size)
 {
 	char			remain;
 	unsigned long	quata;
+	int				byte;
 
-	if (!address)
+	byte = 1;
+	if (!size)
 	{
 		ft_putstr_fd("0x", 1);
-		return ;
+		return (2);
 	}
 	quata = address / 16;
 	remain = change_2_hex(address % 16, 0);
-	print_hex(quata);
+	byte += print_hex(quata, --size);
 	write(1, &remain, 1);
-	return ;
-}
-
-static void			print_address(unsigned long address)
-{
-	if (!address)
-		ft_putstr_fd("0x0", 1);
-	else
-		print_hex(address);
+	return (byte);
 }
 
 int					read_p_type(void *src, t_format f_info)
@@ -59,18 +68,20 @@ int					read_p_type(void *src, t_format f_info)
 
 	byte = 0;
 	address = (unsigned long)src;
-	ad_size = address == 0 ? 3 : count_hex(address);
+	ad_size = prec_size(address, f_info) + 2;
 	width = ad_size > f_info.width ? ad_size : f_info.width;
-	while (byte <= width - ad_size)
+	while (byte < width)
 	{
 		if ((byte == 0
-					&& (f_info.flag & FLAG_MINUS) == FLAG_MINUS)
+					&& (f_info.flag & FLAG_MINUS))
 				|| (byte == width - ad_size
-					&& (f_info.flag & FLAG_MINUS) != FLAG_MINUS))
-			print_address(address);
+					&& !(f_info.flag & FLAG_MINUS)))
+			byte += print_hex(address, ad_size - 2);
 		else
+		{
 			ft_putchar_fd(' ', 1);
-		byte++;
+			byte++;
+		}
 	}
-	return (width);
+	return (byte);
 }
