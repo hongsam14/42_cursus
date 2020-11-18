@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 17:42:27 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/16 21:51:06 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/18 15:24:30 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ static int		read_precision(char **format, t_format *f_info, va_list *v_lst)
 			tmp++;
 			read_pre = va_arg(*v_lst, int);
 			if (read_pre < 0)
+			{
+				f_info->flag -= FLAG_DOT;
 				read_pre = 0;
+			}
 		}
 		else
 			while (*tmp >= '0' && *tmp <= '9')
