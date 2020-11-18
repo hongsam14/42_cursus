@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 17:46:48 by suhong            #+#    #+#              #
-#    Updated: 2020/11/13 12:56:50 by suhong           ###   ########.fr        #
+#    Updated: 2020/11/18 20:14:49 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 $(LIBFT) :
-	cd $(LIBDIR); $(MAKE) all
+	$(MAKE) -C $(LIBDIR)
 
 %.o : %.c
 	$(CC) $(CFLAG) -c $< -o $@ -include $(INC)
@@ -50,7 +50,7 @@ $(NAME) : $(LIBFT) $(OBJS)
 	ranlib $(NAME)
 
 clean :
-	cd $(LIBDIR); $(MAKE) clean
+	$(MAKE) -C $(LIBDIR) clean
 	rm -f $(OBJS)
 
 fclean : clean
