@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:34:52 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/19 11:28:44 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/19 21:00:16 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	jump_flag(char **format)
 	char	*tmp;
 
 	tmp = *format;
-	while ((ft_strchr("-*.0123456789", *tmp)) != 0
+	while ((ft_strchr("-*# +.0123456789", *tmp)) != 0
 			&& *tmp != '\0')
 		tmp++;
 	if ((ft_strchr("cpsdiuxX%", *tmp)) != 0 && *tmp != '\0')
