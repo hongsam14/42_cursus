@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 17:43:43 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/19 19:41:48 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/19 21:33:27 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 
-# define FLAG_MINUS	1
-# define FLAG_ZERO	2
-# define FLAG_DOT	4
-# define FLAG_SHARP	8
-# define FLAG_SPACE	16
-# define FLAG_PLUS	32
+# define FLAG_MINUS	0x01
+# define FLAG_ZERO	0x02
+# define FLAG_DOT	0x04
+# define FLAG_SHARP	0x08
+# define FLAG_SPACE	0x10
+# define FLAG_PLUS	0x20
 
 typedef struct		s_format
 {
-	long long		flag : 63;
+	unsigned int	flag : 6;
 	int				width;
 	int				precision;
 	char			specifier;
