@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 01:47:06 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/16 17:12:58 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/18 17:42:18 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,13 @@ static int	print_num(int src, int num_len)
 	int		remain;
 	int		byte;
 
-	byte = 1;
-	if (num_len == 0)
-		return (0);
+	byte = src == 0 ? 0 : 1;
+	if (src == 0)
+	{
+		while (byte++ < num_len)
+			ft_putchar_fd('0', 1);
+		return (--byte);
+	}
 	if (src < 0)
 	{
 		if (src == -2147483648)
