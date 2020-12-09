@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 15:48:02 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/16 16:22:45 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/18 21:12:20 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int				del_t_format(t_format **f_info)
 	{
 		f_tmp = (*f_info)->next;
 		free(*f_info);
+		*f_info = 0;
 		*f_info = f_tmp;
 	}
 	return (-1);

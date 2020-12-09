@@ -6,38 +6,38 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:34:52 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/16 21:06:35 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/19 21:00:16 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	print_by_specifier(va_list *v_lst, t_format f_info)
+static int	print_by_specifier(t_format f_info)
 {
 	char	specifier;
 
 	specifier = f_info.specifier;
 	if (specifier == 'c')
-		return (read_c_type(va_arg(*v_lst, int), f_info));
+		return (read_c_type((int)(f_info.content), f_info));
 	if (specifier == 's')
-		return (read_s_type(va_arg(*v_lst, char *), f_info));
+		return (read_s_type((char *)(f_info.content), f_info));
 	if (specifier == 'p')
-		return (read_p_type(va_arg(*v_lst, void *), f_info));
+		return (read_p_type((void *)(f_info.content), f_info));
 	if (specifier == 'd' || specifier == 'i')
-		return (read_di_type(va_arg(*v_lst, int), f_info));
+		return (read_di_type((int)(f_info.content), f_info));
 	if (specifier == 'u' || specifier == 'x' || specifier == 'X')
-		return (read_ux_type(va_arg(*v_lst, unsigned int), f_info));
+		return (read_ux_type((unsigned int)f_info.content, f_info));
 	if (specifier == '%')
 		return (read_percent_type(f_info));
 	return (-1);
 }
 
-void		jump_flag(char **format)
+static void	jump_flag(char **format)
 {
 	char	*tmp;
 
 	tmp = *format;
-	while ((ft_strchr("-*.0123456789", *tmp)) != 0
+	while ((ft_strchr("-*# +.0123456789", *tmp)) != 0
 			&& *tmp != '\0')
 		tmp++;
 	if ((ft_strchr("cpsdiuxX%", *tmp)) != 0 && *tmp != '\0')
@@ -45,7 +45,7 @@ void		jump_flag(char **format)
 	*format = tmp;
 }
 
-int			print_format(char *format, t_format *f_info, va_list *v_lst)
+int			print_format(char *format, t_format *f_info)
 {
 	int		read_byte;
 	int		spec_byte;
@@ -63,7 +63,7 @@ int			print_format(char *format, t_format *f_info, va_list *v_lst)
 		{
 			format++;
 			jump_flag(&format);
-			if ((spec_byte = print_by_specifier(v_lst, *f_info)) < 0)
+			if ((spec_byte = print_by_specifier(*f_info)) < 0)
 				return (-1);
 			read_byte += spec_byte;
 			f_info = f_info->next;

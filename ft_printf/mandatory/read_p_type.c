@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 16:00:16 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/16 20:58:12 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/18 20:11:07 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,16 @@ static int			print_hex(unsigned long address, int size)
 	unsigned long	quata;
 	int				byte;
 
-	byte = 1;
-	if (!size)
+	byte = address == 0 ? 0 : 1;
+	if (!address)
 	{
 		ft_putstr_fd("0x", 1);
-		return (2);
+		while (size--)
+		{
+			ft_putchar_fd('0', 1);
+			byte++;
+		}
+		return (byte + 2);
 	}
 	quata = address / 16;
 	remain = change_2_hex(address % 16, 0);

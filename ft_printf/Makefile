@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 17:46:48 by suhong            #+#    #+#              #
-#    Updated: 2020/11/13 12:56:50 by suhong           ###   ########.fr        #
+#    Updated: 2020/11/19 16:51:05 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBDIR = ./libft
 
 INC = ft_printf.h
 
-SRCS = ft_print_format.c \
+SRC = ft_print_format.c \
 		ft_printf.c \
 		ft_printf_utils.c \
 		ft_read_format.c \
@@ -34,15 +34,21 @@ SRCS = ft_print_format.c \
 		read_di_type.c \
 		read_ux_type.c
 
+SRCDIR = ./mandatory/
+
+BONUSDIR = ./bonus/
+
+SRCS = $(addprefix $(SRCDIR), $(SRC))
+
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
 
 $(LIBFT) :
-	cd $(LIBDIR); $(MAKE) all
+	$(MAKE) -C $(LIBDIR)
 
 %.o : %.c
-	$(CC) $(CFLAG) -c $< -o $@ -include $(INC)
+	$(CC) $(CFLAG) -c $< -o $@ -include $(addprefix $(SRCDIR), $(INC))
 
 $(NAME) : $(LIBFT) $(OBJS)
 	cp $(LIBDIR)/$(LIBFT) $(NAME)
@@ -50,7 +56,7 @@ $(NAME) : $(LIBFT) $(OBJS)
 	ranlib $(NAME)
 
 clean :
-	cd $(LIBDIR); $(MAKE) clean
+	$(MAKE) -C $(LIBDIR) clean
 	rm -f $(OBJS)
 
 fclean : clean
