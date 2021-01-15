@@ -8,13 +8,13 @@ RUN apt-get update && apt-get install -y	nginx\
 						php-mysql\
 						mariadb-server\
 						openssl
-COPY ./src/start.sh ./
-COPY ./src/default_org ./
-COPY ./src/autoindex.sh ./
-COPY ./src/config.inc.php ./
-COPY ./src/wp-config.php ./
-COPY ./src/phpMyAdmin-4.9.0.1-all-languages.tar.gz ./
-COPY ./src/latest.tar.gz ./
+COPY ./srcs/start.sh ./
+COPY ./srcs/default_org ./
+COPY ./srcs/autoindex.sh ./
+COPY ./srcs/config.inc.php ./
+COPY ./srcs/wp-config.php ./
+COPY ./srcs/phpMyAdmin-4.9.0.1-all-languages.tar.gz ./
+COPY ./srcs/latest.tar.gz ./
 
 CMD bash ./start.sh
 

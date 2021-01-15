@@ -8,9 +8,8 @@ elif [ $AUTOINDEX = off ]
 then
 	echo "change autoindex... >> autoindex $AUTOINDEX "
 	cat default_org | sed 's/autoindex on/autoindex off/' > default
-#rm default_org
+	rm default_org
 else
 	echo "nothing changes... >> autoindex $AUTOINDEX "
 	mv default_org default
 fi
-rm default_org
