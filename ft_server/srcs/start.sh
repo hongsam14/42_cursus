@@ -46,6 +46,10 @@ echo "CREATE DATABASE wordpress;" | mysql -u root --skip-password
 echo "GRANT ALL PRIVILEGES ON *.* to 'suhong'@'localhost';" | mysql -u root --skip-password
 echo "FLUSH PRIVILEGES" | mysql -u root --skip-password
 
+#clean files
+
+rm *.tar.gz
+
 #start
 service nginx reload
 service php7.3-fpm reload
