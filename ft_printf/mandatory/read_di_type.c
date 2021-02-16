@@ -6,11 +6,8 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 01:47:06 by suhong            #+#    #+#             */
-<<<<<<< HEAD:ft_printf/read_di_type.c
 /*   Updated: 2020/11/18 17:42:18 by suhong           ###   ########.fr       */
-=======
 /*   Updated: 2020/11/19 21:00:18 by suhong           ###   ########.fr       */
->>>>>>> a4f95cfa6d17f552e5e5dc1d4cbbbbd1748e8e81:ft_printf/mandatory/read_di_type.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +50,7 @@ static int	print_num(int src, int num_len)
 	int		byte;
 
 	byte = src == 0 ? 0 : 1;
-<<<<<<< HEAD:ft_printf/read_di_type.c
-	if (src == 0)
-=======
 	if (!src)
->>>>>>> a4f95cfa6d17f552e5e5dc1d4cbbbbd1748e8e81:ft_printf/mandatory/read_di_type.c
 	{
 		while (byte++ < num_len)
 			ft_putchar_fd('0', 1);

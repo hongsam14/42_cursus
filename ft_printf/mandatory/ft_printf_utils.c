@@ -22,7 +22,6 @@ int				del_t_format(t_format **f_info)
 	{
 		f_tmp = (*f_info)->next;
 		free(*f_info);
-		*f_info = 0;
 		*f_info = f_tmp;
 	}
 	return (-1);
