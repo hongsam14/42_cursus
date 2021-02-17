@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 05:01:08 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/14 14:51:34 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/17 20:34:02 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct	s_control
 	int	exit : 1;
 }		t_control;
 
+void	init_control(t_control *control);
 int		key_press(int keycode, t_control *control);
 int		key_release(int keycode, t_control *control);
 

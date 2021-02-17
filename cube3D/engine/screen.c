@@ -6,11 +6,11 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:33:21 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/17 12:07:28 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/17 20:38:42 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "engine.h"
+#include "engine.h"
 
 void	draw_sky_ground(t_window *window, int sky, int ground)
 {
@@ -43,9 +43,11 @@ void	draw_col(t_window *window, double dist, int r_index, int hor)
 	while (draw_start <= draw_end)
 	{
 		if (hor == 1)
-			window->img.data[window->screen_w * draw_start + r_index] = 0xffffff;
+			window->img.data[window->screen_w * draw_start
+				+ r_index] = 0xffffff;
 		else
-			window->img.data[window->screen_w * draw_start + r_index] = 0x00FFFF;
+			window->img.data[window->screen_w * draw_start
+				+ r_index] = 0xF8F8F8;
 		draw_start++;
 	}
 }

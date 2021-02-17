@@ -123,7 +123,7 @@ double		getWallDist(t_vec ray_vec, t_game *game, int *side)
 		sideDist.y = (map_y + 1 - game->player.pos.y) * deltaDist.y;
 	}
 	perpDist = sideDist;
-#if 1
+#if 0
 	//perform DDA
 	while (1)
 	{

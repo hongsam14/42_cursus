@@ -6,11 +6,18 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 05:24:25 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/14 14:51:27 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/17 20:42:50 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "controler.h"
+
+void	init_control(t_control *control)
+{
+	control->movement = 0b0000;
+	control->rotation = 0b00;
+	control->exit = 0b0;
+}
 
 int		key_press(int keycode, t_control *control)
 {

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:48:56 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/14 05:16:31 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/17 20:39:38 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		destroy_window(t_window *window)
 	return (0);
 }
 
-void		update_window(t_window *window)
+void	update_window(t_window *window)
 {
 	mlx_put_image_to_window(window->mlx.mlx_ptr, window->mlx.window,
 			window->img.img_ptr, 0, 0);
