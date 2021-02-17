@@ -6,13 +6,28 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:33:21 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/17 00:26:59 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/17 12:07:28 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "engine.h"
 
-void	draw_col(t_window *window, double dist, int r_index)
+void	draw_sky_ground(t_window *window, int sky, int ground)
+{
+	int	i;
+
+	i = 0;
+	while (i < window->screen_w * window->screen_h)
+	{
+		if (i < window->screen_w * window->screen_h / 2)
+			window->img.data[i] = sky;
+		else
+			window->img.data[i] = ground;
+		i++;
+	}
+}
+
+void	draw_col(t_window *window, double dist, int r_index, int hor)
 {
 	int	draw_start;
 	int	draw_end;
@@ -27,7 +42,10 @@ void	draw_col(t_window *window, double dist, int r_index)
 		draw_end = window->screen_h - 1;
 	while (draw_start <= draw_end)
 	{
-		window->img.data[] = 0xffffff;
+		if (hor == 1)
+			window->img.data[window->screen_w * draw_start + r_index] = 0xffffff;
+		else
+			window->img.data[window->screen_w * draw_start + r_index] = 0x00FFFF;
 		draw_start++;
 	}
 }

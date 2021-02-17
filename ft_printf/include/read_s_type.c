@@ -6,13 +6,13 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 12:19:20 by suhong            #+#    #+#             */
-/*   Updated: 2020/11/16 22:01:44 by suhong           ###   ########.fr       */
+/*   Updated: 2020/11/20 19:28:57 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int		decide_str_len(char *src, t_format f_info)
+static int		precision_size(char *src, t_format f_info)
 {
 	int			src_len;
 
@@ -43,14 +43,14 @@ int				read_s_type(char *src, t_format f_info)
 {
 	int			byte;
 	int			s_len;
-	int			total_len;
+	int			width;
 
 	byte = 0;
-	s_len = decide_str_len(src, f_info);
-	total_len = s_len > f_info.width ? s_len : f_info.width;
-	while (byte <= total_len - s_len)
+	s_len = precision_size(src, f_info);
+	width = s_len > f_info.width ? s_len : f_info.width;
+	while (byte <= width - s_len)
 	{
-		if ((f_info.flag & FLAG_MINUS) == FLAG_MINUS)
+		if ((f_info.flag & FLAG_MINUS))
 		{
 			if (byte++ == 0)
 				print_src(src, s_len);
@@ -59,11 +59,11 @@ int				read_s_type(char *src, t_format f_info)
 		}
 		else
 		{
-			if (byte++ == total_len - s_len)
+			if (byte++ == width - s_len)
 				print_src(src, s_len);
 			else
 				print_space_by_flag(f_info);
 		}
 	}
-	return (total_len);
+	return (width);
 }

@@ -6,24 +6,27 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 21:46:02 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/16 22:47:06 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/17 12:04:59 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-static t_vec	get_s_dist(t_vec ray, t_vec *d_dist, double map_x, double map_y)
+static t_vec	get_s_dist(t_vec ray, t_vec pos, t_vec *d_dist)
 {
 	t_vec	s_dist;
+	t_vec	map;
 
+	map.x = floor(pos.x);
+	map.y = floor(pos.y);
 	d_dist->x = fabs(1 / ray.x);
 	d_dist->y = fabs(1 / ray.y);
 	if (ray.x < 0)
-		s_dist.x = (pos.x - map_x) * d_dist->x;
+		s_dist.x = (pos.x - map.x) * d_dist->x;
 	else
-		g_dist.x = (map_x + 1 - pos.x) * d_dist->x;
+		s_dist.x = (map.x + 1 - pos.x) * d_dist->x;
 	if (ray.y < 0)
-		s_dist.y = (pos.y - map_y) * d_dist->y;
+		s_dist.y = (pos.y - map.y) * d_dist->y;
 	else
 		s_dist.y = (map.y + 1 - pos.y) * d_dist->y;
 	return (s_dist);
@@ -58,7 +61,7 @@ static double	check_collision(t_vec ray, t_vec pos, t_world world, int *hor)
 
 	map.x = floor(pos.x);
 	map.y = floor(pos.y);
-	s_dist = get_s_dist(ray, &d_dist, map.x, map.y);
+	s_dist = get_s_dist(ray, pos, &d_dist);
 	while (1)
 	{
 		if (s_dist.x < s_dist.y)
@@ -73,13 +76,13 @@ static double	check_collision(t_vec ray, t_vec pos, t_world world, int *hor)
 			*hor = 1;
 			s_dist.y += d_dist.y;
 		}
-		if (world->map_data[world->rows * (int)map.y + (int)map.x] == 1)
+		if (world.map_data[world.rows * (int)map.y + (int)map.x] == 1)
 			break ;
 	}
 	return (get_perp_dist(map, pos, ray, *hor));
 }
 
-void	raycasting(t_game *game)
+int	raycasting(t_game *game)
 {
 	t_vec	ray;
 	int		i;
@@ -88,14 +91,17 @@ void	raycasting(t_game *game)
 	double	dist;
 
 	i = 0;
+	//draw_sky_ground(&game->window, 0x010101, 0x101010);
 	while (i < game->window.screen_w)
 	{
 		screen_x = i * 2 / (double)game->window.screen_w - 1;
-		ray = multiply_s_vector(ray, screen_x);
-		ray = add_vector(ray, game->player.dir);
+		ray = multiply_s_vector(game->player.plane, screen_x);
+		ray = add_vector(game->player.dir, ray);
 		dist = check_collision(ray, game->player.pos, game->world, &hor);
 		//draw texture.
-		draw_col(game->window, dist, i);
+		draw_col(&game->window, dist, i, hor);
 		i++;
 	}
+	update_window(&game->window);
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/27 17:46:48 by suhong            #+#    #+#              #
-#    Updated: 2020/11/19 16:51:05 by suhong           ###   ########.fr        #
+#    Updated: 2020/11/20 19:22:39 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,9 +34,7 @@ SRC = ft_print_format.c \
 		read_di_type.c \
 		read_ux_type.c
 
-SRCDIR = ./mandatory/
-
-BONUSDIR = ./bonus/
+SRCDIR = ./include/
 
 SRCS = $(addprefix $(SRCDIR), $(SRC))
 
@@ -62,5 +60,7 @@ clean :
 fclean : clean
 	rm -f $(LIBDIR)/$(LIBFT)
 	rm -f $(NAME)
+
+re : clean all
 
 .PHONY : re fclean clean all

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/16 23:21:52 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/17 11:59:31 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <math.h>
 
 # include "vector.h"
-# include "../mlx_beta/mlx.h"
+# include "../mlx/mlx.h"
 # include "../libft/libft.h"
 
 typedef struct s_mlx
@@ -74,8 +74,9 @@ void	move_player_fb(t_player *player, int dir, double speed);
 void	move_player_lr(t_player *player, int dir, double speed);
 void	turn_player_lr(t_player *player, int dir, double speed);
 
-void	raycasting(t_game *game);
+int		raycasting(t_game *game);
 
-void	draw_col(t_window *window, double dist, int r_index);
+void	draw_sky_ground(t_window *window, int sky, int ground);
+void	draw_col(t_window *window, double dist, int r_index, int hor);
 
 #endif
