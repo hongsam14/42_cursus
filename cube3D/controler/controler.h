@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 05:01:08 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/17 20:34:02 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/18 06:23:56 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define D_FLAG			0b0001
 # define L_FLAG			0b10
 # define R_FLAG			0b01
+# define ESC_FLAG		0b1
 
 typedef struct	s_control
 {

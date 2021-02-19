@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 21:46:02 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/17 22:20:52 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/18 06:15:25 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ static double	get_perp_dist(t_vec map, t_vec pos, t_vec ray, int hor)
 
 static double	check_collision(t_vec ray, t_vec pos, t_world world, int *hor)
 {
-	t_vec		s_dist;
-	t_vec		d_dist;
-	t_vec		map;
-	t_vec		step;
+	t_vec	s_dist;
+	t_vec	d_dist;
+	t_vec	map;
+	t_vec	step;
 
 	d_dist = get_d_dist(ray, &step);
 	s_dist = get_s_dist(ray, pos, d_dist, &map);
@@ -95,18 +95,18 @@ static double	check_collision(t_vec ray, t_vec pos, t_world world, int *hor)
 	return (get_perp_dist(map, pos, ray, *hor));
 }
 
-void			raycasting(t_game *game)
+void		raycasting(t_game *game)
 {
-	t_vec		ray;
-	int			i;
-	int			hor;
-	double		screen_x;
-	double		dist;
+	t_vec	ray;
+	int	i;
+	int	hor;
+	double	screen_x;
+	double	dist;
 
 	i = 0;
 	while (i < game->window.screen_w)
 	{
-		screen_x = i * 2 / (double)game->window.screen_w - 1;
+		screen_x = 2 * i / (double)game->window.screen_w - 1;
 		ray = multiply_s_vector(game->player.plane, screen_x);
 		ray = add_vector(game->player.dir, ray);
 		dist = check_collision(ray, game->player.pos, game->world, &hor);

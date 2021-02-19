@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 05:24:25 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/17 20:42:50 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/18 06:24:22 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ int		key_release(int keycode, t_control *control)
 	if (keycode == KEY_ARROW_R)
 		control->rotation &= ~R_FLAG;
 	if (keycode == KEY_ESC)
-		control->exit = 0b1;
+		control->exit |= 0b1;
 	return (0);
 }

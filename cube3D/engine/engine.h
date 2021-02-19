@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/17 22:23:14 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/18 06:15:40 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct	s_player
 	t_vec		pos;
 	t_vec		plane;
 	t_vec		dir;
+	t_vec		old_pos;
 }				t_player;
 
 typedef struct	s_world
@@ -70,9 +71,9 @@ void			move_player_fb(t_player *player, int dir, double speed);
 void			move_player_lr(t_player *player, int dir, double speed);
 void			turn_player_lr(t_player *player, int dir, double speed);
 
-void			detect_collision(t_vec *pos, t_vec dir, double dist);
-
 void			raycasting(t_game *game);
+
+void			collider(t_game *game);
 
 void			draw_sky_ground(t_window *window, int sky, int ground);
 void			draw_col(t_window *window, double dist, int r_index, int hor);
