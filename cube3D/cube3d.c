@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/19 01:48:28 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/19 15:11:22 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	get_control_info(t_game *game)
 	if (game->control.rotation & R_FLAG)
 		turn_player_lr(&game->player, -1, 0.1);
 	if (game->control.exit & ESC_FLAG)
-		destroy_window(&game->window);;
+		destroy_window(&game->window);
 }
 
 int		main_loop(t_game *game)

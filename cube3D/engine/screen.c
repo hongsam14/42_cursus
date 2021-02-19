@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:33:21 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/18 14:45:55 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/19 15:59:07 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ void	draw_col(t_window *window, double dist, int r_index, int hor)
 		draw_end = window->screen_h - 1;
 	while (draw_start <= draw_end)
 	{
-		if (hor == 1)
+#if 1
+		if (hor & (0xFF << 16))
 			window->img.data[window->screen_w * draw_start
 				+ r_index] = 0xEAE3C8;
 		else
 			window->img.data[window->screen_w * draw_start
 				+ r_index] = 0xCFC5A5;
+#endif
 		draw_start++;
 	}
 }
