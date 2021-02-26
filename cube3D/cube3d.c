@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/19 15:11:22 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/26 22:42:20 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ int		main(void)
 	ft_memcpy(game.world.map_data, map, sizeof(int) * game.world.rows * game.world.cols);
 
 	init_game(&game);
+
+	load_texture(&game.window, &game.world.wall_tex[0], "wood.xpm");
+	load_texture(&game.window, &game.world.wall_tex[1], "wood.xpm");
+	load_texture(&game.window, &game.world.wall_tex[2], "wood.xpm");
+	load_texture(&game.window, &game.world.wall_tex[3], "wood.xpm");
+
 	mlx_hook(game.window.mlx.window, X_EVENT_KEY_PRESS, 1L<<0, &key_press, &game.control);
 	mlx_hook(game.window.mlx.window, X_EVENT_KEY_RELEASE, 1L<<1, &key_release, &game.control);
 	mlx_hook(game.window.mlx.window, X_EVENT_EXIT, 1L<<17, &destroy_window, &game.window);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.c                                          :+:      :+:    :+:   */
+/*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 21:46:02 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/19 15:59:09 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/26 21:47:19 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static t_vec	get_d_dist(t_vec ray, t_vec *step)
 {
 	t_vec		d_dist;
 
-	d_dist.x = fabs(1 / ray.x);
-	d_dist.y = fabs(1 / ray.y);
+	d_dist.x = sqrt(1 + (ray.y * ray.y) / (ray.x * ray.x));
+	d_dist.y = sqrt(1 + (ray.x * ray.x) / (ray.y * ray.y));
 	if (ray.x < 0)
 		step->x = -1;
 	else
@@ -35,29 +35,40 @@ static t_vec	get_s_dist(t_vec ray, t_vec pos, t_vec d_dist, t_vec *map)
 
 	*map = get_floor_vector(pos);
 	if (ray.x < 0)
-	{
 		s_dist.x = (pos.x - map->x) * d_dist.x;
-	}
 	else
-	{
 		s_dist.x = (map->x + 1 - pos.x) * d_dist.x;
-	}
 	if (ray.y < 0)
-	{
 		s_dist.y = (pos.y - map->y) * d_dist.y;
-	}
 	else
-	{
 		s_dist.y = (map->y + 1 - pos.y) * d_dist.y;
-	}
 	return (s_dist);
 }
 
-static double	get_perp_dist(t_vec map, t_vec pos, t_vec ray, int *hor)
+static void		get_collision_info(t_vec ray, int *info)
+{
+	if (*info & (0xFFFF << 16))
+	{
+		if (ray.x < 0)
+			*info |= INFO_EAST;
+		else
+			*info |= INFO_WEST;
+	}
+	else
+	{
+		if (ray.y < 0)
+			*info |= INFO_NORTH;
+		else
+			*info |= INFO_SOUTH;
+	}
+}
+
+static double	get_perp_dist(t_vec map, t_vec pos, t_vec ray, int *info)
 {
 	double		dist;
 
-	if (*hor & (0xFF << 16))
+	get_collision_info(ray, info);
+	if (*info & (0xFFFF << 16))
 	{
 		if (ray.x < 0)
 			dist = (map.x - pos.x + 1) / ray.x;
@@ -74,7 +85,7 @@ static double	get_perp_dist(t_vec map, t_vec pos, t_vec ray, int *hor)
 	return (dist);
 }
 
-static double	check_collision(t_vec ray, t_vec pos, t_world world, int *hor)
+double			check_collision(t_vec ray, t_game game, int *info)
 {
 	t_vec		s_dist;
 	t_vec		d_dist;
@@ -82,44 +93,24 @@ static double	check_collision(t_vec ray, t_vec pos, t_world world, int *hor)
 	t_vec		step;
 
 	d_dist = get_d_dist(ray, &step);
-	s_dist = get_s_dist(ray, pos, d_dist, &map);
+	s_dist = get_s_dist(ray, game.player.pos, d_dist, &map);
 	while (1)
 	{
 		if (s_dist.x < s_dist.y)
 		{
 			map.x += step.x;
-			*hor |= (0xFF << 16);
+			*info |= (0xFFFF << 16);
 			s_dist.x += d_dist.x;
 		}
 		else
 		{
 			map.y += step.y;
-			*hor &= ~(0xFF << 16);
+			*info &= ~(0xFFFF << 16);
 			s_dist.y += d_dist.y;
 		}
-		if (world.map_data[world.rows * (int)map.y + (int)map.x] == 1)
+		if (game.world.map_data[game.world.rows
+				* (int)map.y + (int)map.x] == 1)
 			break ;
 	}
-	return (get_perp_dist(map, pos, ray, hor));
-}
-
-void			raycasting(t_game *game)
-{
-	t_vec		ray;
-	int			i;
-	int			hor;
-	double		screen_x;
-	double		dist;
-
-	i = 0;
-	hor = 0;
-	while (i < game->window.screen_w)
-	{
-		screen_x = 2 * i / (double)game->window.screen_w - 1;
-		ray = multiply_s_vector(game->player.plane, screen_x);
-		ray = add_vector(game->player.dir, ray);
-		dist = check_collision(ray, game->player.pos, game->world, &hor);
-		draw_col(&game->window, dist, i, hor);
-		i++;
-	}
+	return (get_perp_dist(map, game.player.pos, ray, info));
 }

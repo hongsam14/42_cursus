@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:33:21 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/19 15:59:07 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/26 22:32:29 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	draw_col(t_window *window, double dist, int r_index, int hor)
 	while (draw_start <= draw_end)
 	{
 #if 1
-		if (hor & (0xFF << 16))
+		if (hor & (0xFFFF << 16))
 			window->img.data[window->screen_w * draw_start
 				+ r_index] = 0xEAE3C8;
 		else
@@ -52,4 +52,26 @@ void	draw_col(t_window *window, double dist, int r_index, int hor)
 #endif
 		draw_start++;
 	}
+}
+
+void			raycasting(t_game *game)
+{
+    t_vec		ray;
+    int			i;
+    int			info;
+    double		screen_x;
+    double		dist;
+
+    i = 0;
+    while (i < game->window.screen_w)
+    {
+		info = 0;
+        screen_x = 2 * i / (double)game->window.screen_w - 1;
+        ray = multiply_s_vector(game->player.plane, screen_x);
+        ray = add_vector(game->player.dir, ray);
+        //dist = check_collision(ray, *game, &info);
+        //draw_col(&game->window, dist, i, info);
+		draw_wall(game, ray, i);
+        i++;
+    }
 }
