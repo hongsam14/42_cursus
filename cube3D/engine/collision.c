@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 21:46:02 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/26 21:47:19 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/27 17:11:50 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,72 +45,69 @@ static t_vec	get_s_dist(t_vec ray, t_vec pos, t_vec d_dist, t_vec *map)
 	return (s_dist);
 }
 
-static void		get_collision_info(t_vec ray, int *info)
+static void		get_collision_info(t_ray *ray)
 {
-	if (*info & (0xFFFF << 16))
+	if (ray->info & (0xFFFF << 16))
 	{
-		if (ray.x < 0)
-			*info |= INFO_EAST;
+		if (ray->ray.x < 0)
+			ray->info |= INFO_EAST;
 		else
-			*info |= INFO_WEST;
+			ray->info |= INFO_WEST;
 	}
 	else
 	{
-		if (ray.y < 0)
-			*info |= INFO_NORTH;
+		if (ray->ray.y < 0)
+			ray->info |= INFO_NORTH;
 		else
-			*info |= INFO_SOUTH;
+			ray->info |= INFO_SOUTH;
 	}
 }
 
-static double	get_perp_dist(t_vec map, t_vec pos, t_vec ray, int *info)
+static double	get_perp_dist(t_vec map, t_vec pos, t_ray *ray)
 {
-	double		dist;
-
-	get_collision_info(ray, info);
-	if (*info & (0xFFFF << 16))
+	get_collision_info(ray);
+	if (ray->info & (0xFFFF << 16))
 	{
-		if (ray.x < 0)
-			dist = (map.x - pos.x + 1) / ray.x;
+		if (ray->ray.x < 0)
+			ray->dist = (map.x - pos.x + 1) / ray->ray.x;
 		else
-			dist = (map.x - pos.x) / ray.x;
+			ray->dist = (map.x - pos.x) / ray->ray.x;
 	}
 	else
 	{
-		if (ray.y < 0)
-			dist = (map.y - pos.y + 1) / ray.y;
+		if (ray->ray.y < 0)
+			ray->dist = (map.y - pos.y + 1) / ray->ray.y;
 		else
-			dist = (map.y - pos.y) / ray.y;
+			ray->dist = (map.y - pos.y) / ray->ray.y;
 	}
-	return (dist);
+	return (ray->dist);
 }
 
-double			check_collision(t_vec ray, t_game game, int *info)
+double			check_collision(t_ray *ray, t_vec pos, t_world world, int obj)
 {
 	t_vec		s_dist;
 	t_vec		d_dist;
 	t_vec		map;
 	t_vec		step;
 
-	d_dist = get_d_dist(ray, &step);
-	s_dist = get_s_dist(ray, game.player.pos, d_dist, &map);
-	while (1)
+	d_dist = get_d_dist(ray->ray, &step);
+	s_dist = get_s_dist(ray->ray, pos, d_dist, &map);
+	while (map.x < world.rows && map.x >= 0 && map.y < world.cols && map.y >= 0)
 	{
 		if (s_dist.x < s_dist.y)
 		{
 			map.x += step.x;
-			*info |= (0xFFFF << 16);
+			ray->info |= (0xFFFF << 16);
 			s_dist.x += d_dist.x;
 		}
 		else
 		{
 			map.y += step.y;
-			*info &= ~(0xFFFF << 16);
+			ray->info &= ~(0xFFFF << 16);
 			s_dist.y += d_dist.y;
 		}
-		if (game.world.map_data[game.world.rows
-				* (int)map.y + (int)map.x] == 1)
-			break ;
+		if (world.map_data[world.rows * (int)map.y + (int)map.x] == obj)
+			return (get_perp_dist(map, pos, ray));
 	}
-	return (get_perp_dist(map, game.player.pos, ray, info));
+	return (0);
 }

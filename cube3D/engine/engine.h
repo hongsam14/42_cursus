@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/26 22:42:29 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/27 16:49:18 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ typedef struct	s_img
 	int			bpp;
 	int			endian;
 }				t_img;
+
+typedef struct	s_ray
+{
+	t_vec		ray;
+	double		dist;
+	int			info;
+}				t_ray;
 
 typedef struct	s_tex
 {
@@ -86,15 +93,13 @@ void			move_player_fb(t_player *player, int dir, double speed);
 void			move_player_lr(t_player *player, int dir, double speed);
 void			turn_player_lr(t_player *player, int dir, double speed);
 
-double			check_collision(t_vec ray, t_game game, int *info);
+double			check_collision(t_ray *ray, t_vec pos, t_world world, int obj);
 
-void			draw_wall(t_game *game, t_vec ray, int r_index);
+int				raycasting(t_game *game);
 
-void			raycasting(t_game *game);
+int				draw_wall(t_game *game, t_ray *ray, int r_index);
+void			draw_sky_ground(t_window *window, int sky, int ground);
 
 void			collider(t_game *game);
-
-void			draw_sky_ground(t_window *window, int sky, int ground);
-void			draw_col(t_window *window, double dist, int r_index, int hor);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/26 22:42:20 by suhong           ###   ########.fr       */
+/*   Updated: 2021/02/27 16:38:45 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int		main_loop(t_game *game)
 	get_control_info(game);
 	collider(game);
 	draw_sky_ground(&game->window, 0xA1CAE2, 0xC2B092);
-	raycasting(game);
+	if (raycasting(game) == 0)
+		destroy_window(&game->window);
 	update_window(&game->window);
 	return (0);
 }
@@ -54,8 +55,8 @@ int		main(void)
 	t_game	game;
 	int	map[] = {1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1};
 	
-	game.window.screen_w = 1024;
-	game.window.screen_h = 720;
+	game.window.screen_w = 1920;
+	game.window.screen_h = 1080;
 	game.player.dir.x = 0;
 	game.player.dir.y = 1;
 	game.player.pos.x = 2.5;
@@ -72,10 +73,10 @@ int		main(void)
 
 	init_game(&game);
 
-	load_texture(&game.window, &game.world.wall_tex[0], "wood.xpm");
-	load_texture(&game.window, &game.world.wall_tex[1], "wood.xpm");
-	load_texture(&game.window, &game.world.wall_tex[2], "wood.xpm");
-	load_texture(&game.window, &game.world.wall_tex[3], "wood.xpm");
+	load_texture(&game.window, &game.world.wall_tex[0], "texture/wood.xpm");
+	load_texture(&game.window, &game.world.wall_tex[1], "texture/redbrick.xpm");
+	load_texture(&game.window, &game.world.wall_tex[2], "texture/greystone.xpm");
+	load_texture(&game.window, &game.world.wall_tex[3], "texture/colorstone.xpm");
 
 	mlx_hook(game.window.mlx.window, X_EVENT_KEY_PRESS, 1L<<0, &key_press, &game.control);
 	mlx_hook(game.window.mlx.window, X_EVENT_KEY_RELEASE, 1L<<1, &key_release, &game.control);
