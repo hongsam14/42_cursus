@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 14:03:31 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/27 17:11:52 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/03 20:51:22 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int				draw_wall(t_game *game, t_ray *ray, int r_index)
 	int			index_w;
 	t_tex		*tex;
 
-	ray->dist = check_collision(ray, game->player.pos, game->world, 1);
+	ray->dist = wall_collision(ray, game->player.pos, game->world, 1);
 	if (!ray->dist)
 		return (ERROR_W_COLLISION);
 	length = (int)game->window.screen_h / ray->dist;
