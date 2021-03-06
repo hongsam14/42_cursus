@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 19:25:55 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/03 18:11:06 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/06 16:06:30 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@
 
 # define OK					0x00000001
 
-# define ERROR_W_COLLISION	0xFF000000
-# define ERROR_W_TEXTURE	0xF0F00000
-# define ERROR_S_COLLISION	0xF00F0000
+# define ERROR_INIT_GAME	0xF1000000
+# define ERROR_INIT_SIGHT	0xF2000000
+# define ERROR_W_COLLISION	0xF0100000
+# define ERROR_W_TEXTURE	0xF0200000
+# define ERROR_S_CHECK_POOL	0xF0010000
 
 typedef struct	s_vec
 {

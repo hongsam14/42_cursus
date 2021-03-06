@@ -6,19 +6,24 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/27 16:38:45 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/06 16:04:26 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine/engine.h"
 #include <stdio.h>
 
-int		init_game(t_game *game)
+int		init_engine(t_game *game)
 {
-	init_window(&game->window);
-	init_img(&game->window);
+	int	debug;
+
+	debug = 1;
+	debug *= init_window(&game->window);
+	debug *= init_img(&game->window);
 	init_control(&game->control);
-	return (0);
+	if (!debug)
+		return (ft_debug(ERROR_INIT_GAME));
+	return (ft_debug(OK));
 }
 
 void	get_control_info(t_game *game)
@@ -44,7 +49,7 @@ int		main_loop(t_game *game)
 	get_control_info(game);
 	collider(game);
 	draw_sky_ground(&game->window, 0xA1CAE2, 0xC2B092);
-	if (raycasting(game) == 0)
+	if (!raycasting(game))
 		destroy_window(&game->window);
 	update_window(&game->window);
 	return (0);
@@ -65,13 +70,16 @@ int		main(void)
 	game.player.plane.y = 0;
 	game.player.old_pos.x = 0;
 	game.player.old_pos.y = 0;
-	game.world.rows = 5;
-	game.world.cols = 5;
+	game.world.w = 5;
+	game.world.h = 5;
 
 	game.world.map_data = (int *)malloc(sizeof(int) * 25);
-	ft_memcpy(game.world.map_data, map, sizeof(int) * game.world.rows * game.world.cols);
+	ft_memcpy(game.world.map_data, map, sizeof(int) * game.world.w * game.world.h);
 
-	init_game(&game);
+	if (!init_engine(&game))
+		destroy_window(&game.window);
+	if (!init_sight(&game))
+		destroy_window(&game.window);
 
 	load_texture(&game.window, &game.world.wall_tex[0], "texture/wood.xpm");
 	load_texture(&game.window, &game.world.wall_tex[1], "texture/redbrick.xpm");

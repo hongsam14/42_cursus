@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 21:46:02 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/03 19:56:48 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/06 14:33:28 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static double	get_perp_dist(t_vec map, t_vec pos, t_ray *ray)
 	return (ray->dist);
 }
 
-double			wall_collision(t_ray *ray, t_vec pos, t_world world, int obj)
+double			wall_collision(t_ray *ray, t_vec pos, t_world world)
 {
 	t_vec		s_dist;
 	t_vec		d_dist;
@@ -58,10 +58,10 @@ double			wall_collision(t_ray *ray, t_vec pos, t_world world, int obj)
 
 	d_dist = get_delta_dist(ray->ray);
 	s_dist = get_side_dist(ray->ray, pos, d_dist, &map);
-	while (map.x < world.rows && map.x >= 0 && map.y < world.cols && map.y >= 0)
+	while (map.x < world.w && map.x >= 0 && map.y < world.h && map.y >= 0)
 	{
 		move_by_dda(&map, &s_dist, d_dist, ray);
-		if (world.map_data[world.rows * (int)map.y + (int)map.x] == obj)
+		if (world.map_data[world.w * (int)map.y + (int)map.x] == 1)
 			return (get_perp_dist(map, pos, ray));
 	}
 	return (0);

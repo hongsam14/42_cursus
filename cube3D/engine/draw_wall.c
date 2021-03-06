@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 14:03:31 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/03 20:51:22 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/06 16:03:21 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ int				draw_wall(t_game *game, t_ray *ray, int r_index)
 	int			index_w;
 	t_tex		*tex;
 
-	ray->dist = wall_collision(ray, game->player.pos, game->world, 1);
+	ray->dist = wall_collision(ray, game->player.pos, game->world);
 	if (!ray->dist)
-		return (ERROR_W_COLLISION);
+		return (ft_debug(ERROR_W_COLLISION));
 	length = (int)game->window.screen_h / ray->dist;
 	get_draw_point(&draw_start, &draw_end, game->window.screen_h, length);
 	tex = select_wall_tex(&game->world, ray->info);
 	if (!tex)
-		return (ERROR_W_TEXTURE);
+		return (ft_debug(ERROR_W_TEXTURE));
 	index_w = get_tex_index_w(*ray, game->player.pos, tex);
 	while (draw_start <= draw_end)
 	{
@@ -87,5 +87,5 @@ int				draw_wall(t_game *game, t_ray *ray, int r_index)
 			* get_tex_index_h(length, draw_start, game->window, tex) + index_w];
 		draw_start++;
 	}
-	return (OK);
+	return (ft_debug(OK));
 }

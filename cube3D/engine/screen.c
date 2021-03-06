@@ -6,15 +6,15 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:33:21 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/03 19:59:26 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/06 18:08:48 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-void		draw_sky_ground(t_window *window, int sky, int ground)
+void			draw_sky_ground(t_window *window, int sky, int ground)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	while (i < window->screen_w * window->screen_h)
@@ -27,27 +27,51 @@ void		draw_sky_ground(t_window *window, int sky, int ground)
 	}
 }
 
-int			raycasting(t_game *game)
+int				init_sight(t_game *game)
 {
-	t_ray	*ray;
-	int		debug;
-	int		i;
-	double	screen_x;
+	int			i;
 
 	i = 0;
-	debug = 1;
-	ray = (t_ray *)malloc(sizeof(t_ray) * game->window.screen_w);
-	if (!ray)
-		debug *= 0;
-	while (i < game->window.screen_w && debug)
+	game->sight.ray = (t_ray *)malloc(sizeof(t_ray) * game->window.screen_w);
+	if (!game->sight.ray)
+		return (ft_debug(ERROR_INIT_SIGHT));
+	game->sight.pool = (int **)malloc(sizeof(int *) * game->world.h);
+	if (!game->sight.pool)
+		return (ft_debug(ERROR_INIT_SIGHT));
+	while (i < game->world.h)
 	{
-		ray[i].info = 0;
-		screen_x = 2 * i / (double)game->window.screen_w - 1;
-		ray[i].ray = multiply_s_vector(game->player.plane, screen_x);
-		ray[i].ray = add_vector(game->player.dir, ray[i].ray);
-		debug *= ft_debug(draw_wall(game, &ray[i], i));
+		game->sight.pool[i] = (int *)malloc(sizeof(int) * game->world.w);
+		if (!game->sight.pool[i])
+			return (ft_debug(ERROR_INIT_SIGHT));
 		i++;
 	}
-	free(ray);
+	return (ft_debug(OK));
+}
+
+int				raycasting(t_game *game)
+{
+	int			debug;
+	int			i;
+	double		screen_x;
+	t_sprite	*list;
+
+	i = 0;
+	list = 0;
+	debug = 1;
+	init_pool(game->sight.pool, game->world);
+	while (i < game->window.screen_w && debug)
+	{
+		game->sight.ray[i].info = 0;
+		screen_x = 2 * i / (double)game->window.screen_w - 1;
+		game->sight.ray[i].ray = multiply_s_vector(game->player.plane
+				, screen_x);
+		game->sight.ray[i].ray = add_vector(game->player.dir
+				, game->sight.ray[i].ray);
+		debug *= draw_wall(game, &game->sight.ray[i], i);
+		update_pool(game->sight.pool, &game->sight.ray[i]
+				, game->player.pos, game->world);
+		i++;
+	}
+	debug *= check_pool(game->sight.pool, game->player.pos, game->world, list);
 	return (debug);
 }

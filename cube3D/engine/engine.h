@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/03 20:51:17 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/06 18:06:26 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,20 @@ typedef struct		s_sprite
 	struct s_sprite	*next;
 }					t_sprite;
 
+typedef struct		s_sight
+{
+	t_ray			*ray;
+	int				**pool;
+	int				sprite_count;
+}					t_sight;
+
 typedef struct		s_world
 {
-	int				rows;
-	int				cols;
+	int				h;
+	int				w;
 	int				*map_data;
 	t_tex			wall_tex[4];
-	t_tex			sprite_tex;
+	t_tex			sprite;
 }					t_world;
 
 typedef struct		s_game
@@ -88,6 +95,7 @@ typedef struct		s_game
 	t_player		player;
 	t_world			world;
 	t_control		control;
+	t_sight			sight;
 }					t_game;
 
 int					init_window(t_window *window);
@@ -107,11 +115,15 @@ t_vec				get_side_dist(t_vec ray, t_vec pos, t_vec d_dist
 void				move_by_dda(t_vec *map, t_vec *s_dist, t_vec d_dist
 		, t_ray *ray);
 
-double				wall_collision(t_ray *ray, t_vec pos, t_world world
-		, int obj);
-int					sprite_collision(t_ray *ray, t_vec pos, t_world world
+void				init_pool(int **pool, t_world world);
+void				update_pool(int **pool, t_ray *ray, t_vec pos
+		, t_world world);
+int					check_pool(int **pool, t_vec pos, t_world world
 		, t_sprite *list);
 
+double				wall_collision(t_ray *ray, t_vec pos, t_world world);
+
+int					init_sight(t_game *game);
 int					raycasting(t_game *game);
 
 int					draw_wall(t_game *game, t_ray *ray, int r_index);
