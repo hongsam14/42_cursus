@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/06 16:04:26 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/09 19:15:32 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ int		main_loop(t_game *game)
 int		main(void)
 {
 	t_game	game;
-	int	map[] = {1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1};
+	int	map[] = {1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 2, 0, 1, 1, 0, 2, 0, 1, 1, 1, 1, 1, 1};
 	
-	game.window.screen_w = 1920;
-	game.window.screen_h = 1080;
+	game.window.screen_w = 1024;
+	game.window.screen_h = 768;
 	game.player.dir.x = 0;
 	game.player.dir.y = 1;
 	game.player.pos.x = 2.5;
@@ -85,6 +85,7 @@ int		main(void)
 	load_texture(&game.window, &game.world.wall_tex[1], "texture/redbrick.xpm");
 	load_texture(&game.window, &game.world.wall_tex[2], "texture/greystone.xpm");
 	load_texture(&game.window, &game.world.wall_tex[3], "texture/colorstone.xpm");
+	load_texture(&game.window, &game.world.sprite, "texture/colorstone.xpm");
 
 	mlx_hook(game.window.mlx.window, X_EVENT_KEY_PRESS, 1L<<0, &key_press, &game.control);
 	mlx_hook(game.window.mlx.window, X_EVENT_KEY_RELEASE, 1L<<1, &key_release, &game.control);

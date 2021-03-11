@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 15:09:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/06 14:32:06 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/10 01:34:12 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,5 @@ void		move_by_dda(t_vec *map, t_vec *s_dist, t_vec d_dist, t_ray *ray)
 		ray->info &= ~(0xFFFF << 16);
 		s_dist->y += d_dist.y;
 	}
+
 }

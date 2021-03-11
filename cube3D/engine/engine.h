@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/06 18:06:26 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/10 04:44:37 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,10 @@ void				init_pool(int **pool, t_world world);
 void				update_pool(int **pool, t_ray *ray, t_vec pos
 		, t_world world);
 int					check_pool(int **pool, t_vec pos, t_world world
-		, t_sprite *list);
+		, t_sprite **list);
+
+void				destroy_list(t_sprite **list);
+void				draw_sprites(t_sprite **list, t_ray *ray, t_game *game);
 
 double				wall_collision(t_ray *ray, t_vec pos, t_world world);
 
