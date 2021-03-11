@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:33:21 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/11 01:28:39 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/11 17:57:27 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int				raycasting(t_game *game)
 				, game->player.pos, game->world);
 		i++;
 	}
-	debug *= check_pool(game->sight.pool, game->player.pos, game->world, &list);
-	draw_sprites(&list, game->sight.ray, game);
+	debug *= check_pool(game->sight.pool, *game, &list);
+	draw_sprites(&list, game);
 	return (debug);
 }

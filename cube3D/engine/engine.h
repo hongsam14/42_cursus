@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/10 04:44:37 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/11 18:09:38 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct		s_player
 typedef struct		s_sprite
 {
 	t_vec			pos;
-	double			dist;
+	t_vec			trans;
 	struct s_sprite	*next;
 }					t_sprite;
 
@@ -118,11 +118,10 @@ void				move_by_dda(t_vec *map, t_vec *s_dist, t_vec d_dist
 void				init_pool(int **pool, t_world world);
 void				update_pool(int **pool, t_ray *ray, t_vec pos
 		, t_world world);
-int					check_pool(int **pool, t_vec pos, t_world world
-		, t_sprite **list);
 
-void				destroy_list(t_sprite **list);
-void				draw_sprites(t_sprite **list, t_ray *ray, t_game *game);
+int					check_pool(int **pool, t_game game, t_sprite **list);
+
+void				draw_sprites(t_sprite **list, t_game *game);
 
 double				wall_collision(t_ray *ray, t_vec pos, t_world world);
 

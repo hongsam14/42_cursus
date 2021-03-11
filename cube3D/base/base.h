@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 19:25:55 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/06 16:06:30 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/11 18:48:02 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,4 @@ t_vec			get_floor_vector(t_vec dest);
 double			get_vector_length(t_vec dest);
 
 int				ft_debug(int code);
-
-# endif
+#endif

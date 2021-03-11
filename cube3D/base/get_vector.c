@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 03:39:11 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/19 14:48:54 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/11 18:48:16 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_vec		get_vertical_vector(t_vec dest)
 
 	v_vec.x = dest.y;
 	v_vec.y = -dest.x;
-	return(v_vec);
+	return (v_vec);
 }
 
 t_vec		get_floor_vector(t_vec dest)
