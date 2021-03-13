@@ -6,13 +6,13 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:47:46 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/17 21:51:41 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/13 16:12:43 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-void		move_player_fb(t_player *player, int dir, double speed)
+static void	move_player_fb(t_player *player, int dir, double speed)
 {
 	t_vec	dir_vec;
 
@@ -20,7 +20,7 @@ void		move_player_fb(t_player *player, int dir, double speed)
 	player->pos = add_vector(player->pos, dir_vec);
 }
 
-void		move_player_lr(t_player *player, int dir, double speed)
+static void	move_player_lr(t_player *player, int dir, double speed)
 {
 	t_vec	plane_vec;
 
@@ -28,7 +28,7 @@ void		move_player_lr(t_player *player, int dir, double speed)
 	player->pos = add_vector(player->pos, plane_vec);
 }
 
-void		turn_player_lr(t_player *player, int dir, double speed)
+static void	turn_player_lr(t_player *player, int dir, double speed)
 {
 	t_vec	d_vec;
 	double	angle;
@@ -39,4 +39,22 @@ void		turn_player_lr(t_player *player, int dir, double speed)
 	player->dir.x = d_vec.x * cos(angle) - d_vec.y * sin(angle);
 	player->dir.y = d_vec.x * sin(angle) + d_vec.y * cos(angle);
 	player->plane = get_vertical_vector(player->dir);
+}
+
+void		control_player(t_game *game)
+{
+	if (game->control.movement & W_FLAG)
+		move_player_fb(&game->player, 1, 0.1);
+	if (game->control.movement & S_FLAG)
+		move_player_fb(&game->player, -1, 0.1);
+	if (game->control.movement & A_FLAG)
+		move_player_lr(&game->player, -1, 0.1);
+	if (game->control.movement & D_FLAG)
+		move_player_lr(&game->player, 1, 0.1);
+	if (game->control.rotation & L_FLAG)
+		turn_player_lr(&game->player, 1, 0.1);
+	if (game->control.rotation & R_FLAG)
+		turn_player_lr(&game->player, -1, 0.1);
+	if (game->control.exit & ESC_FLAG)
+		destroy_window(&game->window);
 }

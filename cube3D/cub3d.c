@@ -6,50 +6,17 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/11 20:13:49 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/13 17:42:47 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine/engine.h"
+#include "cub3d.h"
 #include <stdio.h>
-
-int		init_engine(t_game *game)
-{
-	int	debug;
-
-	debug = 1;
-	debug *= init_window(&game->window);
-	debug *= init_img(&game->window);
-	init_control(&game->control);
-	if (!debug)
-		return (ft_debug(ERROR_INIT_GAME));
-	return (ft_debug(OK));
-}
-
-void	get_control_info(t_game *game)
-{
-	if (game->control.movement & W_FLAG)
-		move_player_fb(&game->player, 1, 0.1);
-	if (game->control.movement & S_FLAG)
-		move_player_fb(&game->player, -1, 0.1);
-	if (game->control.movement & A_FLAG)
-		move_player_lr(&game->player, -1, 0.1);
-	if (game->control.movement & D_FLAG)
-		move_player_lr(&game->player, 1, 0.1);
-	if (game->control.rotation & L_FLAG)
-		turn_player_lr(&game->player, 1, 0.1);
-	if (game->control.rotation & R_FLAG)
-		turn_player_lr(&game->player, -1, 0.1);
-	if (game->control.exit & ESC_FLAG)
-		destroy_window(&game->window);
-}
 
 int		main_loop(t_game *game)
 {
-	get_control_info(game);
-	collider(game);
-	draw_sky_ground(&game->window, 0xA1CAE2, 0xC2B092);
-	if (!raycasting(game))
+	move_player(game);
+	if (!draw_scene(game))
 		destroy_window(&game->window);
 	update_window(&game->window);
 	return (0);
@@ -58,10 +25,19 @@ int		main_loop(t_game *game)
 int		main(void)
 {
 	t_game	game;
-	int	map[] = {1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 2, 0, 1, 1, 0, 2, 0, 1, 1, 1, 1, 1, 1};
-	
-	game.window.screen_w = 1024;
-	game.window.screen_h = 768;
+	int	map[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+		1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 2, 0, 0, 1, 0, 0, 1,
+		1, 0, 0, 2, 1, 1, 1, 1, 0, 0, 1,
+		1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+	};
+	game.window.screen_w = 800;
+	game.window.screen_h = 600;
 	game.player.dir.x = 0;
 	game.player.dir.y = 1;
 	game.player.pos.x = 2.5;
@@ -70,15 +46,15 @@ int		main(void)
 	game.player.plane.y = 0;
 	game.player.old_pos.x = 0;
 	game.player.old_pos.y = 0;
-	game.world.w = 5;
-	game.world.h = 5;
+	game.world.w = 11;
+	game.world.h = 10;
+	game.world.f = 0xA1CAE2;
+	game.world.c = 0xC2B092;
 
-	game.world.map_data = (int *)malloc(sizeof(int) * 25);
+	game.world.map_data = (int *)malloc(sizeof(int) * game.world.w * game.world.h);
 	ft_memcpy(game.world.map_data, map, sizeof(int) * game.world.w * game.world.h);
 
 	if (!init_engine(&game))
-		destroy_window(&game.window);
-	if (!init_sight(&game))
 		destroy_window(&game.window);
 
 	load_texture(&game.window, &game.world.wall_tex[0], "texture/wood.xpm");

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 19:25:55 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/11 18:48:02 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/13 17:17:03 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <math.h>
 
 # include "../mlx/mlx.h"
+# include "../mlx_beta/mlx_beta.h"
 # include "../libft/libft.h"
 
 # define OK					0x00000001

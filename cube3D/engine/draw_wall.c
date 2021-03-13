@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 14:03:31 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/11 20:47:18 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/13 13:47:32 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,9 @@ int				draw_wall(t_game *game, t_ray *ray, int r_index)
 	while (draw_start <= draw_end)
 	{
 		game->window.img.data[game->window.screen_w * draw_start + r_index] =
-			tex->img.data[tex->tex_w
-			* get_tex_index_h(length, draw_start, game->window, tex) + index_w];
+			get_color(tex->img.data[tex->tex_w
+			* get_tex_index_h(length, draw_start, game->window, tex) + index_w],
+			ray->dist, ray->info);
 		draw_start++;
 	}
 	return (ft_debug(OK));

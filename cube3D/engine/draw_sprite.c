@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 17:01:42 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/11 18:31:09 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/13 13:56:03 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ static t_vec	get_t_index(t_vec tran, t_game *game, t_vec start)
 	t_index.y = start.y - game->window.screen_h / 2 + width / 2;
 	t_index.x *= 1.0 * game->world.sprite.tex_w / width;
 	t_index.y *= 1.0 * game->world.sprite.tex_h / width;
+	if ((int)t_index.y >= game->world.sprite.tex_h)
+		t_index.y = game->world.sprite.tex_h - 1;
+	if ((int)t_index.x >= game->world.sprite.tex_w)
+		t_index.x = game->world.sprite.tex_w - 1;
 	return (t_index);
 }
 
@@ -77,8 +81,9 @@ static void		get_tex_data(t_game *game, t_vec s, t_vec i, t_sprite obj)
 	if (obj.trans.y < game->sight.ray[(int)s.x].dist)
 	{
 		color = t_data[(int)i.y * tex_w + (int)i.x];
-		if ((color & 0x00FFFFFF) != 0)
-			s_data[(int)s.y * screen_w + (int)s.x] = color;
+		if ((color & ~(0xFF << 24)) != 0)
+			s_data[(int)s.y * screen_w + (int)s.x] =
+				get_color(color, obj.trans.y, 0);
 	}
 }
 

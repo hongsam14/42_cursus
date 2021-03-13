@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/11 18:09:38 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/13 17:47:02 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ typedef struct		s_world
 	int				*map_data;
 	t_tex			wall_tex[4];
 	t_tex			sprite;
+	int				f;
+	int				c;
 }					t_world;
 
 typedef struct		s_game
@@ -105,9 +107,7 @@ void				update_window(t_window *window);
 
 int					load_texture(t_window *window, t_tex *tex, char *path);
 
-void				move_player_fb(t_player *player, int dir, double speed);
-void				move_player_lr(t_player *player, int dir, double speed);
-void				turn_player_lr(t_player *player, int dir, double speed);
+void				control_player(t_game *game);
 
 t_vec				get_delta_dist(t_vec ray);
 t_vec				get_side_dist(t_vec ray, t_vec pos, t_vec d_dist
@@ -124,6 +124,8 @@ int					check_pool(int **pool, t_game game, t_sprite **list);
 void				draw_sprites(t_sprite **list, t_game *game);
 
 double				wall_collision(t_ray *ray, t_vec pos, t_world world);
+
+int					get_color(int color, double dist, int info);
 
 int					init_sight(t_game *game);
 int					raycasting(t_game *game);

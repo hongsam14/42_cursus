@@ -35,11 +35,11 @@
 */
 
 
-#ifndef MLX_H
+#ifndef MLX_BETA_H
 
-#define	MLX_H
+#define	MLX_BETA_H
 
-
+#if 0
 void	*mlx_init();
 /*
 **  needed before everything else.
@@ -151,7 +151,7 @@ int	mlx_sync(int cmd, void *param);
 ** mlx_do_sync equals cmd_completed for all windows.
 ** cmd is one of the define, param will be img_ptr or win_ptr accordingly
 */
-
+#endif
 int	mlx_get_screen_size(void *mlx_ptr, int *sizex, int *sizey);
 
 #endif /* MLX_H */
