@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 21:46:02 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/06 14:33:28 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/16 21:33:44 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ double			wall_collision(t_ray *ray, t_vec pos, t_world world)
 	while (map.x < world.w && map.x >= 0 && map.y < world.h && map.y >= 0)
 	{
 		move_by_dda(&map, &s_dist, d_dist, ray);
-		if (world.map_data[world.w * (int)map.y + (int)map.x] == 1)
+		if (world.map_data[(int)map.y][(int)map.x] == '1')
 			return (get_perp_dist(map, pos, ray));
 	}
 	return (0);

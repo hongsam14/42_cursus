@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 16:07:29 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/06 16:07:47 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/16 19:55:24 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		ft_debug(int code)
 			perror("ray_cast_error:draw_wall.c : select_wall_tex");
 		if (code == (int)ERROR_S_CHECK_POOL)
 			perror("malloc_error:sprite_collision.c : check_pool");
+		if (code == (int)ERROR_OPEN_FILE)
+			perror("open_error:parce.c : open_cubfile");
 		return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/13 17:47:02 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/16 21:37:00 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct		s_world
 {
 	int				h;
 	int				w;
-	int				*map_data;
+	char			**map_data;
 	t_tex			wall_tex[4];
 	t_tex			sprite;
 	int				f;

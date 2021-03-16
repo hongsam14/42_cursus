@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/13 17:42:47 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/16 22:06:36 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,7 @@ int		main_loop(t_game *game)
 int		main(void)
 {
 	t_game	game;
-	int	map[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-		1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1,
-		1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1,
-		1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 1,
-		1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1,
-		1, 0, 0, 0, 2, 0, 0, 1, 0, 0, 1,
-		1, 0, 0, 2, 1, 1, 1, 1, 0, 0, 1,
-		1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 1,
-		1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-	};
+	
 	game.window.screen_w = 800;
 	game.window.screen_h = 600;
 	game.player.dir.x = 0;
@@ -51,9 +41,7 @@ int		main(void)
 	game.world.f = 0xA1CAE2;
 	game.world.c = 0xC2B092;
 
-	game.world.map_data = (int *)malloc(sizeof(int) * game.world.w * game.world.h);
-	ft_memcpy(game.world.map_data, map, sizeof(int) * game.world.w * game.world.h);
-
+	get_map(&game.world, "map.cub");
 	if (!init_engine(&game))
 		destroy_window(&game.window);
 
