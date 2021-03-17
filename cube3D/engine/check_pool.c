@@ -77,11 +77,11 @@ int				check_pool(int **pool, t_game game, t_sprite **lst)
 			if (pool[y][x] == 1)
 			{
 				if (!add_list(x, y, game.player, lst))
-					return (ft_debug(ERROR_S_CHECK_POOL));
+					return (ft_debug(ERROR_S_CHECK_POOL, &game.window));
 			}
 			x++;
 		}
 		y++;
 	}
-	return (ft_debug(OK));
+	return (ft_debug(OK, &game.window));
 }

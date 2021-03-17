@@ -6,11 +6,11 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:53:36 by suhong            #+#    #+#             */
-/*   Updated: 2021/02/27 13:41:43 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/17 18:24:56 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "engine.h"
+#include "base.h"
 
 int				load_texture(t_window *window, t_tex *tex, char *path)
 {

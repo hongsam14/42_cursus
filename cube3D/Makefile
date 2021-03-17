@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 14:18:18 by suhong            #+#    #+#              #
-#    Updated: 2021/03/16 22:07:47 by suhong           ###   ########.fr        #
+#    Updated: 2021/03/17 22:09:38 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,9 @@ MLXFLAG = -framework OpenGl -framework AppKit
 SRCS = ./base/debug.c \
 	   ./base/get_vector.c \
 	   ./base/vector.c \
+	   ./base/window.c \
+	   ./base/texture.c \
+	   ./base/color.c \
 	   ./get_next_line/get_next_line.c \
 	   ./get_next_line/get_next_line_utils.c \
 	   ./controler/controler.c \
@@ -41,10 +44,9 @@ SRCS = ./base/debug.c \
 	   ./engine/player.c \
 	   ./engine/screen.c \
 	   ./engine/sprite_collision.c \
-	   ./engine/texture.c \
 	   ./engine/wall_collision.c \
-	   ./engine/window.c \
-	   ./parse/parse.c \
+	   ./parse/read_world.c \
+	   ./parse/parse_util.c \
 	   ./engine.c \
 	   ./cub3d.c
 
@@ -53,10 +55,10 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT) $(LIBMLX) $(LIBMLXBETA)
-	${CC} ${MLXFLAG} -fsanitize=address -O1 ${LFLAG} ${OBJS} -o $@
+	${CC} ${MLXFLAG} ${LFLAG} ${OBJS} -fsanitize=address -O3 -o $@
 
 %.o : %.c
-	$(CC) $(CFLAG) -c $< -o $@
+	$(CC) -c $< -o $@
 
 fclean : clean
 	rm -f $(NAME)

@@ -34,32 +34,30 @@ int				init_sight(t_game *game)
 	i = 0;
 	game->sight.ray = (t_ray *)malloc(sizeof(t_ray) * game->window.screen_w);
 	if (!game->sight.ray)
-		return (ft_debug(ERROR_INIT_SIGHT));
+		return (ft_debug(ERROR_INIT_SIGHT, &game->window));
 	game->sight.pool = (int **)malloc(sizeof(int *) * game->world.h);
 	if (!game->sight.pool)
-		return (ft_debug(ERROR_INIT_SIGHT));
+		return (ft_debug(ERROR_INIT_SIGHT, &game->window));
 	while (i < game->world.h)
 	{
 		game->sight.pool[i] = (int *)malloc(sizeof(int) * game->world.w);
 		if (!game->sight.pool[i])
-			return (ft_debug(ERROR_INIT_SIGHT));
+			return (ft_debug(ERROR_INIT_SIGHT, &game->window));
 		i++;
 	}
-	return (ft_debug(OK));
+	return (ft_debug(OK, &game->window));
 }
 
-int				raycasting(t_game *game)
+void			raycasting(t_game *game)
 {
-	int			debug;
 	int			i;
 	double		screen_x;
 	t_sprite	*list;
 
 	i = 0;
 	list = 0;
-	debug = 1;
 	init_pool(game->sight.pool, game->world);
-	while (i < game->window.screen_w && debug)
+	while (i < game->window.screen_w)
 	{
 		game->sight.ray[i].info = 0;
 		screen_x = 2 * i / (double)game->window.screen_w - 1;
@@ -67,12 +65,11 @@ int				raycasting(t_game *game)
 				, screen_x);
 		game->sight.ray[i].ray = add_vector(game->player.dir
 				, game->sight.ray[i].ray);
-		debug *= draw_wall(game, &game->sight.ray[i], i);
+		draw_wall(game, &game->sight.ray[i], i);
 		update_pool(game->sight.pool, &game->sight.ray[i]
 				, game->player.pos, game->world);
 		i++;
 	}
-	debug *= check_pool(game->sight.pool, *game, &list);
+	check_pool(game->sight.pool, *game, &list);
 	draw_sprites(&list, game);
-	return (debug);
 }

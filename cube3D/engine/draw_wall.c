@@ -73,12 +73,12 @@ int				draw_wall(t_game *game, t_ray *ray, int r_index)
 
 	ray->dist = wall_collision(ray, game->player.pos, game->world);
 	if (!ray->dist)
-		return (ft_debug(ERROR_W_COLLISION));
+		return (ft_debug(ERROR_W_COLLISION, &game->window));
 	length = (int)game->window.screen_h / ray->dist;
 	get_draw_point(&draw_start, &draw_end, game->window.screen_h, length);
 	tex = select_wall_tex(&game->world, ray->info);
 	if (!tex)
-		return (ft_debug(ERROR_W_TEXTURE));
+		return (ft_debug(ERROR_W_TEXTURE, &game->window));
 	index_w = get_tex_index_w(*ray, game->player.pos, tex);
 	while (draw_start <= draw_end)
 	{
@@ -88,5 +88,5 @@ int				draw_wall(t_game *game, t_ray *ray, int r_index)
 			ray->dist, ray->info);
 		draw_start++;
 	}
-	return (ft_debug(OK));
+	return (ft_debug(OK, &game->window));
 }

@@ -12,7 +12,7 @@
 
 #include "base.h"
 
-int		ft_debug(int code)
+int		ft_debug(int code, t_window *window)
 {
 	if (code < 0)
 	{
@@ -26,9 +26,9 @@ int		ft_debug(int code)
 			perror("ray_cast_error:draw_wall.c : select_wall_tex");
 		if (code == (int)ERROR_S_CHECK_POOL)
 			perror("malloc_error:sprite_collision.c : check_pool");
-		if (code == (int)ERROR_OPEN_FILE)
-			perror("open_error:parce.c : open_cubfile");
-		return (0);
+		if (code == (int)ERROR_PARSING_FILE)
+			perror("open_error:parce.c : nonvalid mapfile");
+		return (destroy_window(window));
 	}
 	return (1);
 }
