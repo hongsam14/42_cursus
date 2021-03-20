@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/17 18:37:47 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/19 14:36:53 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,18 @@ typedef struct		s_sight
 	int				**pool;
 	int				sprite_count;
 }					t_sight;
-
+#if 0
+typedef struct	s_world
+{
+	int	h;
+	int	w;
+	char	**map_data;
+	t_tex	wall_tex[4];
+	t_tex	sprite;
+	int	f;
+	int	c;
+}		t_world;
+#endif
 typedef struct		s_game
 {
 	t_window		window;

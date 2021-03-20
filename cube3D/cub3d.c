@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/17 22:02:51 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/20 13:02:59 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		main_loop(t_game *game)
 int		main(void)
 {
 	t_game	game;
+	t_data	data;
 	
 	game.player.dir.x = 0;
 	game.player.dir.y = 1;
@@ -42,10 +43,15 @@ int		main(void)
 	
 	if (!get_map(&game.world, &game.window, "map.cub"))
 		ft_debug(ERROR_PARSING_FILE, &game.window);
-	if (!get_info(&game.world, &game.window, "set.cub"))
+	if (!get_info(&data, "set.cub"))
 		ft_debug(ERROR_PARSING_FILE, &game.window);
 
+	load_screen_size_data(&data, &game.window);
+	
 	init_engine(&game);
+	
+	load_text_from_data(&data, &game.world, &game.window);
+	load_color_data(&data, &game.world);
 
 	mlx_hook(game.window.mlx.window, X_EVENT_KEY_PRESS, 1L<<0, &key_press, &game.control);
 	mlx_hook(game.window.mlx.window, X_EVENT_KEY_RELEASE, 1L<<1, &key_release, &game.control);

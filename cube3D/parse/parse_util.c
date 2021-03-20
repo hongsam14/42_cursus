@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 18:08:43 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/17 21:24:13 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/19 20:58:35 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,46 @@ int		get_word(char *line, char ***content, int c)
 	while ((*content)[i])
 		i++;
 	return (i);
+}
+
+int		is_number(char *str)
+{
+	if (!str)
+		return (0);
+	while (*str != '\0')
+	{
+		if (!ft_strchr("0123456789", *str))
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+int		get_rgb(char *str, int *color)
+{
+	int	index;
+	int	tmp;
+	char	**rgb;
+
+	index = get_word(str, &rgb, ',');
+	*color = 0;
+	if (index != 3)
+		return (0);
+	while (index)
+	{
+		if (!is_number(rgb[--index]))
+			return (0);
+		tmp = ft_atoi(rgb[index]);
+		if (tmp < 0 || tmp > 255)
+			return (0);
+		if (index == 2)
+			*color |= tmp << 16;
+		if (index == 1)
+			*color |= tmp << 8;
+		if (index == 0)
+			*color |= tmp;
+		free(rgb[index]);
+	}
+	free(rgb);
+	return (1);
 }

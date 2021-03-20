@@ -1,6 +1,12 @@
-JO texture/wood.xpm
+NO texture/wood.xpm
 SO texture/redbrick.xpm
 WE texture/greystone.xpm
 EA texture/colorstone.xpm
 S texture/barrel.xpm
 R 1024 1020
+
+F 120,130,180
+
+
+
+C 213,211,123

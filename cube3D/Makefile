@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 14:18:18 by suhong            #+#    #+#              #
-#    Updated: 2021/03/17 22:09:38 by suhong           ###   ########.fr        #
+#    Updated: 2021/03/19 14:38:55 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRCS = ./base/debug.c \
 	   ./parse/read_world.c \
 	   ./parse/parse_util.c \
 	   ./engine.c \
+	   ./parse.c \
 	   ./cub3d.c
 
 OBJS = $(SRCS:.c=.o)

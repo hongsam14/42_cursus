@@ -6,72 +6,93 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 17:54:10 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/17 22:09:10 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/20 13:45:50 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-static int	check_s_f_c(char **word, t_world *world, t_window *win)
+static int	check_s_f_c(char **word, t_data *data)
 {
+	int	index;
+	int	color;
+
 	if (ft_strnstr(word[0], "S", 1))
-		return (load_texture(win, &world->sprite, word[1]));
-	else if (ft_strnstr(word[0], "F", 1))
 	{
-		printf("floor\n");
+		data->sprite_tex = ft_strdup(word[1]);
+		if (!data->sprite_tex)
+			return (0);
+		return (TEXTURE_SPRITE);
 	}
-	else if (ft_strnstr(word[0], "C", 1))
+	else if (get_rgb(word[1], &color))
 	{
-		printf("ceiling\n");
+		if (ft_strnstr(word[0], "F", 1))
+		{
+			data->f = color;
+			return (F_COLOR);
+		}
+		if (ft_strnstr(word[0], "C", 1))
+		{
+			data->c = color;
+			return (C_COLOR);
+		}
+		return (0);
 	}
 	else
 		return (0);
-	return (1);
 }
 
-static int	check_direction(char **word, t_world *world, t_window *win)
+static int	check_direction(char **word, t_data *data)
 {
-	if (ft_strnstr(word[0], "NO", 2))
-		return (load_texture(win, &world->wall_tex[0], word[1]));
-	else if (ft_strnstr(word[0], "SO", 2))
-		return (load_texture(win, &world->wall_tex[1], word[1]));
-	else if (ft_strnstr(word[0], "WE", 2))
-		return (load_texture(win, &world->wall_tex[3], word[1]));
-	else if (ft_strnstr(word[0], "EA", 2))
-		return (load_texture(win, &world->wall_tex[2], word[1]));
-	else
+	char	*tmp;
+
+	tmp = ft_strdup(word[1]);
+	if (!tmp)
 		return (0);
-	return (1);
+	if (ft_strnstr(word[0], "NO", 2))
+		data->wall_tex[0] = tmp;
+	else if (ft_strnstr(word[0], "SO", 2))
+		data->wall_tex[1] = tmp;
+	else if (ft_strnstr(word[0], "WE", 2))
+		data->wall_tex[3] = tmp;
+	else if (ft_strnstr(word[0], "EA", 2))
+		data->wall_tex[2] = tmp;
+	else
+	{
+		free(tmp);
+		return (0);
+	}
+	return (TEXTURE_WALL);
 }
 
-static int	check_screen_size(char **word, t_window *window)
+static int	check_screen_size(char **word, t_data *data)
 {
 	int		w;
 	int		h;
 	
 	if (ft_strnstr(word[0], "R", 1))
 	{
-		printf("screen\n");
+		if (!is_number(word[1]) || !is_number(word[2]))
+			return (0);
 		w = ft_atoi(word[1]);
 		h = ft_atoi(word[2]);
 		if (w <= 0 || h <= 0)
 			return (0);
-		window->screen_w = w;
-		window->screen_h = h;
+		data->screen_w = w;
+		data->screen_h = h;
 	}
 	else
 		return (0);
-	return (1);
+	return (SCREEN);
 }
 
-static int	read_word(char *line, t_world *world, t_window *win)
+static int	read_word(char *line, t_data *data)
 {
 	int		index;
 	int		debug;
 	size_t	len;
 	char	**word;
 
-	debug = 1;
 	index = get_word(line, &word, ' ');
 	if (!index)
 		return (0);
@@ -79,38 +100,46 @@ static int	read_word(char *line, t_world *world, t_window *win)
 	if (index == 2)
 	{
 		if (len == 1)
-			debug *= check_s_f_c(word, world, win);
+			debug = check_s_f_c(word, data);
 		else if (len == 2)
-			debug *= check_direction(word, world, win);
+			debug = check_direction(word, data);
 		else
-			debug *= 0;
+			debug = 0;
 	}
 	else if (index == 3 && len == 1)
-		debug *= check_screen_size(word, win);
+		debug = check_screen_size(word, data);
 	while (index > 0)
 		free(word[--index]);
 	free(word);
 	return (debug);
 }
 
-int			get_info(t_world *world, t_window *win, char *file)
+int			get_info(t_data *data, char *file)
 {
 	int		fd;
 	int		i;
 	char	*line;
+	int		debug;
+	int		out;
 
 	fd = open_cubfile(file);
 	if (fd < 0)
 		return (0);
 	line = 0;
+	out = 0;
 	while (skip_empty_lines(fd, &line))
 	{
-		if (!read_word(line, world, win))
+		debug = read_word(line, data);
+		if (!debug)
 			return (0);
+		out |= debug;
 		free(line);
 		line = 0;
+		if (out & SCREEN && out & F_COLOR && out & C_COLOR
+				&& out & TEXTURE_WALL && out & TEXTURE_SPRITE)
+			break ;
 	}
-	free(line);
+	//free(line);
 	close(fd);
 	return (1);
 }
@@ -129,8 +158,7 @@ int			get_map(t_world *world, t_window *win, char *file)
 	world->map_data = (char **)malloc(sizeof(char *) * world->h);
 	while (skip_empty_lines(fd, &line))
 	{
-		world->map_data[i] = (char *)malloc(sizeof(char) * world->w);
-		ft_memcpy(world->map_data[i], line, world->w);
+		world->map_data[i] = ft_strdup(line);
 		free(line);
 		line = 0;
 		i++;
