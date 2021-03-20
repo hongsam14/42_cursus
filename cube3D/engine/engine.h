@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/19 14:36:53 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/20 18:43:13 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,16 @@ typedef struct		s_sight
 	int				sprite_count;
 }					t_sight;
 #if 0
-typedef struct	s_world
+typedef struct		s_world
 {
-	int	h;
-	int	w;
-	char	**map_data;
-	t_tex	wall_tex[4];
-	t_tex	sprite;
-	int	f;
-	int	c;
-}		t_world;
+	int				h;
+	int				w;
+	char			**map_data;
+	t_tex			wall_tex[4];
+	t_tex			sprite;
+	int				f;
+	int				c;
+}					t_world;
 #endif
 typedef struct		s_game
 {
@@ -73,21 +73,18 @@ typedef struct		s_game
 
 void				control_player(t_game *game);
 
-t_vec				get_delta_dist(t_vec ray);
-t_vec				get_side_dist(t_vec ray, t_vec pos, t_vec d_dist
-		, t_vec *map);
-void				move_by_dda(t_vec *map, t_vec *s_dist, t_vec d_dist
-		, t_ray *ray);
+t_vec				get_delta_dst(t_vec ray);
+t_vec				get_side_dst(t_vec ray, t_vec pos, t_vec d_dst, t_vec *map);
+void				move_dda(t_vec *map, t_vec *s_dst, t_vec d_dst, t_ray *ray);
 
 void				init_pool(int **pool, t_world world);
-void				update_pool(int **pool, t_ray *ray, t_vec pos
-		, t_world world);
+void				update_pool(int x, int y, int **pool, t_world wld);
 
 int					check_pool(int **pool, t_game game, t_sprite **list);
 
 void				draw_sprites(t_sprite **list, t_game *game);
 
-double				wall_collision(t_ray *ray, t_vec pos, t_world world);
+double				collision(t_ray *ray, t_vec pos, t_world world, int **pool);
 
 int					get_color(int color, double dist, int info);
 

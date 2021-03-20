@@ -6,13 +6,13 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 15:09:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/11 14:29:33 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/20 14:23:10 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-t_vec		get_delta_dist(t_vec ray)
+t_vec		get_delta_dst(t_vec ray)
 {
 	t_vec	d_dist;
 
@@ -21,23 +21,23 @@ t_vec		get_delta_dist(t_vec ray)
 	return (d_dist);
 }
 
-t_vec		get_side_dist(t_vec ray, t_vec pos, t_vec d_dist, t_vec *map)
+t_vec		get_side_dst(t_vec ray, t_vec pos, t_vec d_dst, t_vec *map)
 {
-	t_vec	s_dist;
+	t_vec	s_dst;
 
 	*map = get_floor_vector(pos);
 	if (ray.x < 0)
-		s_dist.x = (pos.x - map->x) * d_dist.x;
+		s_dst.x = (pos.x - map->x) * d_dst.x;
 	else
-		s_dist.x = (map->x + 1 - pos.x) * d_dist.x;
+		s_dst.x = (map->x + 1 - pos.x) * d_dst.x;
 	if (ray.y < 0)
-		s_dist.y = (pos.y - map->y) * d_dist.y;
+		s_dst.y = (pos.y - map->y) * d_dst.y;
 	else
-		s_dist.y = (map->y + 1 - pos.y) * d_dist.y;
-	return (s_dist);
+		s_dst.y = (map->y + 1 - pos.y) * d_dst.y;
+	return (s_dst);
 }
 
-void		move_by_dda(t_vec *map, t_vec *s_dist, t_vec d_dist, t_ray *ray)
+void		move_dda(t_vec *map, t_vec *s_dst, t_vec d_dst, t_ray *ray)
 {
 	t_vec	step;
 
@@ -49,16 +49,16 @@ void		move_by_dda(t_vec *map, t_vec *s_dist, t_vec d_dist, t_ray *ray)
 		step.y = -1;
 	else
 		step.y = 1;
-	if (s_dist->x < s_dist->y)
+	if (s_dst->x < s_dst->y)
 	{
 		map->x += step.x;
 		ray->info |= (0xFFFF << 16);
-		s_dist->x += d_dist.x;
+		s_dst->x += d_dst.x;
 	}
 	else
 	{
 		map->y += step.y;
 		ray->info &= ~(0xFFFF << 16);
-		s_dist->y += d_dist.y;
+		s_dst->y += d_dst.y;
 	}
 }

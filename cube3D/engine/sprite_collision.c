@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 11:05:12 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/16 21:32:23 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/20 20:38:02 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,13 @@ void			init_pool(int **pool, t_world world)
 	}
 }
 
-void			update_pool(int **pool, t_ray *ray, t_vec pos, t_world world)
+void			update_pool(int x, int y, int **pool, t_world wld)
 {
-	t_vec		s_dist;
-	t_vec		d_dist;
-	t_vec		map;
-
-	d_dist = get_delta_dist(ray->ray);
-	s_dist = get_side_dist(ray->ray, pos, d_dist, &map);
-	while (world.map_data[(int)map.y][(int)map.x] != '1')
+	if (wld.map_data[y][x] == '2')
 	{
-		move_by_dda(&map, &s_dist, d_dist, ray);
-		if (world.map_data[(int)map.y][(int)map.x] == '2')
+		if (pool[y][x] == 0)
 		{
-			if (pool[(int)map.y][(int)map.x] == 0)
-			{
-				pool[(int)map.y][(int)map.x] = 1;
-			}
+			pool[y][x] = 1;
 		}
 	}
 }

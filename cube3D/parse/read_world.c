@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 17:54:10 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/20 13:45:50 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/20 22:09:41 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	check_s_f_c(char **word, t_data *data)
 {
-	int	index;
-	int	color;
+	int		index;
+	int		color;
 
 	if (ft_strnstr(word[0], "S", 1))
 	{
@@ -36,10 +36,8 @@ static int	check_s_f_c(char **word, t_data *data)
 			data->c = color;
 			return (C_COLOR);
 		}
-		return (0);
 	}
-	else
-		return (0);
+	return (0);
 }
 
 static int	check_direction(char **word, t_data *data)
@@ -69,10 +67,10 @@ static int	check_screen_size(char **word, t_data *data)
 {
 	int		w;
 	int		h;
-	
+
 	if (ft_strnstr(word[0], "R", 1))
 	{
-		if (!is_number(word[1]) || !is_number(word[2]))
+		if (!check_str(word[1], "0123456789") || !check_str(word[2], "0123456789"))
 			return (0);
 		w = ft_atoi(word[1]);
 		h = ft_atoi(word[2]);
@@ -122,8 +120,7 @@ int			get_info(t_data *data, char *file)
 	int		debug;
 	int		out;
 
-	fd = open_cubfile(file);
-	if (fd < 0)
+	if (!open_cubfile(file, &fd))
 		return (0);
 	line = 0;
 	out = 0;
@@ -140,6 +137,11 @@ int			get_info(t_data *data, char *file)
 			break ;
 	}
 	//free(line);
+
+	printf("map start\n");
+	if (!make_square_map(fd, &data->map_w, &data->map_h, &data->map))
+		return (0);
+	
 	close(fd);
 	return (1);
 }
@@ -150,8 +152,7 @@ int			get_map(t_world *world, t_window *win, char *file)
 	int		i;
 	char	*line;
 
-	fd = open_cubfile(file);
-	if (fd < 0)
+	if (!open_cubfile(file, &fd))
 		return (0);
 	line = 0;
 	i = 0;

@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 14:18:18 by suhong            #+#    #+#              #
-#    Updated: 2021/03/19 14:38:55 by suhong           ###   ########.fr        #
+#    Updated: 2021/03/20 19:56:55 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ LIBMLXBETA = libmlx_beta.dylib
 CC = gcc
 
 CFLAG = -Wall -Wextra -Werror
+
+MFLAG = -fsanitize=address -O1
 
 LFLAG = -L. -lft -lmlx -lmlx_beta
 
@@ -44,8 +46,9 @@ SRCS = ./base/debug.c \
 	   ./engine/player.c \
 	   ./engine/screen.c \
 	   ./engine/sprite_collision.c \
-	   ./engine/wall_collision.c \
+	   ./engine/collision.c \
 	   ./parse/read_world.c \
+	   ./parse/read_map.c \
 	   ./parse/parse_util.c \
 	   ./engine.c \
 	   ./parse.c \
@@ -56,7 +59,7 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT) $(LIBMLX) $(LIBMLXBETA)
-	${CC} ${MLXFLAG} ${LFLAG} ${OBJS} -fsanitize=address -O3 -o $@
+	${CC} ${MLXFLAG} ${LFLAG} ${OBJS} -o $@
 
 %.o : %.c
 	$(CC) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 22:33:21 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/13 16:42:23 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/20 18:44:18 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void			draw_sky_ground(t_window *window, int sky, int ground)
 	while (i < window->screen_w * window->screen_h)
 	{
 		if (i < window->screen_w * window->screen_h / 2)
-			window->img.data[i] = sky;
+			window->img.data[i] = (0x00000000 | sky);
 		else
-			window->img.data[i] = ground;
+			window->img.data[i] = (0x00000000 | ground);
 		i++;
 	}
 }
@@ -65,9 +65,9 @@ void			raycasting(t_game *game)
 				, screen_x);
 		game->sight.ray[i].ray = add_vector(game->player.dir
 				, game->sight.ray[i].ray);
+		collision(&game->sight.ray[i], game->player.pos, game->world
+				, game->sight.pool);
 		draw_wall(game, &game->sight.ray[i], i);
-		update_pool(game->sight.pool, &game->sight.ray[i]
-				, game->player.pos, game->world);
 		i++;
 	}
 	check_pool(game->sight.pool, *game, &list);

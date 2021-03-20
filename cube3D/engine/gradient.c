@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 11:08:51 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/16 15:48:58 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/20 18:46:10 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int					get_color(int color, double dist, int info)
 		b = b >> 1;
 	}
 	out |= (r << 16) | (g << 8) | b;
-	return (out);
+	return (out & ~(0xFF << 24));
 	if (dist)
 		return (out);
 }

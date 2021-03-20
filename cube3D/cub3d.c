@@ -6,14 +6,30 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/20 13:02:59 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/20 20:06:50 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include <stdio.h>
 
-int		main_loop(t_game *game)
+void		init_game(t_game *game, t_data *data, char *dir, char *dir_2)
+{
+	int		debug;
+
+	debug = 1;
+	init_game_struct(game);
+	debug *= get_map(&game->world, &game->window, dir);
+	debug *= get_info(data, dir_2);
+	debug *= load_screen_size_data(data, &game->window);
+	debug *= init_engine(game);
+	debug *= load_text_from_data(data, &game->world, &game->window);
+	debug *= load_color_data(data, &game->world);
+	if (!debug)
+		ft_debug(ERROR_PARSING_FILE, &game->window);
+}
+
+int			main_loop(t_game *game)
 {
 	move_player(game);
 	draw_scene(game);
@@ -21,7 +37,7 @@ int		main_loop(t_game *game)
 	return (0);
 }
 
-int		main(void)
+int			main(void)
 {
 	t_game	game;
 	t_data	data;
@@ -36,23 +52,9 @@ int		main(void)
 	game.player.old_pos.y = 0;
 	game.world.w = 11;
 	game.world.h = 10;
-	game.world.f = 0xA1CAE2;
-	game.world.c = 0xC2B092;
 
-	init_game_struct(&game);
+	init_game(&game, &data, "map.cub", "set.cub");
 	
-	if (!get_map(&game.world, &game.window, "map.cub"))
-		ft_debug(ERROR_PARSING_FILE, &game.window);
-	if (!get_info(&data, "set.cub"))
-		ft_debug(ERROR_PARSING_FILE, &game.window);
-
-	load_screen_size_data(&data, &game.window);
-	
-	init_engine(&game);
-	
-	load_text_from_data(&data, &game.world, &game.window);
-	load_color_data(&data, &game.world);
-
 	mlx_hook(game.window.mlx.window, X_EVENT_KEY_PRESS, 1L<<0, &key_press, &game.control);
 	mlx_hook(game.window.mlx.window, X_EVENT_KEY_RELEASE, 1L<<1, &key_release, &game.control);
 	mlx_hook(game.window.mlx.window, X_EVENT_EXIT, 1L<<17, &destroy_window, &game.window);

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 17:01:42 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/13 13:56:03 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/20 19:05:24 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void		destroy_list(t_sprite **list)
 		free(*list);
 		*list = tmp;
 	}
+	*list = 0;
 }
 
 static void		get_index(t_vec tran, t_game *game, t_vec *start, t_vec *end)

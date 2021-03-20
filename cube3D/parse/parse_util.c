@@ -6,23 +6,23 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 18:08:43 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/19 20:58:35 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/20 21:31:09 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 
-int		open_cubfile(const char *file)
+int			open_cubfile(const char *file, int *fd)
 {
-	int	fd;
-
-	fd = open(file, O_RDONLY);
-	return (fd);
+	*fd = open(file, O_RDONLY);
+	if (*fd < 0)
+		return (0);
+	return (1);
 }
 
-int		skip_empty_lines(int fd, char **line)
+int			skip_empty_lines(int fd, char **line)
 {
-	int	result;
+	int		result;
 
 	result = get_next_line(fd, line);
 	while (**line == '\0' && result > 0)
@@ -34,9 +34,9 @@ int		skip_empty_lines(int fd, char **line)
 	return (result);
 }
 
-int		get_word(char *line, char ***content, int c)
+int			get_word(char *line, char ***content, int c)
 {
-	int	i;
+	int		i;
 
 	*content = ft_split(line, c);
 	if (!*content)
@@ -47,23 +47,23 @@ int		get_word(char *line, char ***content, int c)
 	return (i);
 }
 
-int		is_number(char *str)
+int			check_str(char *str, char *base)
 {
 	if (!str)
 		return (0);
 	while (*str != '\0')
 	{
-		if (!ft_strchr("0123456789", *str))
+		if (!ft_strchr(base, *str))
 			return (0);
 		str++;
 	}
 	return (1);
 }
 
-int		get_rgb(char *str, int *color)
+int			get_rgb(char *str, int *color)
 {
-	int	index;
-	int	tmp;
+	int		index;
+	int		tmp;
 	char	**rgb;
 
 	index = get_word(str, &rgb, ',');
@@ -72,7 +72,7 @@ int		get_rgb(char *str, int *color)
 		return (0);
 	while (index)
 	{
-		if (!is_number(rgb[--index]))
+		if (!check_str(rgb[--index], "0123456789"))
 			return (0);
 		tmp = ft_atoi(rgb[index]);
 		if (tmp < 0 || tmp > 255)
