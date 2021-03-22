@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 15:02:35 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/21 13:26:37 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/22 19:18:02 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ static int		destroy_list(t_row **list)
 	return (1);
 }
 
-static int	init_row_data(char *str, t_row **add)
+static int		init_row_data(char *str, t_row **add)
 {
 	*add = (t_row *)malloc(sizeof(t_row));
 	if (!*add || !str)
 		return (0);
 	(*add)->w_size = ft_strlen(str);
+	if (!check_str(str, "012NSWE "))
+		return (0);
 	(*add)->content = ft_strdup(str);
 	if (!(*add)->content)
 		return (0);
@@ -49,13 +51,13 @@ static int		read_map(int fd, t_row **start)
 	t_row		*lst;
 
 	*start = 0;
-	if (skip_empty_lines(fd, &tmp) > 0 && tmp && check_str(tmp, "012NSWE "))
+	if (skip_empty_lines(fd, &tmp) > 0 && tmp)
 	{
 		if (!init_row_data(tmp, &add))
 			return (0);
 		lst = add;
 		*start = add;
-		while (get_next_line(fd, &tmp) > 0 && tmp && check_str(tmp, "012NSWE "))
+		while (get_next_line(fd, &tmp) > 0 && tmp)
 		{
 			if (!init_row_data(tmp, &add))
 				return (0);
@@ -63,8 +65,9 @@ static int		read_map(int fd, t_row **start)
 			lst = lst->next;
 		}
 		free(tmp);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 static int		get_size(t_row *lst, int *w, int *h)
@@ -96,22 +99,23 @@ int				make_square_map(int fd, int *w, int *h, char ***map)
 	int			y;
 
 	if (!read_map(fd, &lst) || !get_size(lst, w, h))
-			return (0);
+		return (ERROR_MAP);
 	*map = (char **)malloc(sizeof(char *) * *h + 1);
 	if (!*map)
-		return (0);
+		return (ERROR_MAP);
 	y = -1;
 	start = lst;
 	while (++y < *h)
 	{
 		(*map)[y] = ft_calloc(sizeof(char), *w + 1);
 		if (!(*map)[y])
-			return (0);
+			return (ERROR_MAP);
 		(*map)[y] = ft_memset((*map)[y], ' ', *w);
 		(*map)[y] = ft_memcpy((*map)[y], lst->content, lst->w_size);
 		lst = lst->next;
 		printf("%s\n", (*map)[y]);
 	}
 	(*map)[y] = 0;
+	close(fd);
 	return (destroy_list(&start));
 }

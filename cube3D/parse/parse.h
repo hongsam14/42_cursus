@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 17:42:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/20 22:17:50 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/22 21:53:15 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,11 @@
 # include "../base/base.h"
 # include <fcntl.h>
 
-# define SCREEN			1	
-# define F_COLOR		2
-# define C_COLOR		4
-# define TEXTURE_WALL	8
-# define TEXTURE_SPRITE	16
-
-#if 1
-typedef struct	s_world
-{
-	int				h;
-	int				w;
-	char			**map_data;
-	t_tex			wall_tex[4];
-	t_tex			sprite;
-	int				f;
-	int				c;
-}					t_world;
-#endif
+# define SCREEN			0X00000001
+# define F_COLOR		0X00000010
+# define C_COLOR		0X00000100
+# define TEXTURE_SPRITE	0X00001000
+# define TEXTURE_WALL	0X11110000
 
 typedef struct		s_row
 {
@@ -66,6 +53,6 @@ int					get_info(t_data *data, char *file);
 
 int					make_square_map(int fd, int *w, int *h, char ***map);
 
-int					get_map(t_world *world, t_window *win, char *file);
-
+char				*get_map_node(t_data *data, t_index pos);
+t_index				get_circle_index(t_index pos, int i);
 #endif

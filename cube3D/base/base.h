@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 19:25:55 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/17 21:19:18 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/22 19:16:19 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,60 +29,71 @@
 # define ERROR_W_COLLISION	0xF0100000
 # define ERROR_W_TEXTURE	0xF0200000
 # define ERROR_S_CHECK_POOL	0xF0010000
-# define ERROR_PARSING_FILE	0xF0001000
+# define ERROR_OPEN_FILE	0xF0001000
+# define ERROR_ELEMENT		0xF0000100
+# define ERROR_MAP			0xF0000200
+# define ERROR_LOAD_DATA	0xF0000300
 
-typedef struct	s_vec
+typedef struct		s_vec
 {
-	double		x;
-	double		y;
-}				t_vec;
+	double			x;
+	double			y;
+}					t_vec;
 
-typedef struct	s_mlx
+typedef struct		s_index
 {
-	void		*mlx_ptr;
-	void		*window;
-}				t_mlx;
+	int				x;
+	int				y;
+}					t_index;
 
-typedef struct	s_img
+typedef struct		s_mlx
 {
-	void		*img_ptr;
-	int			*data;
-	int			size_l;
-	int			bpp;
-	int			endian;
-}				t_img;
+	void			*mlx_ptr;
+	void			*window;
+}					t_mlx;
 
-typedef struct	s_tex
+typedef struct		s_img
 {
-	t_img		img;
-	int			tex_w;
-	int			tex_h;
-}				t_tex;
+	void			*img_ptr;
+	int				*data;
+	int				size_l;
+	int				bpp;
+	int				endian;
+}					t_img;
 
-typedef struct	s_window
+typedef struct		s_tex
 {
-	t_mlx		mlx;
-	t_img		img;
-	int			screen_w;
-	int			screen_h;
-}				t_window;
+	t_img			img;
+	int				tex_w;
+	int				tex_h;
+}					t_tex;
 
-int				init_window(t_window *window);
-int				init_img(t_window *window);
-int				destroy_window(t_window *window);
-void			update_window(t_window *window);
+typedef struct		s_window
+{
+	t_mlx			mlx;
+	t_img			img;
+	int				screen_w;
+	int				screen_h;
+}					t_window;
 
-int				load_texture(t_window *window, t_tex *tex, char *path);
+int					init_window(t_window *window);
+int					init_img(t_window *window);
+int					destroy_window(t_window *window);
+void				update_window(t_window *window);
 
-int				rgb_color(int r, int g, int b);
+int					load_texture(t_window *window, t_tex *tex, char *path);
 
-t_vec			add_vector(t_vec dest, t_vec src);
-t_vec			subtract_vector(t_vec dest, t_vec src);
-t_vec			multiply_s_vector(t_vec dest, double src);
+int					rgb_color(int r, int g, int b);
 
-t_vec			get_vertical_vector(t_vec dest);
-t_vec			get_floor_vector(t_vec dest);
-double			get_vector_length(t_vec dest);
+t_vec				add_vector(t_vec dest, t_vec src);
+t_vec				subtract_vector(t_vec dest, t_vec src);
+t_vec				multiply_s_vector(t_vec dest, double src);
+t_index				add_index(t_index dest, t_index src);
+t_index				subtract_index(t_index dest, t_index src);
 
-int				ft_debug(int code, t_window *window);
+t_vec				get_vertical_vector(t_vec dest);
+t_index				get_floor_vector(t_vec dest);
+double				get_vector_length(t_vec dest);
+
+int					ft_debug(int code, t_window *window);
 #endif

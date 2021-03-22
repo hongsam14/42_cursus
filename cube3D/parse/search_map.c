@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_vector.c                                       :+:      :+:    :+:   */
+/*   search_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/19 03:39:11 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/22 16:52:59 by suhong           ###   ########.fr       */
+/*   Created: 2021/03/22 16:34:13 by suhong            #+#    #+#             */
+/*   Updated: 2021/03/22 22:08:04 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "base.h"
+#include "parse.h"
 
-t_vec		get_vertical_vector(t_vec dest)
+int			search_map(t_data *data, t_index pos)
 {
-	t_vec	v_vec;
+	int		i;
+	char	*c;
+	t_index	search;
 
-	v_vec.x = dest.y;
-	v_vec.y = -dest.x;
-	return (v_vec);
-}
-
-t_index		get_floor_vector(t_vec dest)
-{
-	t_index	tmp;
-
-	tmp.x = (int)dest.x;
-	tmp.y = (int)dest.y;
-	return (tmp);
-}
-
-double		get_vector_length(t_vec dest)
-{
-	double	len;
-
-	len = sqrt(dest.x * dest.x + dest.y * dest.y);
-	return (len);
+	i = 0;
+	c = get_map_node(data, pos);
+	while (i < 8)
+	{
+		search = get_circle_index(pos, i);
+		c = get_map_node(data, search);
+		i++;
+	}
 }

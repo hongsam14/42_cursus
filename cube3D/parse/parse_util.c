@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 18:08:43 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/21 07:01:56 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/22 21:24:54 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int			get_word(char *line, char ***content, int c)
 int			check_str(char *str, char *base)
 {
 	if (!str)
+		return (0);
+	if (*str == '\0')
 		return (0);
 	while (*str != '\0')
 	{

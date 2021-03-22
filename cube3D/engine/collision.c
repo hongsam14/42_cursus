@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 21:46:02 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/20 18:57:07 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/22 16:57:28 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static void		get_collision_info(t_ray *ray)
 	else
 	{
 		if (ray->ray.y < 0)
-			ray->info |= INFO_NORTH;
-		else
 			ray->info |= INFO_SOUTH;
+		else
+			ray->info |= INFO_NORTH;
 	}
 }
 
-static double	get_perp_dist(t_vec map, t_vec pos, t_ray *ray)
+static double	get_perp_dist(t_index map, t_vec pos, t_ray *ray)
 {
 	get_collision_info(ray);
 	if (ray->info & (0xFFFF << 16))
@@ -54,16 +54,16 @@ double			collision(t_ray *ray, t_vec pos, t_world world, int **pool)
 {
 	t_vec		s_dist;
 	t_vec		d_dist;
-	t_vec		map;
+	t_index		map;
 
 	d_dist = get_delta_dst(ray->ray);
 	s_dist = get_side_dst(ray->ray, pos, d_dist, &map);
 	while (map.x < world.w && map.x >= 0 && map.y < world.h && map.y >= 0)
 	{
 		move_dda(&map, &s_dist, d_dist, ray);
-		if (world.map_data[(int)map.y][(int)map.x] == '1')
+		if (world.map_data[map.y][map.x] == '1')
 			return (get_perp_dist(map, pos, ray));
-		update_pool((int)map.x, (int)map.y, pool, world);
+		update_pool(map.x, map.y, pool, world);
 	}
 	return (0);
 }

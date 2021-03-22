@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_vector.c                                       :+:      :+:    :+:   */
+/*   search_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/19 03:39:11 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/22 16:52:59 by suhong           ###   ########.fr       */
+/*   Created: 2021/03/22 16:36:58 by suhong            #+#    #+#             */
+/*   Updated: 2021/03/22 21:49:14 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "base.h"
+#include "parse.h"
 
-t_vec		get_vertical_vector(t_vec dest)
+char		*get_map_node(t_data *data, t_index pos)
 {
-	t_vec	v_vec;
-
-	v_vec.x = dest.y;
-	v_vec.y = -dest.x;
-	return (v_vec);
+	char	*c;
+	
+	c = 0;
+	if (pos.y >= 0 && pos.y < data->map_h
+			&& pos.x >= 0  && pos.x < data->map_w)
+		c = &data->map[pos.y][pos.x];
+	return (c);
 }
 
-t_index		get_floor_vector(t_vec dest)
+t_index		get_circle_index(t_index pos, int i)
 {
-	t_index	tmp;
+	t_index	index;
 
-	tmp.x = (int)dest.x;
-	tmp.y = (int)dest.y;
-	return (tmp);
-}
-
-double		get_vector_length(t_vec dest)
-{
-	double	len;
-
-	len = sqrt(dest.x * dest.x + dest.y * dest.y);
-	return (len);
+	index.x = {-1, -1, 0, 1, 1, 1, 0, -1}[i];
+	index.y = {0, 1, 1, 1, 0, -1, -1, -1}[i];
+	return (add_index(pos, index));
 }

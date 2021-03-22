@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 15:09:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/20 14:23:10 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/22 16:55:03 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_vec		get_delta_dst(t_vec ray)
 	return (d_dist);
 }
 
-t_vec		get_side_dst(t_vec ray, t_vec pos, t_vec d_dst, t_vec *map)
+t_vec		get_side_dst(t_vec ray, t_vec pos, t_vec d_dst, t_index *map)
 {
 	t_vec	s_dst;
 
@@ -37,9 +37,9 @@ t_vec		get_side_dst(t_vec ray, t_vec pos, t_vec d_dst, t_vec *map)
 	return (s_dst);
 }
 
-void		move_dda(t_vec *map, t_vec *s_dst, t_vec d_dst, t_ray *ray)
+void		move_dda(t_index *map, t_vec *s_dst, t_vec d_dst, t_ray *ray)
 {
-	t_vec	step;
+	t_index	step;
 
 	if (ray->ray.x < 0)
 		step.x = -1;

@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 14:18:18 by suhong            #+#    #+#              #
-#    Updated: 2021/03/20 19:56:55 by suhong           ###   ########.fr        #
+#    Updated: 2021/03/22 20:58:48 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRCS = ./base/debug.c \
 	   ./parse/parse_util.c \
 	   ./engine.c \
 	   ./parse.c \
+	   ./load.c \
 	   ./cub3d.c
 
 OBJS = $(SRCS:.c=.o)
@@ -59,7 +60,7 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT) $(LIBMLX) $(LIBMLXBETA)
-	${CC} ${MLXFLAG} ${LFLAG} ${OBJS} -o $@
+	${CC} ${MLXFLAG} ${LFLAG} ${OBJS} $(MFLAG) -o $@
 
 %.o : %.c
 	$(CC) -c $< -o $@
