@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 18:08:43 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/20 21:31:09 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/21 07:01:56 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int			skip_empty_lines(int fd, char **line)
 		free(*line);
 		result = get_next_line(fd, line);
 	}
-	printf("%s\n", *line);
 	return (result);
 }
 

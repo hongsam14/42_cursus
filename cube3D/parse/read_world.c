@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 17:54:10 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/20 22:09:41 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/21 07:02:45 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ int			get_info(t_data *data, char *file)
 	}
 	//free(line);
 
-	printf("map start\n");
 	if (!make_square_map(fd, &data->map_w, &data->map_h, &data->map))
 		return (0);
 	

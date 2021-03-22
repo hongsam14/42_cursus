@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 15:02:35 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/20 22:55:29 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/21 13:26:37 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,51 +28,43 @@ static int		destroy_list(t_row **list)
 	return (1);
 }
 
-static t_row	*init_row_data(char *str)
+static int	init_row_data(char *str, t_row **add)
 {
-	t_row		*add;
-
-	add = (t_row *)malloc(sizeof(t_row));
-	if (!add || !str)
+	*add = (t_row *)malloc(sizeof(t_row));
+	if (!*add || !str)
 		return (0);
-	add->w_size = ft_strlen(str);
-	add->content = ft_strdup(str);
-	if (!add->content)
+	(*add)->w_size = ft_strlen(str);
+	(*add)->content = ft_strdup(str);
+	if (!(*add)->content)
 		return (0);
 	free(str);
-	add->next = 0;
-	return (add);
+	(*add)->next = 0;
+	return (1);
 }
 
-static t_row	*read_map(int fd)
+static int		read_map(int fd, t_row **start)
 {
 	char		*tmp;
 	t_row		*add;
 	t_row		*lst;
-	t_row		*start;
-	int			result;
 
-	lst = 0;
-	start = 0;
-	result = skip_empty_lines(fd, &tmp);
-	while (result > 0 && tmp && check_str(tmp, "012NSWE "))
+	*start = 0;
+	if (skip_empty_lines(fd, &tmp) > 0 && tmp && check_str(tmp, "012NSWE "))
 	{
-		add = init_row_data(tmp);
-		if (!add)
+		if (!init_row_data(tmp, &add))
 			return (0);
-		if (!lst)
+		lst = add;
+		*start = add;
+		while (get_next_line(fd, &tmp) > 0 && tmp && check_str(tmp, "012NSWE "))
 		{
-			lst = add;
-			start = lst;
-		}
-		else
-		{
+			if (!init_row_data(tmp, &add))
+				return (0);
 			lst->next = add;
 			lst = lst->next;
 		}
-		result = get_next_line(fd, &tmp);
+		free(tmp);
 	}
-	return (start);
+	return (1);
 }
 
 static int		get_size(t_row *lst, int *w, int *h)
@@ -103,8 +95,7 @@ int				make_square_map(int fd, int *w, int *h, char ***map)
 	t_row		*start;
 	int			y;
 
-	lst = read_map(fd);
-	if (!get_size(lst, w, h))
+	if (!read_map(fd, &lst) || !get_size(lst, w, h))
 			return (0);
 	*map = (char **)malloc(sizeof(char *) * *h + 1);
 	if (!*map)
