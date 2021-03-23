@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 21:46:02 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/22 16:57:28 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/23 19:41:59 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ double			collision(t_ray *ray, t_vec pos, t_world world, int **pool)
 	t_vec		d_dist;
 	t_index		map;
 
-	d_dist = get_delta_dst(ray->ray);
-	s_dist = get_side_dst(ray->ray, pos, d_dist, &map);
+	d_dist = get_d_dst(ray->ray);
+	s_dist = get_s_dst(ray->ray, pos, d_dist, &map);
 	while (map.x < world.w && map.x >= 0 && map.y < world.h && map.y >= 0)
 	{
-		move_dda(&map, &s_dist, d_dist, ray);
+		dda(&map, &s_dist, d_dist, ray);
 		if (world.map_data[map.y][map.x] == '1')
 			return (get_perp_dist(map, pos, ray));
 		update_pool(map.x, map.y, pool, world);

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/22 21:04:23 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/23 20:00:23 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,23 @@ int			main_loop(t_game *game)
 	return (0);
 }
 
-int			main(void)
+int			main(int argc, char *argv[])
 {
 	t_game	game;
 	t_data	data;
-	
-	game.player.dir.x = 0;
-	game.player.dir.y = 1;
-	game.player.pos.x = 8;
-	game.player.pos.y = 4;
-	game.player.plane.x = 1;
-	game.player.plane.y = 0;
-	game.player.old_pos.x = 0;
-	game.player.old_pos.y = 0;
 
-	init_game(&game, &data, "set.cub");
-	
-	mlx_hook(game.window.mlx.window, X_EVENT_KEY_PRESS, 1L<<0, &key_press, &game.control);
-	mlx_hook(game.window.mlx.window, X_EVENT_KEY_RELEASE, 1L<<1, &key_release, &game.control);
-	mlx_hook(game.window.mlx.window, X_EVENT_EXIT, 1L<<17, &destroy_window, &game.window);
-	mlx_loop_hook(game.window.mlx.mlx_ptr, &main_loop, &game);
-	mlx_loop(game.window.mlx.mlx_ptr);
+	if (argc > 1 && argc < 4)
+	{
+		init_game(&game, &data, argv[1]);
+		mlx_hook(game.window.mlx.window, X_EVENT_KEY_PRESS
+				, 1L << 0, &key_press, &game.control);
+		mlx_hook(game.window.mlx.window, X_EVENT_KEY_RELEASE
+				, 1L << 1, &key_release, &game.control);
+		mlx_hook(game.window.mlx.window, X_EVENT_EXIT
+				, 1L << 17, &destroy_window, &game.window);
+		mlx_loop_hook(game.window.mlx.mlx_ptr, &main_loop, &game);
+		mlx_loop(game.window.mlx.mlx_ptr);
+	}
+	printf("Error\nargument\n");
 	return (0);
 }

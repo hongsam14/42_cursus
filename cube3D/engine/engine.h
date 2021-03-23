@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/22 17:08:10 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/23 19:41:53 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ typedef struct		s_game
 
 void				control_player(t_game *game);
 
-t_vec				get_delta_dst(t_vec ray);
-t_vec				get_side_dst(t_vec ray, t_vec pos, t_vec d_dst, t_index *map);
-void				move_dda(t_index *map, t_vec *s_dst, t_vec d_dst, t_ray *ray);
+t_vec				get_d_dst(t_vec ray);
+t_vec				get_s_dst(t_vec ray, t_vec pos, t_vec d_dst, t_index *map);
+void				dda(t_index *map, t_vec *s_dst, t_vec d_dst, t_ray *ray);
 
 void				init_pool(int **pool, t_world world);
 void				update_pool(int x, int y, int **pool, t_world wld);

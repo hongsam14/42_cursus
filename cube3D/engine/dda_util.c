@@ -6,13 +6,13 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 15:09:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/22 16:55:03 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/23 19:42:11 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-t_vec		get_delta_dst(t_vec ray)
+t_vec		get_d_dst(t_vec ray)
 {
 	t_vec	d_dist;
 
@@ -21,7 +21,7 @@ t_vec		get_delta_dst(t_vec ray)
 	return (d_dist);
 }
 
-t_vec		get_side_dst(t_vec ray, t_vec pos, t_vec d_dst, t_index *map)
+t_vec		get_s_dst(t_vec ray, t_vec pos, t_vec d_dst, t_index *map)
 {
 	t_vec	s_dst;
 
@@ -37,7 +37,7 @@ t_vec		get_side_dst(t_vec ray, t_vec pos, t_vec d_dst, t_index *map)
 	return (s_dst);
 }
 
-void		move_dda(t_index *map, t_vec *s_dst, t_vec d_dst, t_ray *ray)
+void		dda(t_index *map, t_vec *s_dst, t_vec d_dst, t_ray *ray)
 {
 	t_index	step;
 

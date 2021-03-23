@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 17:42:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/22 21:53:15 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/23 18:47:31 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct		s_data
 	int				map_w;
 	int				map_h;
 	char			**map;
+	t_index			player_pos;
+	char			player_dir;
 }					t_data;
 
 int					open_cubfile(const char *file, int *fd);
@@ -55,4 +57,7 @@ int					make_square_map(int fd, int *w, int *h, char ***map);
 
 char				*get_map_node(t_data *data, t_index pos);
 t_index				get_circle_index(t_index pos, int i);
+
+int					judge_map(t_data *data);
+
 #endif

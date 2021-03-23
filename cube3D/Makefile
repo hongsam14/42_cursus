@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 14:18:18 by suhong            #+#    #+#              #
-#    Updated: 2021/03/22 20:58:48 by suhong           ###   ########.fr        #
+#    Updated: 2021/03/23 18:49:50 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,8 @@ SRCS = ./base/debug.c \
 	   ./parse/read_world.c \
 	   ./parse/read_map.c \
 	   ./parse/parse_util.c \
+	   ./parse/search_map.c \
+	   ./parse/search_util.c \
 	   ./engine.c \
 	   ./parse.c \
 	   ./load.c \

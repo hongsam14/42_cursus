@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 19:31:09 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/22 21:05:20 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/23 19:10:06 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,5 @@ void	init_data_struct(t_data *data)
 void	parse(t_data *data, t_window *window, char *file)
 {
 	ft_debug(get_info(data, file), window);
+	ft_debug(judge_map(data), window);
 }

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:47:46 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/13 16:12:43 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/23 19:33:23 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void		control_player(t_game *game)
 	if (game->control.movement & D_FLAG)
 		move_player_lr(&game->player, 1, 0.1);
 	if (game->control.rotation & L_FLAG)
-		turn_player_lr(&game->player, 1, 0.1);
-	if (game->control.rotation & R_FLAG)
 		turn_player_lr(&game->player, -1, 0.1);
+	if (game->control.rotation & R_FLAG)
+		turn_player_lr(&game->player, 1, 0.1);
 	if (game->control.exit & ESC_FLAG)
 		destroy_window(&game->window);
 }
