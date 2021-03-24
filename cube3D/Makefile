@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/16 14:18:18 by suhong            #+#    #+#              #
-#    Updated: 2021/03/23 18:49:50 by suhong           ###   ########.fr        #
+#    Updated: 2021/03/24 16:06:54 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRCS = ./base/debug.c \
 	   ./engine.c \
 	   ./parse.c \
 	   ./load.c \
+	   ./bmp.c \
 	   ./cub3d.c
 
 OBJS = $(SRCS:.c=.o)

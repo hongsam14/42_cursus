@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/23 20:00:23 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/24 17:34:27 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ int			main_loop(t_game *game)
 {
 	move_player(game);
 	draw_scene(game);
+	if (game->bmp)
+	{
+		printf("save\n");
+		destroy_window(&game->window);
+	}
 	update_window(&game->window);
 	return (0);
 }
@@ -35,18 +40,23 @@ int			main(int argc, char *argv[])
 	t_game	game;
 	t_data	data;
 
-	if (argc > 1 && argc < 4)
+	if (argc == 2 || (argc == 3 && !ft_strncmp(argv[2], "--save", 5)))
 	{
 		init_game(&game, &data, argv[1]);
-		mlx_hook(game.window.mlx.window, X_EVENT_KEY_PRESS
-				, 1L << 0, &key_press, &game.control);
-		mlx_hook(game.window.mlx.window, X_EVENT_KEY_RELEASE
-				, 1L << 1, &key_release, &game.control);
-		mlx_hook(game.window.mlx.window, X_EVENT_EXIT
-				, 1L << 17, &destroy_window, &game.window);
+		if (argc == 3)
+			game.bmp = 1;
+		else
+		{
+			mlx_hook(game.window.mlx.window, X_EVENT_KEY_PRESS
+					, 1L << 0, &key_press, &game.control);
+			mlx_hook(game.window.mlx.window, X_EVENT_KEY_RELEASE
+					, 1L << 1, &key_release, &game.control);
+			mlx_hook(game.window.mlx.window, X_EVENT_EXIT
+					, 1L << 17, &destroy_window, &game.window);
+		}
 		mlx_loop_hook(game.window.mlx.mlx_ptr, &main_loop, &game);
 		mlx_loop(game.window.mlx.mlx_ptr);
 	}
-	printf("Error\nargument\n");
+	printf("Error\nargument_error");
 	return (0);
 }

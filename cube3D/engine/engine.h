@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:13:52 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/23 19:41:53 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/24 14:37:30 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct		s_game
 	t_world			world;
 	t_control		control;
 	t_sight			sight;
+	int				bmp;
 }					t_game;
 
 void				control_player(t_game *game);

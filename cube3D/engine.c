@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:13:51 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/22 19:50:40 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/24 14:38:41 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_game_struct(t_game *game)
 	game->window.mlx.window = 0;
 	game->window.img.img_ptr = 0;
 	game->window.img.data = 0;
+	game->bmp = 0;
 }
 
 void	move_player(t_game *game)
