@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/24 17:34:27 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/28 01:09:03 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			main_loop(t_game *game)
 	draw_scene(game);
 	if (game->bmp)
 	{
-		printf("save\n");
+		save_bmp(game);
 		destroy_window(&game->window);
 	}
 	update_window(&game->window);

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 16:52:07 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/24 17:24:15 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/28 01:08:44 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ void	parse(t_data *data, t_window *window, char *file);
 void	load_world_init_data(t_data *data, t_game *game);
 void	load_data_2_world(t_data *data, t_game *game);
 
-void	write_little_endian(unsigned char *dest, int value);
+int	save_bmp(t_game *game);
 
 #endif
