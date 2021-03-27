@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/28 01:09:03 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/28 02:38:39 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ int			main(int argc, char *argv[])
 
 	if (argc == 2 || (argc == 3 && !ft_strncmp(argv[2], "--save", 5)))
 	{
-		init_game(&game, &data, argv[1]);
 		if (argc == 3)
 			game.bmp = 1;
 		else
+			game.bmp = 0;
+		init_game(&game, &data, argv[1]);
+		if (!game.bmp)
 		{
 			mlx_hook(game.window.mlx.window, X_EVENT_KEY_PRESS
 					, 1L << 0, &key_press, &game.control);

@@ -6,20 +6,25 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:48:56 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/13 17:38:24 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/28 02:28:35 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "base.h"
+
+int		init_mlx(t_window *window)
+{
+	window->mlx.mlx_ptr = mlx_init();
+	if (!window->mlx.mlx_ptr)
+		return (0);
+	return (1);
+}
 
 int		init_window(t_window *window)
 {
 	int	max_w;
 	int	max_h;
 
-	window->mlx.mlx_ptr = mlx_init();
-	if (!window->mlx.mlx_ptr)
-		return (0);
 	mlx_get_screen_size(window->mlx.mlx_ptr, &max_w, &max_h);
 	if (!max_w || !max_h)
 		return (0);

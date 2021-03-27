@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 19:25:55 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/24 15:33:49 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/28 02:19:28 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct		s_window
 	int				screen_h;
 }					t_window;
 
+int					init_mlx(t_window *window);
 int					init_window(t_window *window);
 int					init_img(t_window *window);
 int					destroy_window(t_window *window);
