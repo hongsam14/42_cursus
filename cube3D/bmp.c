@@ -12,10 +12,10 @@
 
 #include "cub3d.h"
 
-static void		write_little_endian(unsigned char *dest, int value)
+static void			write_little_endian(unsigned char *dest, int value)
 {
-	size_t		size;
-	int		i;
+	size_t			size;
+	int				i;
 
 	i = 0;
 	size = sizeof(int);
@@ -26,11 +26,11 @@ static void		write_little_endian(unsigned char *dest, int value)
 	}
 }
 
-static int		write_file_header(int fd, int file_size)
+static int			write_file_header(int fd, int file_size)
 {
 	unsigned char	tmp[14];
-	int		i;
-	
+	int				i;
+
 	i = 0;
 	while (i < 14)
 		tmp[i++] = (unsigned char)(0);
@@ -41,14 +41,14 @@ static int		write_file_header(int fd, int file_size)
 	return (write(fd, tmp, 14));
 }
 
-static int		write_info_header(int fd, int w, int h)
+static int			write_info_header(int fd, int w, int h)
 {
 	unsigned char	tmp[40];
-	int		i;
-	
+	int				i;
+
 	i = 0;
 	while (i < 40)
-		tmp[i++] = (unsigned char) 0;
+		tmp[i++] = (unsigned char)(0);
 	write_little_endian(&tmp[0], 40);
 	write_little_endian(&tmp[4], w);
 	write_little_endian(&tmp[8], h);
@@ -57,31 +57,24 @@ static int		write_info_header(int fd, int w, int h)
 	return (write(fd, tmp, 40));
 }
 
-static int		get_pixel_data(t_window win, int x, int y)
+static int			write_bmp_data(int fd, t_window win, int pad)
 {
-	int		color;
-	int		size_x;
-	int		size_y;
-
-	size_x = win.screen_w;
-	size_y = win.screen_h;
-	color = win.img.data[x + (size_y - 1 - y) * size_x];
-	return (color & 0xFFFFFF);
-}
-
-static int		write_bmp_data(int fd, t_window win, int pad)
-{
-	int		i;
-	int		j;
-	int		color;
+	int				i;
+	int				j;
+	int				size_x;
+	int				size_y;
+	int				color;
 
 	i = 0;
-	while (i < win.screen_h)
+	size_x = win.screen_w;
+	size_y = win.screen_h;
+	while (i < size_y)
 	{
 		j = 0;
-		while (j < win.screen_w)
+		while (j < size_x)
 		{
-			color = get_pixel_data(win, j, i);
+			color = win.img.data[j + (size_y - 1 - i) * size_x];
+			color &= 0xFFFFFF;
 			if (write(fd, &color, 3) < 0)
 				return (0);
 			j++;
@@ -93,14 +86,14 @@ static int		write_bmp_data(int fd, t_window win, int pad)
 	return (1);
 }
 
-int			save_bmp(t_game *game)
+int					save_bmp(t_game *game)
 {
-	int		fd;
-	int		pad;
-	int		size;
+	int				fd;
+	int				pad;
+	int				size;
 
 	pad = (4 - (game->window.screen_w * 3) % 4) % 4;
-	size = ((game->window.screen_w + pad) * 3 *  game->window.screen_h) + 54;
+	size = ((game->window.screen_w + pad) * 3 * game->window.screen_h) + 54;
 	fd = open("screenshot.bmp", O_WRONLY | O_CREAT);
 	if (fd < 0)
 		return (0);
