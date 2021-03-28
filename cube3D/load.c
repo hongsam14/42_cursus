@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 13:32:53 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/23 19:47:10 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/29 01:12:38 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ static int	load_map_data(t_data *data, t_world *world)
 	world->map_data = (char **)malloc(sizeof(char *) * data->map_h);
 	if (!world->map_data)
 		return (0);
+	printf("/////after search/////\n");
 	while (i < data->map_h)
 	{
 		world->map_data[i] = ft_strdup(data->map[i]);
+		printf("%s\n", world->map_data[i]);
 		if (!world->map_data[i])
 			return (0);
 		free(data->map[i]);
@@ -85,6 +87,16 @@ static void	load_player_data(t_data *data, t_player *player)
 
 void		load_world_init_data(t_data *data, t_game *game)
 {
+	int	max_w;
+	int	max_h;
+
+	mlx_get_screen_size(game->window.mlx.mlx_ptr, &max_w, &max_h);
+	if (!max_w || !max_h)
+		ft_debug(ERROR_LOAD_DATA, &game->window);
+	if (data->screen_w > max_w)
+		data->screen_w = max_w;
+	if (data->screen_h > max_h)
+		data->screen_h = max_h;
 	game->window.screen_w = data->screen_w;
 	game->window.screen_h = data->screen_h;
 	if (!load_map_data(data, &game->world))

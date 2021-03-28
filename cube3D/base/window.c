@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 07:48:56 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/28 02:28:35 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/29 00:56:42 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,6 @@ int		init_mlx(t_window *window)
 
 int		init_window(t_window *window)
 {
-	int	max_w;
-	int	max_h;
-
-	mlx_get_screen_size(window->mlx.mlx_ptr, &max_w, &max_h);
-	if (!max_w || !max_h)
-		return (0);
-	if (window->screen_w > max_w)
-		window->screen_w = max_w;
-	if (window->screen_h > max_h)
-		window->screen_h = max_h;
 	window->mlx.window = mlx_new_window(window->mlx.mlx_ptr,
 				window->screen_w, window->screen_h, "cub3d");
 	return (1);

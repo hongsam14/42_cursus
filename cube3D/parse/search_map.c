@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 16:34:13 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/23 18:50:32 by suhong           ###   ########.fr       */
+/*   Updated: 2021/03/29 01:27:34 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,24 @@ static int	search_player_pos(t_data *data)
 
 int			judge_map(t_data *data)
 {
+	t_index		idx;
+
+	idx.y = 0;
 	if (!search_player_pos(data))
 		return (ERROR_MAP);
 	if (!search_map(data, data->player_pos))
 		return (ERROR_MAP);
+	while (idx.y < data->map_h)
+	{
+		idx.x = 0;
+		while (idx.x < data->map_w)
+		{
+			if (data->map[idx.y][idx.x] == '0')
+				if (!search_map(data, idx))
+					return (ERROR_MAP);
+			idx.x++;
+		}
+		idx.y++;
+	}
 	return (1);
 }
