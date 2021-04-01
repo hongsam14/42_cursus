@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/13 17:54:10 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/22 21:19:04 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/01 17:53:45 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int				get_info(t_data *data, char *file)
 	while (skip_empty_lines(fd, &line))
 	{
 		debug = read_word(line, data);
-		if (!debug)
+		if (!debug || (out & debug) == debug)
 			return (ERROR_ELEMENT);
 		printf("%s\n", line);
 		out |= debug;
