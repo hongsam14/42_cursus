@@ -63,7 +63,7 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT) $(LIBMLX) $(LIBMLXBETA)
-	${CC} ${MLXFLAG} ${LFLAG} ${OBJS} $(MFLAG) -o $@
+	${CC} ${MLXFLAG} ${LFLAG} ${OBJS} -o $@
 
 %.o : %.c
 	$(CC) -c $< -o $@
