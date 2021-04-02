@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 18:22:48 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/28 02:38:39 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/02 11:11:01 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int			main(int argc, char *argv[])
 	t_game	game;
 	t_data	data;
 
-	if (argc == 2 || (argc == 3 && !ft_strncmp(argv[2], "--save", 5)))
+	if (argc == 2 || (argc == 3 && !ft_strncmp(argv[2], "--save", 6)
+				&& ft_strlen(argv[2]) == 6))
 	{
 		if (argc == 3)
 			game.bmp = 1;
