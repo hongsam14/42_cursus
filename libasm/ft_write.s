@@ -4,7 +4,6 @@ section .text
 _ft_write:
 	push	rbp
 	mov		rbp, rsp
-	sub		rsp, 20
 	mov		rax, 0x2000004
 	syscall
 	mov		rsp, rbp

@@ -6,10 +6,7 @@ size_t	ft_strlen(const char *s);
 
 int		main(void)
 {
-	int	i;
-	
 	ft_write(1, "helloworld\n", 11);
-	i = ft_strlen("helloworld");
-	printf("%d\n", i);
+	printf("%zu\n", ft_strlen("helloworld\n"));
 	return (0);
 }

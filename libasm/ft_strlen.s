@@ -4,18 +4,15 @@ section .text
 _ft_strlen:
 	push	rbp
 	mov		rbp, rsp
-	sub		rsp, 8
 	mov		rax, 0
 	jmp		comp
 
-comp:
-	cmp		BYTE[rdi + rax], 0
-	jne		plus
-	jmp		done
-
 plus:
 	inc		rax
-	jmp		comp
+
+comp:
+	cmp		byte [rdi + rax], 0
+	jne		plus
 
 done:
 	mov		rsp, rbp
