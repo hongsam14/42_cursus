@@ -3,28 +3,26 @@ section .text
 
 _ft_strcpy:
 	push	rbp
-	mov		rbp, rsp
-	mov		rdx, 0
-	lea		s1, rsp
-	jz		end
-	mov		rax, s1
-	mov		s2, qword [rsp + 8]
-	jnz		cpy
+	mov	rbp, rsp
+	;init rcx (count index) 0
+	mov	rcx, 0
+	;rdi : dest, rsi : src
+	;src null check
+	cmp	rsi, 0
+	jz	done
+	jmp	cpy
 
-end:
+plus:
+	inc	rcx
+
+cpy:
+	mov	dl, byte[rsi + rcx]
+	mov	byte [rdi + rcx], dl
+	cmp	dl, 0
+	jnz	plus
+
+done:
+	mov		rax, rdi
 	mov		rsp, rbp
 	pop		rbp
 	ret
-
-plus:
-	inc		rdx
-
-cpy:
-	mov rcx, byte [rbx + rdx]
-	jz		end
-	mov	byte [rax + rdx], rcx
-	jmp		plus
-
-section .bss
-	s1 resq 1
-	s2 resq 2
