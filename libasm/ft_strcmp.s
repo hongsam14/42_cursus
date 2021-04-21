@@ -20,7 +20,7 @@ comp:
 
 done:
 	sub	bl, bh
-	mov	al, bl
+	movsx	rax, bl
 	mov	rsp, rbp
 	pop	rbp
 	ret
