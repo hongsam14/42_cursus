@@ -4,23 +4,24 @@ section .text
 _ft_strcmp:
 	push	rbp
 	mov	rbp, rsp
-	;init count index
+	;init count index, return rax
 	mov	rcx, 0
 	;rdi : s1, rsi : s2
 	jmp	comp
 
 plus:
+	cmp	rax, 0
+	jz	done
 	inc	rcx
 
 comp:
-	mov	bl, byte [rdi + rcx]
-	mov	bh, byte [rsi + rcx]
-	cmp	bl, bh
+	movzx	rax, byte [rdi + rcx]
+	movzx	rbx, byte [rsi + rcx]
+	cmp	rax, rbx
 	je	plus
 
 done:
-	sub	bl, bh
-	movsx	rax, bl
+	sub	rax, rbx
 	mov	rsp, rbp
 	pop	rbp
 	ret

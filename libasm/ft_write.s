@@ -17,7 +17,7 @@ done:
 err:
 	push	rax
 	call	___error
-	pop	rbx
-	mov	[rax], rbx
+	pop	rdx
+	mov	[rax], rdx
 	mov	rax, -1
 	jmp	done
