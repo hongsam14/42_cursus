@@ -12,35 +12,49 @@ int	ft_strcmp(const char *s1, const char *s2);
 ssize_t	ft_read(int fildes, void *buf, size_t nbyte);
 char	*ft_strdup(const char *s1);
 
-int		main(void)
+int	main(void)
 {
-	char	dst[12] = "helloworld\n";
-	char	*or_src;
-	char	*src;
-	int	size;
-
-	or_src = (char *)malloc(sizeof(char) * 30);
-#if 0
-	size = ft_read(0, or_src, 30);
-	or_src[size] = '\0';
-	src = ft_strdup(or_src);
-	ft_write(1, dst, ft_strlen(dst));
-	ft_write(1, src, ft_strlen(src));
-	printf("result:%d\n", ft_strcmp(dst, src));
-	ft_write(1, ft_strcpy(dst, src), ft_strlen(dst));
-#else
-	/*
-	size = read(0, or_src, 30);
-	or_src[size] = '\0';
-	src = strdup(or_src);
-	write(1, dst, strlen(dst));
-	write(1, src, strlen(src));
-	printf("result:%d\n", strcmp(dst, src));
-	write(1, strcpy(dst, src), strlen(dst));
-	*/
-#endif
-	printf("%zd\n", write(-1, "test", 5));
-	free(or_src);
-	//free(src);
+	char	*str;
+	char	*str2;
+	char	*copy;
+	
+	while (1)
+	{
+		str = (char *)calloc(30, sizeof(char));
+		str2 = (char *)calloc(30, sizeof(char));
+		printf("/////\nft_read\n/////\n");
+		ft_read(1, str, 30);
+		printf("\ns1:%s\n", str);
+		printf("/////\norigin\n/////\n");
+		ft_read(1, str2, 30);
+		printf("\ns2:%s\n", str2);
+		printf("/////\nft_write\n/////\n");
+		printf("base:%s\n", str2);
+		write(1, "my:", 3);
+		ft_write(1, str2, strlen(str2));
+		write(1, "\n", 1);
+		write(1, "origin:", 7);
+		write(1, str2, strlen(str2));
+		write(1, "\n", 1);
+		printf("/////\nft_strlen\n/////\n");
+		printf("base:%s\n", str);
+		printf("my:%zu\n", ft_strlen(str));
+		printf("origin:%zu\n", strlen(str));
+		printf("/////\nft_strcmp(%s,%s)\n/////\n", str, str2);
+		printf("my:%d origin:%d\n", ft_strcmp(str, str2), strcmp(str, str2));
+		printf("/////\nft_strdup(%s)\n/////\n", str);
+		copy = ft_strdup(str);
+		printf("my:%s\n", copy);
+		free(copy);
+		copy = strdup(str);
+		printf("origin:%s\n", copy);
+		printf("/////\nft_strcpy(%s, %s)\n/////\n", str, str2);
+		printf("my:%s\n", ft_strcpy(str, str2));
+		printf("origin:%s\n", strcpy(copy, str2));
+		printf("/////\nend\n/////\n");
+		free(str);
+		free(str2);
+		free(copy);
+	}
 	return (0);
 }
