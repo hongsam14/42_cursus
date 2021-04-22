@@ -7,13 +7,14 @@ section .text
 _ft_strdup:
 	push	rbp
 	mov	rbp, rsp
+	sub	rsp, 8
 	call	_ft_strlen
 	push	rdi
 	inc	rax
 	mov	rdi, rax
 	call	_malloc
-	;cmp	rax, 0
-	;jz	done
+	cmp	rax, 0
+	jz	done
 	pop	rsi
 	mov	rdi, rax
 	call	_ft_strcpy

@@ -19,32 +19,28 @@ int		main(void)
 	char	*src;
 	int	size;
 
-	while (1)
-	{
-		or_src = (char *)malloc(sizeof(char) * 30);
+	or_src = (char *)malloc(sizeof(char) * 30);
 #if 0
-		size = ft_read(0, or_src, 30);
-		or_src[size] = '\0';
-		src = ft_strdup(or_src);
-		ft_write(1, dst, ft_strlen(dst));
-		ft_write(1, src, ft_strlen(src));
-		printf("result:%d\n", ft_strcmp(dst, src));
-		ft_write(1, ft_strcpy(dst, src), ft_strlen(dst));
+	size = ft_read(0, or_src, 30);
+	or_src[size] = '\0';
+	src = ft_strdup(or_src);
+	ft_write(1, dst, ft_strlen(dst));
+	ft_write(1, src, ft_strlen(src));
+	printf("result:%d\n", ft_strcmp(dst, src));
+	ft_write(1, ft_strcpy(dst, src), ft_strlen(dst));
 #else
-		/*
-		size = read(0, or_src, 30);
-		or_src[size] = '\0';
-		src = strdup(or_src);
-		write(1, dst, strlen(dst));
-		write(1, src, strlen(src));
-		printf("result:%d\n", strcmp(dst, src));
-		write(1, strcpy(dst, src), strlen(dst));
-		*/
+	/*
+	size = read(0, or_src, 30);
+	or_src[size] = '\0';
+	src = strdup(or_src);
+	write(1, dst, strlen(dst));
+	write(1, src, strlen(src));
+	printf("result:%d\n", strcmp(dst, src));
+	write(1, strcpy(dst, src), strlen(dst));
+	*/
 #endif
-		src = ft_strdup("bob");
-		printf("%s\n", src);
-		free(or_src);
-		free(src);
-	}
+	printf("%zd\n", write(-1, "test", 5));
+	free(or_src);
+	//free(src);
 	return (0);
 }

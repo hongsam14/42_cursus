@@ -5,6 +5,7 @@ section .text
 _ft_write:
 	push	rbp
 	mov	rbp, rsp
+	sub	rsp, 8
 	mov	rax, 0x2000004
 	syscall
 	jc	err
