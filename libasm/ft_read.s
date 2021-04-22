@@ -5,6 +5,7 @@ section .text
 _ft_read:
 	push	rbp
 	mov	rbp, rsp
+	sub	rsp, 8
 	mov	rax, 0x2000003
 	syscall
 	jc	err
