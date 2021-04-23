@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <sys/errno.h>
 
 ssize_t	ft_write(int fd, const void *buf, size_t nbyte);
 size_t	ft_strlen(const char *s);

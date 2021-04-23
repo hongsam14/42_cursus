@@ -3,6 +3,7 @@ section .text
 	extern _ft_strlen
 	extern _ft_strcpy
 	extern _malloc
+	extern ___error
 
 _ft_strdup:
 	push	rbp
@@ -14,7 +15,7 @@ _ft_strdup:
 	mov	rdi, rax
 	call	_malloc
 	cmp	rax, 0
-	jz	done
+	jz	err
 	pop	rsi
 	mov	rdi, rax
 	call	_ft_strcpy
@@ -23,3 +24,11 @@ done:
 	mov	rsp, rbp
 	pop	rbp
 	ret
+
+err:
+	sub		rsp, 8
+	push	rax
+	call	___error
+	mov		dword [rax], 12
+	pop		rax
+	jmp		done

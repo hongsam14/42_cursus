@@ -4,7 +4,8 @@ section .text
 _ft_strlen:
 	push	rbp
 	mov		rbp, rsp
-	mov		rax, 0
+	;mov		rax, 0
+	xor	rax, rax
 	jmp		comp
 
 plus:

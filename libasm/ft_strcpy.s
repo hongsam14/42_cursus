@@ -5,7 +5,8 @@ _ft_strcpy:
 	push	rbp
 	mov	rbp, rsp
 	;init rcx (count index) 0
-	mov	rcx, 0
+	;mov	rcx, 0
+	xor		rcx, rcx
 	;rdi : dest, rsi : src
 	;src null check
 	cmp	rsi, 0

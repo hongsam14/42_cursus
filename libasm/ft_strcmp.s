@@ -5,7 +5,8 @@ _ft_strcmp:
 	push	rbp
 	mov	rbp, rsp
 	;init count index, return rax
-	mov	rcx, 0
+	;mov	rcx, 0
+	xor	rcx, rcx
 	;rdi : s1, rsi : s2
 	jmp	comp
 
