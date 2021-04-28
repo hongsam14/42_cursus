@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_stack_util.c                                    :+:      :+:    :+:   */
+/*   io.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 20:29:09 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/23 20:47:39 by suhong           ###   ########.fr       */
+/*   Created: 2021/04/27 13:30:31 by suhong            #+#    #+#             */
+/*   Updated: 2021/04/27 19:57:44 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_stack.h"
+#ifndef IO_H
+# define IO_H
 
-int	push(t_stack *stack, int add)
-{
-}
+# include "my_stack.h"
+# include "../libft/libft.h"
+# include "../get_next_line/get_next_line.h"
 
-int	pop(t_stack *stack)
-{
-}
+int	put_int_2_stack(t_stack *stack, int argc, char *argv[]);
 
-int	shift_up(t_stack *stack)
-{
-}
+int	get_input_str(t_stack *a, t_stack *b);
 
-int	shift_down(t_stack *stack)
-{
-}
+#endif
