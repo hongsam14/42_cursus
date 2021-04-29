@@ -6,11 +6,11 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:45:51 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/28 12:26:39 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/28 14:13:03 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header/my_stack.h"
+#include "../header/my_stack.h"
 
 int	swap_order(t_stack *stack)
 {

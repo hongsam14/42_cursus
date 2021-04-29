@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 13:30:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/28 14:20:16 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/28 15:11:15 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header/checker.h"
+#include "header/push_swap.h"
 
 static int	init_a_b_stack(t_stack **a, t_stack **b)
 {
@@ -46,15 +46,6 @@ int	main(int argc, char *argv[])
 		write(1, "Error\n", 6);
 		return (exit_checker(a_stack, b_stack));
 	}
-	if (get_input_str(a_stack, b_stack) == ERROR)
-	{
-		write(1, "Error\n", 6);
-		return (exit_checker(a_stack, b_stack));
-	}
-	if (sort_check(a_stack) && stack_empty(b_stack))
-		write(1, "\nOK\n", 4);
-	else
-		write(1, "\nKO\n", 4);
 	exit_checker(a_stack, b_stack);
 	return (0);
 }

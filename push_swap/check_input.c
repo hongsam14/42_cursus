@@ -6,11 +6,11 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 17:41:25 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/28 12:32:13 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/29 01:29:33 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header/io.h"
+#include "header/checker.h"
 
 static int	two_word(char *str, t_stack *a, t_stack *b)
 {
@@ -49,6 +49,8 @@ static int	check_input(char *str, t_stack *a, t_stack *b)
 	int	size;
 
 	size = ft_strlen(str);
+	if (size == 0)
+		return (0);
 	if (size == 2)
 		return (two_word(str, a, b));
 	if (size == 3)

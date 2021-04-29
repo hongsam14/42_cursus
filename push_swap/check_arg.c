@@ -6,12 +6,11 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 16:24:58 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/28 12:27:23 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/29 01:23:00 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header/io.h"
-#include <stdio.h>
+#include "header/common.h"
 
 static int	check_str_int(char *str)
 {
@@ -34,6 +33,24 @@ static int	check_str_int(char *str)
 	return (state);
 }
 
+static int	check_dup(t_stack *stack, int cont)
+{
+	t_deck	*p;
+
+	if (stack_empty(stack))
+		return (OK);
+	p = stack->head;
+	while (p != stack->tail)
+	{
+		if (cont == p->content)
+			return (0);
+		p = p->next;
+	}
+	if (cont == p->content)
+		return (0);
+	return (1);
+}
+
 int	put_int_2_stack(t_stack *stack, int argc, char *argv[])
 {
 	long	state;
@@ -47,6 +64,8 @@ int	put_int_2_stack(t_stack *stack, int argc, char *argv[])
 		out = atoi(argv[argc - 1]);
 		state *= out;
 		if (state < 0)
+			return (0);
+		if (!check_dup(stack, out))
 			return (0);
 		push(stack, out);
 		argc--;

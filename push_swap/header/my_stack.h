@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:42:31 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/28 12:12:34 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/29 02:25:11 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	stack_init(t_stack **stack);
 int	stack_empty(t_stack *stack);
 int	stack_one_left(t_stack *stack);
 void	stack_destroy(t_stack *stack);
-size_t	get_stack_size(t_stack stac);
+size_t	get_stack_size(t_stack stack);
 
 int	push(t_stack *stack, int add);
 int	pop(t_stack *stack, int *content);
