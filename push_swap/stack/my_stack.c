@@ -6,13 +6,13 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 19:04:08 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/27 16:19:19 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/29 13:52:58 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/my_stack.h"
 
-int	stack_init(t_stack **stack)
+int		stack_init(t_stack **stack)
 {
 	*stack = (t_stack *)malloc(sizeof(t_stack));
 	if (!stack)
@@ -22,14 +22,14 @@ int	stack_init(t_stack **stack)
 	return (OK);
 }
 
-int	stack_empty(t_stack *stack)
+int		stack_empty(t_stack *stack)
 {
 	if (!stack->head && !stack->tail)
 		return (1);
 	return (0);
 }
 
-int	stack_one_left(t_stack *stack)
+int		stack_one_left(t_stack *stack)
 {
 	if (stack->head == stack->tail)
 		return (1);

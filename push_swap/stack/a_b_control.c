@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:45:51 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/28 14:13:03 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/29 13:57:14 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	rev_rotate_order(t_stack *stack)
 	return (OK);
 }
 
-int	double_order(t_stack *a, t_stack *b, int (*func)(t_stack *))
+int	dble_order(t_stack *a, t_stack *b, int (*func)(t_stack *))
 {
 	if (func(a) == ERROR)
 		return (ERROR);

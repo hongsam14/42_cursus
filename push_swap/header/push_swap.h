@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/28 14:57:19 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/28 14:58:12 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/29 15:40:35 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "common.h"
 
-
+int	get_middle(t_stack *stack, int *middle, int *m_count);
 
 #endif

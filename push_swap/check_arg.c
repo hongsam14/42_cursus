@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 16:24:58 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 01:23:00 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/29 13:51:31 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	check_str_int(char *str)
 {
-	int	i;
-	int	state;
+	int		i;
+	int		state;
 
 	i = 0;
 	state = 1;
@@ -51,10 +51,10 @@ static int	check_dup(t_stack *stack, int cont)
 	return (1);
 }
 
-int	put_int_2_stack(t_stack *stack, int argc, char *argv[])
+int			put_int_2_stack(t_stack *stack, int argc, char *argv[])
 {
 	long	state;
-	int	out;
+	int		out;
 
 	while (argc > 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 17:41:25 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 01:29:33 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/29 13:56:50 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	two_word(char *str, t_stack *a, t_stack *b)
 	if (!ft_strncmp(str, "sb", 2))
 		return (swap_order(b));
 	if (!ft_strncmp(str, "ss", 2))
-		return (double_order(a, b, swap_order));
+		return (dble_order(a, b, swap_order));
 	if (!ft_strncmp(str, "pa", 2))
 		return (push_order(b, a));
 	if (!ft_strncmp(str, "pb", 2))
@@ -29,7 +29,7 @@ static int	two_word(char *str, t_stack *a, t_stack *b)
 	if (!ft_strncmp(str, "rb", 2))
 		return (rotate_order(b));
 	if (!ft_strncmp(str, "rr", 2))
-		return (double_order(a, b, rotate_order));
+		return (dble_order(a, b, rotate_order));
 	return (ERROR);
 }
 
@@ -40,13 +40,13 @@ static int	three_word(char *str, t_stack *a, t_stack *b)
 	if (!ft_strncmp(str, "rrb", 3))
 		return (rev_rotate_order(b));
 	if (!ft_strncmp(str, "rrr", 3))
-		return (double_order(a, b, rev_rotate_order));
+		return (dble_order(a, b, rev_rotate_order));
 	return (ERROR);
 }
 
 static int	check_input(char *str, t_stack *a, t_stack *b)
 {
-	int	size;
+	int		size;
 
 	size = ft_strlen(str);
 	if (size == 0)
@@ -59,9 +59,9 @@ static int	check_input(char *str, t_stack *a, t_stack *b)
 	return (ERROR);
 }
 
-int	get_input_str(t_stack *a, t_stack *b)
+int			get_input_str(t_stack *a, t_stack *b)
 {
-	int	result;
+	int		result;
 	char	*str;
 
 	result = get_next_line(0, &str);
