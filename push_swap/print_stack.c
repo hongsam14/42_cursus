@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   common.h                                           :+:      :+:    :+:   */
+/*   print_stack.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/27 13:30:31 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 17:28:20 by suhong           ###   ########.fr       */
+/*   Created: 2021/04/29 17:23:13 by suhong            #+#    #+#             */
+/*   Updated: 2021/04/29 17:39:21 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMON_H
-# define COMMON_H
+#include "header/common.h"
 
-# include "my_stack.h"
-# include "../libft/libft.h"
+void	print_stack(t_stack *stack)
+{
+	t_deck *p;
 
-int	put_int_2_stack(t_stack *stack, int argc, char *argv[]);
-void	print_stack(t_stack *stack);
-
-#endif
+	if (stack_empty(stack))
+		return ;
+	p = stack->head;
+	while (p != stack->tail)
+	{
+		ft_putnbr_fd(p->content, 1);
+		write(1, ", ", 2);
+		p = p->next;
+	}
+	ft_putnbr_fd(p->content, 1);
+	write(1, "\n", 1);
+}

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 01:53:30 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 15:46:52 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/29 17:29:11 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,12 @@ int			get_middle(t_stack *stack, int *middle, int *m_count)
 {
 	int		size;
 	int		term;
-	double	count;
 	t_deck	*p;
 
 	p = stack->head;
 	term = 0;
 	size = get_stack_size(*stack);
-#if 1
-	count = (size - 1) / 2;
-	*m_count = (int)count;
-#endif
+	*m_count = (size - 1) / 2;
 	if (!(size % 2))
 		term = -1;
 	while (p != stack->tail)
@@ -66,4 +62,28 @@ int			get_middle(t_stack *stack, int *middle, int *m_count)
 		return (OK);
 	}
 	return (0);
+}
+
+int			push_by_mid(t_stack *a, t_stack *b, int mid, int m_count)
+{
+	if (m_count > 0)
+	{
+		if (a->tail->content <= mid)
+		{
+			if (a->tail->pre->content > mid)
+			{
+				if (swap_order(a) == ERROR)
+					return (ERROR);
+			}
+			else if (a->head->content > mid)
+				rev_rotate_order(a);
+			else
+				rotate_order(a);
+		}
+		if (push_order(a, b) == ERROR)
+			return (ERROR);
+	}
+	else
+		return (OK);
+	return (push_by_mid(a, b, mid, --m_count));
 }

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:45:51 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 13:57:14 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/29 17:28:43 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ int	swap_order(t_stack *stack)
 		return (0);
 	pop(stack, &tmp1);
 	pop(stack, &tmp2);
-	push(stack, tmp1);
-	push(stack, tmp2);
+	if (push(stack, tmp1) == ERROR)
+		return (ERROR);
+	if (push(stack, tmp2) == ERROR)
+		return (ERROR);
 	return (OK);
 }
 

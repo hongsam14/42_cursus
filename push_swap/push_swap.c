@@ -6,11 +6,12 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 13:30:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 15:43:49 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/29 17:42:18 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header/push_swap.h"
+#include "header/common.h"
 #include <stdio.h>
 
 static int	init_a_b_stack(t_stack **a, t_stack **b)
@@ -53,6 +54,13 @@ int	main(int argc, char *argv[])
 	}
 	get_middle(a_stack, &middle, &m_count);
 	printf("middle : %d, count : %d \n", middle, m_count);
+	if (push_by_mid(a_stack, b_stack, middle, m_count) == OK)
+	{
+		write(1, "a: ", 3);
+		print_stack(a_stack);
+		write(1, "b: ", 3);
+		print_stack(b_stack);
+	}
 	exit_checker(a_stack, b_stack);
 	return (0);
 }
