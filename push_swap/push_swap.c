@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 13:30:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 17:42:18 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/30 17:00:59 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ int	main(int argc, char *argv[])
 	t_stack	*b_stack;
 	int	middle;
 	int	m_count;
+	int	step;
 
 	middle = 0;
 	m_count = 0;
+	step = 0;
 	if (argc < 2)
 		return (0);
 	if (!init_a_b_stack(&a_stack, &b_stack))
@@ -52,15 +54,13 @@ int	main(int argc, char *argv[])
 		write(1, "Error\n", 6);
 		return (exit_checker(a_stack, b_stack));
 	}
+#if 1
 	get_middle(a_stack, &middle, &m_count);
 	printf("middle : %d, count : %d \n", middle, m_count);
-	if (push_by_mid(a_stack, b_stack, middle, m_count) == OK)
-	{
-		write(1, "a: ", 3);
-		print_stack(a_stack);
-		write(1, "b: ", 3);
-		print_stack(b_stack);
-	}
+	step = push_by_mid(a_stack, b_stack, middle, m_count);
+	if (step != ERROR)
+		printf("step:%d\n", step);
+#endif
 	exit_checker(a_stack, b_stack);
 	return (0);
 }

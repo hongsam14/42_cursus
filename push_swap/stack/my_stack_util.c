@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 20:29:09 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 17:28:00 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/30 17:19:17 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,10 @@ int	pop(t_stack *stack, int *content)
 	else
 	{
 		tmp = stack->tail->pre;
+		tmp->next = stack->tail->next;
 		free(stack->tail);
 		stack->tail = tmp;
-		stack->tail->next = stack->head;
+		stack->head->pre = stack->tail;
 	}
 	return (OK);
 }
@@ -71,4 +72,13 @@ int	sort_check(t_stack *stack)
 			return (0);
 	}
 	return (OK);
+}
+
+int	step_count(int input)
+{
+	static int	step = 0;
+
+	if (input != 0)
+		step += input;
+	return (step);
 }

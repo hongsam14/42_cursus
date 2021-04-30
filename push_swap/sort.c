@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 01:53:30 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/30 14:32:46 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/30 17:54:32 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	go_round(t_deck *start)
 	return (diff);
 }
 
-int			get_middle(t_stack *stack, int *middle, int *m_count)
+int	get_middle(t_stack *stack, int *middle, int *m_count)
 {
 	int		size;
 	int		term;
@@ -47,15 +47,8 @@ int			get_middle(t_stack *stack, int *middle, int *m_count)
 	*m_count = (size - 1) / 2;
 	if (!(size % 2))
 		term = -1;
-	while (p != stack->tail)
-	{
-		if (go_round(p) == term)
-		{
-			*middle = p->content;
-			return (OK);
-		}
+	while (p != stack->tail && go_round(p) != term)
 		p = p->next;
-	}
 	if (go_round(p) == term)
 	{
 		*middle = p->content;
@@ -64,13 +57,10 @@ int			get_middle(t_stack *stack, int *middle, int *m_count)
 	return (0);
 }
 
-int			push_by_mid(t_stack *a, t_stack *b, int mid, int m_count)
+int	push_by_mid(t_stack *a, t_stack *b, int mid, int m_count)
 {
-	int	step;
-
-	step = 0;
 	if (m_count <= 0)
-		return (OK);
+		return (step_count(0));
 	while (a->tail->content <= mid)
 	{
 		if (a->tail->pre->content > mid)
@@ -82,8 +72,12 @@ int			push_by_mid(t_stack *a, t_stack *b, int mid, int m_count)
 			rev_rotate_order(a);
 		else
 			rotate_order(a);
+		print_a_b_stack(a, b);
+		step_count(1);
 	}
 	if (push_order(a, b) == ERROR)
 		return (ERROR);
+	print_a_b_stack(a, b);
+	step_count(1);
 	return (push_by_mid(a, b, mid, --m_count));
 }

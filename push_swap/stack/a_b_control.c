@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 16:45:51 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 17:28:43 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/30 17:24:44 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	rev_rotate_order(t_stack *stack)
 {
 	if (stack_empty(stack) || stack_one_left(stack))
 		return (0);
-	stack->head = stack->head->next;
 	stack->tail = stack->tail->next;
+	stack->head = stack->head->next;
 	return (OK);
 }
 
