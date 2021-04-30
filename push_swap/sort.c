@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 01:53:30 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 17:29:11 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/30 14:32:46 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,24 +66,24 @@ int			get_middle(t_stack *stack, int *middle, int *m_count)
 
 int			push_by_mid(t_stack *a, t_stack *b, int mid, int m_count)
 {
-	if (m_count > 0)
-	{
-		if (a->tail->content <= mid)
-		{
-			if (a->tail->pre->content > mid)
-			{
-				if (swap_order(a) == ERROR)
-					return (ERROR);
-			}
-			else if (a->head->content > mid)
-				rev_rotate_order(a);
-			else
-				rotate_order(a);
-		}
-		if (push_order(a, b) == ERROR)
-			return (ERROR);
-	}
-	else
+	int	step;
+
+	step = 0;
+	if (m_count <= 0)
 		return (OK);
+	while (a->tail->content <= mid)
+	{
+		if (a->tail->pre->content > mid)
+		{
+			if (swap_order(a) == ERROR)
+				return (ERROR);
+		}
+		else if (a->head->content > mid)
+			rev_rotate_order(a);
+		else
+			rotate_order(a);
+	}
+	if (push_order(a, b) == ERROR)
+		return (ERROR);
 	return (push_by_mid(a, b, mid, --m_count));
 }

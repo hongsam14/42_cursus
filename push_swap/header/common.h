@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 13:30:31 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 17:28:20 by suhong           ###   ########.fr       */
+/*   Updated: 2021/04/30 14:18:45 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 
 int	put_int_2_stack(t_stack *stack, int argc, char *argv[]);
 void	print_stack(t_stack *stack);
+void	print_a_b_stack(t_stack *a, t_stack *b);
 
 #endif

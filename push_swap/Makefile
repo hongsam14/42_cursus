@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 12:34:51 by suhong            #+#    #+#              #
-#    Updated: 2021/04/29 17:37:12 by suhong           ###   ########.fr        #
+#    Updated: 2021/04/30 13:22:49 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ P_OBJS = $(P_SRC:.c=.o)
 
 CC = gcc
 
-CFLAG = -Wall -Wextra -Werror
+CFLAG = -Wall -Wextra -Werror -O3
 
 LIBFT = libft.a
 
