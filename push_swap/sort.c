@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 01:53:30 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/30 17:54:32 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/03 14:51:12 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	get_middle(t_stack *stack, int *middle, int *m_count)
 	p = stack->head;
 	term = 0;
 	size = get_stack_size(*stack);
+	if (size <= 2)
+		return (0);
 	*m_count = (size - 1) / 2;
 	if (!(size % 2))
 		term = -1;
@@ -57,27 +59,70 @@ int	get_middle(t_stack *stack, int *middle, int *m_count)
 	return (0);
 }
 
-int	push_by_mid(t_stack *a, t_stack *b, int mid, int m_count)
+pre
+
+int	push_little(t_stack *a, t_stack *b, int mid, int m_count)
 {
 	if (m_count <= 0)
 		return (step_count(0));
-	while (a->tail->content <= mid)
+	if (a->tail->pre->content < a->tail->content)
 	{
-		if (a->tail->pre->content > mid)
+		if (swap_order(a) == ERROR)
+			return (ERROR);
+		print_a_b_stack(a, b);
+		step_count(1);
+	}
+	while (a->tail->content >= mid)
+	{
+		if (a->tail->pre->content < mid)
 		{
 			if (swap_order(a) == ERROR)
 				return (ERROR);
 		}
-		else if (a->head->content > mid)
+		else if (a->head->content < mid)
 			rev_rotate_order(a);
 		else
 			rotate_order(a);
 		print_a_b_stack(a, b);
 		step_count(1);
 	}
+	if (sort_check(a) && stack_empty(b))
+		return (step_count(0));
 	if (push_order(a, b) == ERROR)
 		return (ERROR);
 	print_a_b_stack(a, b);
 	step_count(1);
-	return (push_by_mid(a, b, mid, --m_count));
+	return (push_little(a, b, mid, --m_count));
+}
+
+int	push_big(t_stack *a, t_stack *b, int mid, int m_count)
+{
+	if (m_count <= 0)
+		return (step_count(0));
+	while (b->tail->content <= mid)
+	{
+		if (b->tail->pre->content > mid)
+		{
+			if (swap_order(b) == ERROR)
+				return (ERROR);
+		}
+		else if (b->head->content > mid)
+			rev_rotate_order(b);
+		else
+			rotate_order(b);
+		print_a_b_stack(a, b);
+		step_count(1);
+	}
+	if (b->tail->pre->content > b->tail->content)
+	{
+		if (swap_order(b) == ERROR)
+			return (ERROR);
+		print_a_b_stack(a, b);
+		step_count(1);
+	}
+	if (push_order(b, a) == ERROR)
+		return (ERROR);
+	print_a_b_stack(a, b);
+	step_count(1);
+	return (push_big(a, b, mid, --m_count));
 }

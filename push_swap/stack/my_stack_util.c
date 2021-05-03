@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 20:29:09 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/30 17:19:17 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/02 15:55:50 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,23 @@ int	sort_check(t_stack *stack)
 	while (p != stack->head)
 	{
 		if (p->content < p->pre->content)
+			p = p->pre;
+		else
+			return (0);
+	}
+	return (OK);
+}
+
+int	rev_sort_check(t_stack *stack)
+{
+	t_deck	*p;
+
+	if (stack_empty(stack) || stack_one_left(stack))
+		return (OK);
+	p = stack->tail;
+	while (p != stack->head)
+	{
+		if (p->content > p->pre->content)
 			p = p->pre;
 		else
 			return (0);

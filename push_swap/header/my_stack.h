@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 18:42:31 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/30 17:20:26 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/02 16:21:43 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int					push(t_stack *stack, int add);
 int					pop(t_stack *stack, int *content);
 
 int					sort_check(t_stack *stack);
+int					rev_sort_check(t_stack *stack);
 int					step_count(int input);
 
 int					swap_order(t_stack *stack);
