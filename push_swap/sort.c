@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 01:53:30 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/03 14:51:12 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/04 11:16:45 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,39 +59,93 @@ int	get_middle(t_stack *stack, int *middle, int *m_count)
 	return (0);
 }
 
-pre
+#if 1
+static int	pre_work(t_stack *a, t_stack *b)
+{
+	int	flag;
 
+	flag = 1;
+	while (flag)
+	{
+		if (a->tail->pre->content < a->tail->content)
+		{
+			if (!stack_empty(b) && !stack_one_left(b)
+					&& b->tail->pre->content > b->tail->content)
+			{
+				if (dble_order(a, b, swap_order) == ERROR)
+					return (ERROR);
+			}
+			else
+				if (swap_order(a) == ERROR)
+					return (ERROR);
+			step_count(1);
+			print_a_b_stack(a, b);
+		}
+		else if (a->head->content < a->tail->content)
+		{
+			if (!stack_empty(b) && !stack_one_left(b)
+					&& b->head->content > b->tail->content)
+				dble_order(a, b, rev_rotate_order);
+			else
+				rev_rotate_order(a);
+			step_count(1);
+			print_a_b_stack(a, b);
+		}
+		else
+			flag = 0;
+	}
+	return (1);
+}
+
+static int	pre_b_work(t_stack *a, t_stack *b)
+{
+	int	flag;
+
+	flag = 1;
+	while (flag)
+	{
+		if (b->tail->pre->content > b->tail->content)
+		{
+			if (swap_order(b) == ERROR)
+				return (ERROR);
+			step_count(1);
+			print_a_b_stack(a, b);
+		}
+		else if (b->head->content > b->tail->content)
+		{
+			rev_rotate_order(b);
+			step_count(1);
+			print_a_b_stack(a, b);
+		}
+		else
+			flag = 0;
+	}
+	return (1);
+}
+#endif
 int	push_little(t_stack *a, t_stack *b, int mid, int m_count)
 {
 	if (m_count <= 0)
 		return (step_count(0));
-	if (a->tail->pre->content < a->tail->content)
+	if (pre_work(a, b) == ERROR)
+		return (ERROR);
+	while (a->tail->content >= mid)
 	{
-		if (swap_order(a) == ERROR)
+		rotate_order(a);
+		print_a_b_stack(a, b);
+		step_count(1);
+	}
+	if (!sort_check(a))
+	{
+		if (push_order(a, b) == ERROR)
 			return (ERROR);
 		print_a_b_stack(a, b);
 		step_count(1);
+
 	}
-	while (a->tail->content >= mid)
-	{
-		if (a->tail->pre->content < mid)
-		{
-			if (swap_order(a) == ERROR)
-				return (ERROR);
-		}
-		else if (a->head->content < mid)
-			rev_rotate_order(a);
-		else
-			rotate_order(a);
-		print_a_b_stack(a, b);
-		step_count(1);
-	}
-	if (sort_check(a) && stack_empty(b))
-		return (step_count(0));
-	if (push_order(a, b) == ERROR)
-		return (ERROR);
-	print_a_b_stack(a, b);
-	step_count(1);
+	else
+		if (stack_empty(b))
+			return (step_count(0));
 	return (push_little(a, b, mid, --m_count));
 }
 
@@ -99,24 +153,15 @@ int	push_big(t_stack *a, t_stack *b, int mid, int m_count)
 {
 	if (m_count <= 0)
 		return (step_count(0));
+#if 0
+	if (pre_b_work(a, b) == ERROR)
+		return (ERROR);
+#endif
 	while (b->tail->content <= mid)
 	{
-		if (b->tail->pre->content > mid)
-		{
-			if (swap_order(b) == ERROR)
-				return (ERROR);
-		}
-		else if (b->head->content > mid)
-			rev_rotate_order(b);
-		else
-			rotate_order(b);
-		print_a_b_stack(a, b);
-		step_count(1);
-	}
-	if (b->tail->pre->content > b->tail->content)
-	{
-		if (swap_order(b) == ERROR)
+		if (pre_b_work(a, b) == ERROR)
 			return (ERROR);
+		rotate_order(b);
 		print_a_b_stack(a, b);
 		step_count(1);
 	}

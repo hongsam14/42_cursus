@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 12:34:51 by suhong            #+#    #+#              #
-#    Updated: 2021/05/01 12:56:09 by suhong           ###   ########.fr        #
+#    Updated: 2021/05/03 15:44:32 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,8 @@ CC = gcc
 
 CFLAG = -Wall -Wextra -Werror -O3
 
+MFLAG = -fsanitize=address -g
+
 LIBFT = libft.a
 
 LIBDIR = ./libft
@@ -48,13 +50,13 @@ LFLAG = -L. -lft
 all : $(C_NAME) $(P_NAME)
 
 %.o : %.c
-	$(CC) $(CFLAG) -c $< -o $@
+	$(CC) $(CFLAG) $(MFLAG) -c $< -o $@
 
 $(C_NAME) : $(C_OBJS) $(LIBFT)
-	      $(CC) $(LFLAG) $(C_OBJS) -o $@
+	      $(CC) $(LFLAG) $(MFLAG) $(C_OBJS) -o $@
 
 $(P_NAME) : $(P_OBJS) $(LIBFT)
-	      $(CC) $(LFLAG) $(P_OBJS) -o $@
+	      $(CC) $(LFLAG) $(MFLAG) $(P_OBJS) -o $@
 
 $(LIBFT) :
 	make -C $(LIBDIR) all

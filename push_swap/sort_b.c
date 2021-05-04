@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 12:36:56 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/02 21:37:23 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/03 22:40:21 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	push_b_2_a(t_stack *a, t_stack *b)
 
 int	push_b_all(t_stack *a, t_stack *b)
 {
+#if 1
 	while (!stack_empty(b))
 	{
 		if (push_order(b, a) == ERROR)
@@ -91,5 +92,6 @@ int	push_b_all(t_stack *a, t_stack *b)
 		print_a_b_stack(a, b);
 		step_count(1);
 	}
+#endif
 	return (OK);
 }

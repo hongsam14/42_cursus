@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 13:30:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/02 21:35:12 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/04 01:18:10 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,18 @@ int	main(int argc, char *argv[])
 		write(1, "Error\n", 6);
 		return (exit_checker(a_stack, b_stack));
 	}
+#if 0
 	while (!sort_check(a_stack))
 		step = push_a_2_b(a_stack, b_stack);
 	push_b_all(a_stack, b_stack);
+#else
+	step = push_a_2_b(a_stack, b_stack);
+	push_b_all(a_stack, b_stack);
+#endif
 	if (step != ERROR)
 		printf("step:%d\n", step_count(0));
+	if (sort_check(a_stack))
+		printf("OK\n");
 	exit_checker(a_stack, b_stack);
 	return (0);
 }

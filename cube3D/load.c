@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 13:32:53 by suhong            #+#    #+#             */
-/*   Updated: 2021/03/29 01:12:38 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/04 12:08:45 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ static void	load_player_data(t_data *data, t_player *player)
 	y[1] = 1;
 	y[2] = 0;
 	y[3] = 0;
-	player->pos.x = data->player_pos.x;
-	player->pos.y = data->player_pos.y;
+	player->pos.x = data->player_pos.x + 0.5;
+	player->pos.y = data->player_pos.y + 0.5;
 	if (data->player_dir == 'N')
 		i = 0;
 	if (data->player_dir == 'S')
@@ -110,8 +110,7 @@ void		load_data_2_world(t_data *data, t_game *game)
 	debug = 1;
 	debug *= load_text_from_data(data, &game->world, &game->window);
 	load_player_data(data, &game->player);
-	game->player.old_pos.x = 0;
-	game->player.old_pos.y = 0;
+	game->player.old_pos = game->player.pos;
 	if (!debug)
 		ft_debug(ERROR_LOAD_DATA, &game->window);
 }
