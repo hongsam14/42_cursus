@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 12:34:51 by suhong            #+#    #+#              #
-#    Updated: 2021/05/03 15:44:32 by suhong           ###   ########.fr        #
+#    Updated: 2021/05/05 16:30:41 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ COMMON_SRC = ./stack/my_stack.c\
 	    ./stack/my_stack_util.c\
 	    ./stack/a_b_control.c\
 	    ./check_arg.c\
-		./print_stack.c\
+	    ./order.c\
+	    ./print_stack.c\
 	    
 C_SRC = $(COMMON_SRC)\
 		./check_input.c\

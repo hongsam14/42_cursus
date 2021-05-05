@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 01:53:30 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/04 11:16:45 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/04 18:45:30 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,14 +153,12 @@ int	push_big(t_stack *a, t_stack *b, int mid, int m_count)
 {
 	if (m_count <= 0)
 		return (step_count(0));
-#if 0
+#if 1
 	if (pre_b_work(a, b) == ERROR)
 		return (ERROR);
 #endif
 	while (b->tail->content <= mid)
 	{
-		if (pre_b_work(a, b) == ERROR)
-			return (ERROR);
 		rotate_order(b);
 		print_a_b_stack(a, b);
 		step_count(1);
@@ -169,5 +167,7 @@ int	push_big(t_stack *a, t_stack *b, int mid, int m_count)
 		return (ERROR);
 	print_a_b_stack(a, b);
 	step_count(1);
+	if (pre_work(a, b) == ERROR)
+		return (ERROR);
 	return (push_big(a, b, mid, --m_count));
 }

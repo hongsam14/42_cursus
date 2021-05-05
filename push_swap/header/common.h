@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 13:30:31 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/30 17:54:53 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/05 16:29:45 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../libft/libft.h"
 
 int	put_int_2_stack(t_stack *stack, int argc, char *argv[]);
+int	order(char *str, t_stack *a, t_stack *b);
 void	print_a_b_stack(t_stack *a, t_stack *b);
 
 #endif
