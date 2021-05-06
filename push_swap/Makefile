@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 12:34:51 by suhong            #+#    #+#              #
-#    Updated: 2021/05/05 16:30:41 by suhong           ###   ########.fr        #
+#    Updated: 2021/05/06 13:36:55 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,13 +51,13 @@ LFLAG = -L. -lft
 all : $(C_NAME) $(P_NAME)
 
 %.o : %.c
-	$(CC) $(CFLAG) $(MFLAG) -c $< -o $@
+	$(CC) $(CFLAG) -c $< -o $@
 
 $(C_NAME) : $(C_OBJS) $(LIBFT)
-	      $(CC) $(LFLAG) $(MFLAG) $(C_OBJS) -o $@
+	      $(CC) $(LFLAG) $(C_OBJS) -o $@
 
 $(P_NAME) : $(P_OBJS) $(LIBFT)
-	      $(CC) $(LFLAG) $(MFLAG) $(P_OBJS) -o $@
+	      $(CC) $(LFLAG) $(P_OBJS) -o $@
 
 $(LIBFT) :
 	make -C $(LIBDIR) all

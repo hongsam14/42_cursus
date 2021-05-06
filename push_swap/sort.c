@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 01:53:30 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/04 18:45:30 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/05 17:00:11 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	get_middle(t_stack *stack, int *middle, int *m_count)
 	return (0);
 }
 
-#if 1
 static int	pre_work(t_stack *a, t_stack *b)
 {
 	int	flag;
@@ -96,7 +95,7 @@ static int	pre_work(t_stack *a, t_stack *b)
 	}
 	return (1);
 }
-
+#if 1
 static int	pre_b_work(t_stack *a, t_stack *b)
 {
 	int	flag;
@@ -127,14 +126,20 @@ int	push_little(t_stack *a, t_stack *b, int mid, int m_count)
 {
 	if (m_count <= 0)
 		return (step_count(0));
+#if 0
 	if (pre_work(a, b) == ERROR)
 		return (ERROR);
+#endif
 	while (a->tail->content >= mid)
 	{
 		rotate_order(a);
 		print_a_b_stack(a, b);
 		step_count(1);
 	}
+#if 1
+	if (pre_work(a, b) == ERROR)
+		return (ERROR);
+#endif
 	if (!sort_check(a))
 	{
 		if (push_order(a, b) == ERROR)
@@ -153,7 +158,7 @@ int	push_big(t_stack *a, t_stack *b, int mid, int m_count)
 {
 	if (m_count <= 0)
 		return (step_count(0));
-#if 1
+#if 0
 	if (pre_b_work(a, b) == ERROR)
 		return (ERROR);
 #endif
@@ -163,6 +168,10 @@ int	push_big(t_stack *a, t_stack *b, int mid, int m_count)
 		print_a_b_stack(a, b);
 		step_count(1);
 	}
+#if 1
+	if (pre_b_work(a, b) == ERROR)
+		return (ERROR);
+#endif
 	if (push_order(b, a) == ERROR)
 		return (ERROR);
 	print_a_b_stack(a, b);
