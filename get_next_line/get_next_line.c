@@ -6,13 +6,13 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/12 12:55:30 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/24 10:26:58 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/06 23:59:23 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int		cut_buffer(char **buffer, char **out)
+static int	cut_buffer(char **buffer, char **out)
 {
 	char		*buf_start;
 	char		*n_point;
@@ -38,7 +38,7 @@ static int		cut_buffer(char **buffer, char **out)
 	return (1);
 }
 
-static int		join_buffer(char **buffer, char *add)
+static int	join_buffer(char **buffer, char *add)
 {
 	char		*b_tmp;
 
@@ -56,7 +56,7 @@ static int		join_buffer(char **buffer, char *add)
 	return (1);
 }
 
-static int		free_buffer(char *buffer)
+static int	free_buffer(char *buffer)
 {
 	if (buffer != 0)
 	{
@@ -66,14 +66,15 @@ static int		free_buffer(char *buffer)
 	return (-1);
 }
 
-static int		meet_eof(char **buffer, char *tmp, char **line, ssize_t r_size)
+static int	meet_eof(char **buffer, char *tmp, char **line, ssize_t r_size)
 {
 	char		*out;
 
-	if (*buffer == 0)
+	if (!*buffer)
 	{
 		free(tmp);
-		if ((out = gnl_strdup("")) == 0 || r_size == -1)
+		out = gnl_strdup("");
+		if (!out || r_size == -1)
 			return (-1);
 		*line = out;
 		return (0);
@@ -88,26 +89,25 @@ static int		meet_eof(char **buffer, char *tmp, char **line, ssize_t r_size)
 	return (0);
 }
 
-int				get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char	*buffer = 0;
 	char		*tmp;
 	ssize_t		read_size;
-	int			result;
 
 	if (line == 0 || fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
 		return (-1);
-	while ((result = cut_buffer(&buffer, line)) == 0)
+	while (!cut_buffer(&buffer, line))
 	{
-		if ((tmp = (char *)malloc(BUFFER_SIZE + 1)) == 0)
+		tmp = (char *)malloc(BUFFER_SIZE + 1);
+		if (!tmp)
 			return (free_buffer(buffer));
-		if ((read_size = read(fd, tmp, BUFFER_SIZE)) <= 0)
+		read_size = read(fd, tmp, BUFFER_SIZE);
+		if (read_size <= 0)
 			return (meet_eof(&buffer, tmp, line, read_size));
 		tmp[read_size] = '\0';
-		if ((result = join_buffer(&buffer, tmp)) == -1)
-			break ;
+		if (join_buffer(&buffer, tmp) == -1)
+			return (-1);
 	}
-	if (result == -1)
-		return (-1);
 	return (1);
 }

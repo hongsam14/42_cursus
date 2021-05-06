@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 17:23:13 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/30 17:31:34 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/06 15:59:40 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,14 @@ void	print_a_b_stack(t_stack *a, t_stack *b)
 	ft_putstr_fd("b:", 1);
 	print_stack(b);
 	ft_putstr_fd("------------------\n", 1);
+}
+
+int		print_order(char *str, t_stack *a, t_stack *b)
+{
+	if (order(str, a, b) == ERROR)
+		return (ERROR);
+	step_count(1);
+	ft_putstr_fd(str, 1);
+	write(1, "\n", 1);
+	return (1);
 }

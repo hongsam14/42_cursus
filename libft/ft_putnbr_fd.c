@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 22:34:18 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/04 15:40:57 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/06 23:40:49 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	make_positive(int n, int fd)
 	return (n);
 }
 
-void		ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
 	int		tmp;
 	int		digit;
@@ -40,7 +40,8 @@ void		ft_putnbr_fd(int n, int fd)
 
 	digit = 1;
 	i = '0';
-	if (!(n = make_positive(n, fd)))
+	n = make_positive(n, fd);
+	if (!n)
 		return ;
 	tmp = n;
 	while (tmp >= 10)

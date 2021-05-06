@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 12:34:51 by suhong            #+#    #+#              #
-#    Updated: 2021/05/06 13:36:55 by suhong           ###   ########.fr        #
+#    Updated: 2021/05/07 00:17:54 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ P_OBJS = $(P_SRC:.c=.o)
 
 CC = gcc
 
-CFLAG = -Wall -Wextra -Werror -O3
+CFLAG = -Wall -Wextra -Werror -D BUFFER_SIZE=1
 
 MFLAG = -fsanitize=address -g
 

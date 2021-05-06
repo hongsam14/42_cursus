@@ -6,13 +6,13 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 18:42:23 by suhong            #+#    #+#             */
-/*   Updated: 2020/09/28 19:48:41 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/06 23:17:55 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *s, int c)
 {
 	char	*p;
 	char	*i;

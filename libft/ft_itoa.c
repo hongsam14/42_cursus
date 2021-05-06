@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/03 13:32:06 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/08 14:25:16 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/06 22:06:05 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,46 @@ static size_t	digit_size(int n)
 	return (i);
 }
 
-char			*ft_itoa(int n)
+static char	*special_case(int n)
+{
+	char	*tmp;
+
+	tmp = 0;
+	if (n == 0)
+		tmp = ft_strdup("0");
+	if (n == -2147483648)
+		tmp = ft_strdup("-2147483648");
+	return (tmp);
+}
+
+static size_t	get_size(int *n, int *sign)
+{
+	size_t	size;
+
+	size = 0;
+	if (*n < 0)
+	{
+		size = 1;
+		*sign = -1;
+	}
+	*n *= (*sign);
+	size += digit_size(*n);
+	return (size);
+}
+
+char	*ft_itoa(int n)
 {
 	char		*tmp;
 	size_t		size;
-	int			minus;
+	int			sign;
 
-	if (n == -2147483648 || n == 0)
-	{
-		tmp = n == 0 ? ft_strdup("0") : ft_strdup("-2147483648");
+	sign = 1;
+	tmp = special_case(n);
+	if (tmp)
 		return (tmp);
-	}
-	minus = n < 0 ? 1 : 0;
-	size = n < 0 ? digit_size(n *= -1) + 1 : digit_size(n);
-	if ((tmp = (char *)malloc(sizeof(char) * (size + 1))) == 0)
+	size = get_size(&n, &sign);
+	tmp = (char *)malloc(size + 1);
+	if (!tmp)
 		return (0);
 	tmp[size] = '\0';
 	while (n > 0)
@@ -47,7 +73,7 @@ char			*ft_itoa(int n)
 		n = n / 10;
 		size--;
 	}
-	if (minus)
+	if (sign < 0)
 		tmp[0] = '-';
 	return (tmp);
 }

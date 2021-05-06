@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 17:41:49 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/27 20:20:48 by suhong           ###   ########.fr       */
+/*   Updated: 2020/10/24 10:31:37 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
-
-# define BUFFER_SIZE	1
 
 size_t	gnl_strlen(const char *str);
 char	*gnl_strchr(const char *s, int c);

@@ -6,13 +6,13 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 12:45:04 by suhong            #+#    #+#             */
-/*   Updated: 2020/10/08 03:02:15 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/06 23:14:40 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t	d_size;
 	size_t	s_size;
