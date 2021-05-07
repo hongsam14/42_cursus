@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 13:30:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/06 16:36:53 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/07 21:26:19 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	main(int argc, char *argv[])
 {
 	t_stack	*a_stack;
 	t_stack	*b_stack;
-	int	middle;
-	int	m_count;
-	int	step;
+	int		middle;
+	int		m_count;
+	int		step;
 
 	middle = 0;
 	m_count = 0;
@@ -54,14 +54,8 @@ int	main(int argc, char *argv[])
 		write(1, "Error\n", 6);
 		return (exit_checker(a_stack, b_stack));
 	}
-#if 1
-	while (!sort_check(a_stack))
-		step = push_a_2_b(a_stack, b_stack);
-	push_b_all(a_stack, b_stack);
-#else
-	step = push_a_2_b(a_stack, b_stack);
-	push_b_all(a_stack, b_stack);
-#endif
-	exit_checker(a_stack, b_stack);
+	write(1, "sort\n", 5);
+	get_pivot(a_stack, &middle);
+ 	exit_checker(a_stack, b_stack);
 	return (0);
 }

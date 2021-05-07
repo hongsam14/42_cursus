@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 12:34:51 by suhong            #+#    #+#              #
-#    Updated: 2021/05/07 00:17:54 by suhong           ###   ########.fr        #
+#    Updated: 2021/05/07 16:13:47 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ C_SRC = $(COMMON_SRC)\
 
 P_SRC = $(COMMON_SRC)\
 		./sort.c\
-		./sort_b.c\
 		./push_swap.c
 
 C_OBJS = $(C_SRC:.c=.o)

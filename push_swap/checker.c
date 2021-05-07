@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 13:30:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/04/29 13:50:54 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/07 12:42:35 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	exit_checker(t_stack *a, t_stack *b)
 	return (0);
 }
 
-int			main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_stack	*a_stack;
 	t_stack	*b_stack;

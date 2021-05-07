@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 17:23:13 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/06 15:59:40 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/07 12:46:10 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	print_stack(t_stack *stack)
 {
-	t_deck *p;
+	t_deck	*p;
 
 	if (!stack_empty(stack))
 	{
@@ -40,7 +40,7 @@ void	print_a_b_stack(t_stack *a, t_stack *b)
 	ft_putstr_fd("------------------\n", 1);
 }
 
-int		print_order(char *str, t_stack *a, t_stack *b)
+int	print_order(char *str, t_stack *a, t_stack *b)
 {
 	if (order(str, a, b) == ERROR)
 		return (ERROR);

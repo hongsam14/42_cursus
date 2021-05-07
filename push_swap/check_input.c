@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/05 16:24:57 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/05 16:27:34 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/07 12:42:15 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	get_input_str(t_stack *a, t_stack *b)
 {
-	int	result;
+	int		result;
 	char	*str;
 
 	result = get_next_line(0, &str);
