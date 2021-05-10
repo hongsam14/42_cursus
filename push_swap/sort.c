@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 16:47:22 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/10 12:36:14 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/10 16:12:50 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,10 @@ int	quick_a_2_b(t_stack *a, t_stack *b, size_t size)
 	ra_log = 0;
 	pb_log = 0;
 	i = 0;
-#if 0
 	if (size < 2)
 		return (1);
-#else
-	if (size < 3)
-	{
-		if (a->tail->content > a->tail->pre->content)
-			if (print_order("sa", a, b) == ERROR)
-				return (ERROR);
-		return (1);
-	}
-#endif
-	printf("a_stack size:%zu, size:%zu\n", get_stack_size(*a), size);
-	if (!get_pivot(a->tail, size, &pivot))
-		return (ERROR);
-	while (size--)
+	pivot = get_pivot(a, size);
+	while (size-- && !stack_empty(a))
 	{
 		if (a->tail->content > pivot)
 		{
@@ -71,23 +59,16 @@ int	quick_b_2_a(t_stack *a, t_stack *b, size_t size)
 	rb_log = 0;
 	pa_log = 0;
 	i = 0;
-	if (size < 3)
+	if (size < 2)
 	{
-		if (!stack_empty(b) || !stack_one_left(b))
-			if (b->tail->content < b->tail->pre->content)
-				if (print_order("sb", a, b) == ERROR)
-					return (ERROR);
-		while (!stack_empty(b))
-			if (print_order("pa", a, b) == ERROR)
-				return (ERROR);
+		if (print_order("pa", a, b) == ERROR)
+			return (ERROR);
 		return (1);
 	}
-	printf("b_stack size:%zu, size:%zu\n", get_stack_size(*b), size);
-	if (!get_pivot(b->tail, size, &pivot))
-		return (ERROR);
-	while (size--)
+	pivot = get_pivot(b, size);
+	while (size-- && !stack_empty(b))
 	{
-		if (b->tail->content > pivot)
+		if (b->tail->content <= pivot)
 		{
 			print_order("rb", a, b);
 			rb_log++;
