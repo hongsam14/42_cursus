@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 12:34:51 by suhong            #+#    #+#              #
-#    Updated: 2021/05/10 05:16:06 by suhong           ###   ########.fr        #
+#    Updated: 2021/05/10 21:36:12 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ CC = gcc
 
 CFLAG = -Wall -Wextra -Werror -D BUFFER_SIZE=1
 
-MFLAG = -fsanitize=address -g
+MFLAG = -fsanitize=address -g -O2
 
 LIBFT = libft.a
 
