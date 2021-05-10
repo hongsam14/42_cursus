@@ -5,96 +5,103 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/07 15:22:30 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/07 21:48:04 by suhong           ###   ########.fr       */
+/*   Created: 2021/05/09 16:47:22 by suhong            #+#    #+#             */
+/*   Updated: 2021/05/10 12:36:14 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header/push_swap.h"
 #include <stdio.h>
 
-static int	*make_array(t_stack *stack, size_t *size)
-{
-	int		*tmp;
-	int		i;
-	t_deck	*p;
-
-	*size = get_stack_size(*stack);
-	if (*size < 3)
-		return (0);
-	tmp = (int *)malloc(sizeof(int) * (*size));
-	if (!tmp)
-		return (0);
-	p = stack->head;
-	i = 0;
-	tmp[i++] = p->content;
-	while (p != stack->head)
-	{
-		tmp[i++] = p->content;
-		p = p->next;
-	}
-	return (tmp);
-}
-
-static int	sort_array(int *array, int head, int tail)
+int	quick_a_2_b(t_stack *a, t_stack *b, size_t size)
 {
 	int	pivot;
-	int	low;
-	int	high;
-	int	tmp;
+	size_t	ra_log;
+	size_t	pb_log;
+	size_t	i;
 
-	pivot = array[head];
-	low = head + 1;
-	high = tail;
-	while (low < high)
+	pivot = 0;
+	ra_log = 0;
+	pb_log = 0;
+	i = 0;
+#if 0
+	if (size < 2)
+		return (1);
+#else
+	if (size < 3)
 	{
-		while (array[low] < pivot && low <= tail)
-			low++;
-		while (array[high] > pivot && high > head)
-			high--;
-		if (low < high)
+		if (a->tail->content > a->tail->pre->content)
+			if (print_order("sa", a, b) == ERROR)
+				return (ERROR);
+		return (1);
+	}
+#endif
+	printf("a_stack size:%zu, size:%zu\n", get_stack_size(*a), size);
+	if (!get_pivot(a->tail, size, &pivot))
+		return (ERROR);
+	while (size--)
+	{
+		if (a->tail->content > pivot)
 		{
-			tmp = array[low];
-			array[low] = array[high];
-			array[high] = tmp;
+			print_order("ra", a, b);
+			ra_log++;
+		}
+		else
+		{
+			if (print_order("pb", a, b) == ERROR)
+				return (ERROR);
+			pb_log++;
 		}
 	}
-	tmp = array[head];
-	array[head] = array[high];
-	array[high] = tmp;
-	return (high);
+	while (i++ < ra_log)
+		print_order("rra", a, b);
+	quick_a_2_b(a, b, ra_log);
+	quick_b_2_a(a, b, pb_log);
+	return (1);
 }
 
-static void	quick_sort(int *array, int head, int tail)
+int	quick_b_2_a(t_stack *a, t_stack *b, size_t size)
 {
 	int	pivot;
+	size_t	rb_log;
+	size_t	pa_log;
+	size_t	i;
 
-	if (head < tail)
-	{
-		pivot = sort_array(array, head, tail);
-		printf("pivot:%d\n", pivot);
-		quick_sort(array, head, pivot - 1);
-		quick_sort(array, pivot + 1, tail);
-	}
-}
-
-int	get_pivot(t_stack *stack, int *pivot)
-{
-	int				*tmp;
-	size_t			size;
-	unsigned int	i;
-
+	pivot = 0;
+	rb_log = 0;
+	pa_log = 0;
 	i = 0;
-	tmp = make_array(stack, &size);
-	if (!tmp)
-		return (0);
-	quick_sort(tmp, 0, size - 1);
-	while (i < size)
+	if (size < 3)
 	{
-		printf("%d", tmp[i]);
-		i++;
+		if (!stack_empty(b) || !stack_one_left(b))
+			if (b->tail->content < b->tail->pre->content)
+				if (print_order("sb", a, b) == ERROR)
+					return (ERROR);
+		while (!stack_empty(b))
+			if (print_order("pa", a, b) == ERROR)
+				return (ERROR);
+		return (1);
 	}
-	*pivot = i;
-	printf("\n");
+	printf("b_stack size:%zu, size:%zu\n", get_stack_size(*b), size);
+	if (!get_pivot(b->tail, size, &pivot))
+		return (ERROR);
+	while (size--)
+	{
+		if (b->tail->content > pivot)
+		{
+			print_order("rb", a, b);
+			rb_log++;
+		}
+		else
+		{
+			if (print_order("pa", a, b) == ERROR)
+				return (ERROR);
+			pa_log++;
+		}
+	}
+	while (i++ < rb_log)
+		print_order("rrb", a, b);
+	quick_a_2_b(a, b, pa_log);
+	quick_b_2_a(a, b, rb_log);
 	return (1);
 }

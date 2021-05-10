@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/28 12:34:51 by suhong            #+#    #+#              #
-#    Updated: 2021/05/07 16:13:47 by suhong           ###   ########.fr        #
+#    Updated: 2021/05/10 05:16:06 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ C_SRC = $(COMMON_SRC)\
 
 P_SRC = $(COMMON_SRC)\
 		./sort.c\
+		./get_pivot.c\
 		./push_swap.c
 
 C_OBJS = $(C_SRC:.c=.o)
@@ -50,13 +51,13 @@ LFLAG = -L. -lft
 all : $(C_NAME) $(P_NAME)
 
 %.o : %.c
-	$(CC) $(CFLAG) -c $< -o $@
+	$(CC) $(CFLAG) $(MFLAG) -c $< -o $@
 
 $(C_NAME) : $(C_OBJS) $(LIBFT)
-	      $(CC) $(LFLAG) $(C_OBJS) -o $@
+	      $(CC) $(LFLAG) $(MFLAG) $(C_OBJS) -o $@
 
 $(P_NAME) : $(P_OBJS) $(LIBFT)
-	      $(CC) $(LFLAG) $(P_OBJS) -o $@
+	      $(CC) $(LFLAG) $(MFLAG) $(P_OBJS) -o $@
 
 $(LIBFT) :
 	make -C $(LIBDIR) all
