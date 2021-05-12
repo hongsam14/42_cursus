@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 16:47:22 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/11 00:14:56 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/12 15:18:40 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,17 @@ int	a_2_b(t_stack *a, t_stack *b, size_t size)
 	rb_log = 0;
 	i = 0;
 	if (size < 3)
+	{
+		if (!stack_empty(a) && !stack_one_left(a))
+			if (a->tail->content > a->tail->pre->content)
+				if (print_order("sa", a, b) == ERROR)
+					return (ERROR);
 		return (1);
-	get_pivot(a, size, &pivot_l, &pivot_h);
+	}
+	get_pivot(a, &size, &pivot_l, &pivot_h);
 	while (size--)
 	{
-		if (a->tail->content > pivot_h)
+		if (a->tail->content >= pivot_h)
 		{
 			print_order("ra", a, b);
 			ra_log++;
@@ -66,11 +72,6 @@ int	a_2_b(t_stack *a, t_stack *b, size_t size)
 		i++;
 	}
 	return (a_2_b(a, b, ra_log) | b_2_a(a, b, rb_log) | b_2_a(a, b, pb_log - rb_log));
-#if 0
-	while (i++ < ra_log && !sort_check(a))
-		print_order("rra", a, b);
-	return (a_2_b(a, b, ra_log) | b_2_a(a, b, pb_log));
-#endif
 }
 
 int	b_2_a(t_stack *a, t_stack *b, size_t size)
@@ -88,16 +89,23 @@ int	b_2_a(t_stack *a, t_stack *b, size_t size)
 	pa_log = 0;
 	ra_log = 0;
 	i = 0;
-	if (size > 3)
+	if (size < 3)
 	{
-		if (print_order("pa", a, b) == ERROR)
-			return (ERROR);
+		while (!stack_empty(b) && size--)
+		{
+			if (!stack_one_left(b))
+				if (b->tail->content < b->tail->pre->content)
+					if (print_order("sb", a, b) == ERROR)
+						return (ERROR);
+			if (print_order("pa", a, b) == ERROR)
+				return (ERROR);
+		}
 		return (1);
 	}
-	get_pivot(b, size, &pivot_l, &pivot_h);
+	get_pivot(b, &size, &pivot_l, &pivot_h);
 	while (size--)
 	{
-		if (b->tail->content <= pivot_h)
+		if (b->tail->content < pivot_l)
 		{
 			print_order("rb", a, b);
 			rb_log++;
@@ -107,7 +115,7 @@ int	b_2_a(t_stack *a, t_stack *b, size_t size)
 			if (print_order("pa", a, b) == ERROR)
 				return (ERROR);
 			pa_log++;
-			if (a->tail->content < pivot_l)
+			if (a->tail->content < pivot_h)
 			{
 				print_order("ra", a, b);
 				ra_log++;
@@ -131,10 +139,5 @@ int	b_2_a(t_stack *a, t_stack *b, size_t size)
 		print_order("rra", a, b);
 		i++;
 	}
-	return (a_2_b(a, b, rb_log) | b_2_a(a, b, ra_log));
-#if 0
-	while (i++ < rb_log && !rev_sort_check(b))
-		print_order("rrb", a, b);
-	return (a_2_b(a, b, pa_log) | b_2_a(a, b, rb_log));
-#endif
+	return (a_2_b(a, b, ra_log) | b_2_a(a, b, rb_log));
 }
