@@ -6,138 +6,112 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 16:47:22 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/12 15:18:40 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/13 12:08:17 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header/push_swap.h"
-#include <stdio.h>
 
-int	a_2_b(t_stack *a, t_stack *b, size_t size)
+static int	a_three(t_stack *a, t_stack *b, size_t size)
 {
-	int	pivot_l;
-	int	pivot_h;
-	size_t	ra_log;
-	size_t	pb_log;
-	size_t	rb_log;
-	size_t	i;
-
-	pivot_l = 0;
-	pivot_h = 0;
-	ra_log = 0;
-	pb_log = 0;
-	rb_log = 0;
-	i = 0;
+	if (get_stack_size(*a) == 3)
+	{
+		while (!sort_check(a))
+		{
+			if (a->tail->content > a->tail->pre->content
+				&& a->tail->content > a ->head->content)
+				print_order("ra", a, b);
+			else if (a->tail->content > a->tail->pre->content)
+			{
+				if (print_order("sa", a, b) == ERROR)
+					return (ERROR);
+			}
+			else if (a->tail->content > a->head->content)
+				print_order("rra", a, b);
+			else
+				print_order("ra", a, b);
+		}
+		return (1);
+	}
 	if (size < 3)
+		return (1);
+	return (0);
+}
+
+static int	below_three(t_stack *a, t_stack *b, size_t size, int flag)
+{
+	if (flag)
 	{
 		if (!stack_empty(a) && !stack_one_left(a))
 			if (a->tail->content > a->tail->pre->content)
 				if (print_order("sa", a, b) == ERROR)
 					return (ERROR);
-		return (1);
 	}
-	get_pivot(a, &size, &pivot_l, &pivot_h);
-	while (size--)
+	else
 	{
-		if (a->tail->content >= pivot_h)
-		{
-			print_order("ra", a, b);
-			ra_log++;
-		}
+		if (!stack_empty(b) && !stack_one_left(b))
+			if (b->tail->content < b->tail->pre->content)
+				if (print_order("sb", a, b) == ERROR)
+					return (ERROR);
+		while (!stack_empty(b) && size--)
+			if (print_order("pa", a, b) == ERROR)
+				return (ERROR);
+	}
+	return (1);
+}
+
+int	a_2_b(t_stack *a, t_stack *b, size_t size)
+{
+	t_chunk	chunk;
+
+	init_chunk(&chunk);
+	if (a_three(a, b, size))
+		return (below_three(a, b, size, 1));
+	if (get_pivot(a, &size, &(chunk.pivot_l), &(chunk.pivot_h)) == ERROR)
+		return (ERROR);
+	while (size)
+	{
+		if (a->tail->content >= chunk.pivot_h)
+			work_log(a, b, "ra", &(chunk.ra_log));
 		else
 		{
-			if (print_order("pb", a, b) == ERROR)
+			if (work_log(a, b, "pb", &(chunk.push_log)) == ERROR)
 				return (ERROR);
-			pb_log++;
-			if (b->tail->content >= pivot_l)
-			{
-				print_order("rb", a, b);
-				rb_log++;
-			}
+			if (b->tail->content > chunk.pivot_l)
+				work_log(a, b, "rb", &(chunk.rb_log));
 		}
+		size--;
 	}
-	while (i < ra_log && i < rb_log)
-	{
-		print_order("rrr", a, b);
-		i++;
-	}
-	while (i < ra_log)
-	{
-		print_order("rra", a, b);
-		i++;
-	}
-	while (i < rb_log)
-	{
-		print_order("rrb", a, b);
-		i++;
-	}
-	return (a_2_b(a, b, ra_log) | b_2_a(a, b, rb_log) | b_2_a(a, b, pb_log - rb_log));
+	rotate_stack(a, b, chunk.ra_log, chunk.rb_log);
+	return (a_2_b(a, b, chunk.ra_log)
+		| b_2_a(a, b, chunk.rb_log)
+		| b_2_a(a, b, chunk.push_log - chunk.rb_log));
 }
 
 int	b_2_a(t_stack *a, t_stack *b, size_t size)
 {
-	int	pivot_l;
-	int	pivot_h;
-	size_t	rb_log;
-	size_t	pa_log;
-	size_t	ra_log;
-	size_t	i;
+	t_chunk	chunk;
 
-	pivot_l = 0;
-	pivot_h = 0;
-	rb_log = 0;
-	pa_log = 0;
-	ra_log = 0;
-	i = 0;
+	init_chunk(&chunk);
 	if (size < 3)
+		return (below_three(a, b, size, 0));
+	if (get_pivot(b, &size, &(chunk.pivot_l), &(chunk.pivot_h)) == ERROR)
+		return (ERROR);
+	while (size)
 	{
-		while (!stack_empty(b) && size--)
-		{
-			if (!stack_one_left(b))
-				if (b->tail->content < b->tail->pre->content)
-					if (print_order("sb", a, b) == ERROR)
-						return (ERROR);
-			if (print_order("pa", a, b) == ERROR)
-				return (ERROR);
-		}
-		return (1);
-	}
-	get_pivot(b, &size, &pivot_l, &pivot_h);
-	while (size--)
-	{
-		if (b->tail->content < pivot_l)
-		{
-			print_order("rb", a, b);
-			rb_log++;
-		}
+		if (b->tail->content <= chunk.pivot_l)
+			work_log(a, b, "rb", &(chunk.rb_log));
 		else
 		{
-			if (print_order("pa", a, b) == ERROR)
+			if (work_log(a, b, "pa", &(chunk.push_log)) == ERROR)
 				return (ERROR);
-			pa_log++;
-			if (a->tail->content < pivot_h)
-			{
-				print_order("ra", a, b);
-				ra_log++;
-			}
+			if (a->tail->content < chunk.pivot_h)
+				work_log(a, b, "ra", &(chunk.ra_log));
 		}
+		size--;
 	}
-	if (a_2_b(a, b, pa_log - ra_log) == ERROR)
+	if (a_2_b(a, b, chunk.push_log - chunk.ra_log) == ERROR)
 		return (ERROR);
-	while (i < ra_log && i < rb_log)
-	{
-		print_order("rrr", a, b);
-		i++;
-	}
-	while (i < rb_log)
-	{
-		print_order("rrb", a, b);
-		i++;
-	}
-	while (i < ra_log)
-	{
-		print_order("rra", a, b);
-		i++;
-	}
-	return (a_2_b(a, b, ra_log) | b_2_a(a, b, rb_log));
+	rotate_stack(a, b, chunk.ra_log, chunk.rb_log);
+	return (a_2_b(a, b, chunk.ra_log) | b_2_a(a, b, chunk.rb_log));
 }

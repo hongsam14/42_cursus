@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 17:23:13 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/12 15:19:51 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/13 12:09:19 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	print_order(char *str, t_stack *a, t_stack *b)
 		return (0);
 	step_count(1);
 	ft_putstr_fd(str, 1);
-	//print_a_b_stack(a, b);
 	write(1, "\n", 1);
 	return (1);
 }
