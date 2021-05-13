@@ -6,13 +6,11 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 13:30:33 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/13 12:09:31 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/13 19:54:09 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header/push_swap.h"
-#include "header/common.h"
-#include <stdio.h>
 
 static int	init_a_b_stack(t_stack **a, t_stack **b)
 {

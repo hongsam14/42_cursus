@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/07 15:22:30 by suhong            #+#    #+#             */
-/*   Updated: 2021/05/12 16:19:00 by suhong           ###   ########.fr       */
+/*   Updated: 2021/05/13 19:51:45 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	*make_array(t_stack *stack, size_t *size)
 	size_t	f_size;
 	size_t	i;
 	t_deck	*p;
-	int	*tmp;
+	int		*tmp;
 
 	i = 0;
 	f_size = get_stack_size(*stack);
@@ -41,7 +41,7 @@ static int	bubble_sort(int *array, size_t size)
 	size_t	i_l;
 	size_t	i_h;
 	size_t	i;
-	int	tmp;
+	int		tmp;
 
 	i = 0;
 	while (i < size)
@@ -66,7 +66,7 @@ static int	bubble_sort(int *array, size_t size)
 
 int	get_pivot(t_stack *stack, size_t *size, int *p_l, int *p_h)
 {
-	int	*array;
+	int		*array;
 	size_t	i;
 
 	i = 0;
