@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 15:42:00 by suhong            #+#    #+#              #
-#    Updated: 2021/07/17 10:33:45 by suhong           ###   ########.fr        #
+#    Updated: 2021/07/17 10:43:11 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,6 +91,7 @@ clean : fclean_libft
 
 fclean : clean
 	$(RM) -rf $(NAME)
+	$(RM) -rf $(NAME_BONUS)
 
 re : fclean all
 
