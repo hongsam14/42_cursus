@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 15:27:43 by suhong            #+#    #+#             */
-/*   Updated: 2021/07/17 10:25:39 by suhong           ###   ########.fr       */
+/*   Updated: 2021/07/17 16:12:53 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	open_file(int *fd, int argc, char **argv, int *d_flag)
 
 	tmp = 0;
 	fd[0] = STDIN_FILENO;
-	if (argv[1] || *(argv[1]))
+	if (argv[1] && *(argv[1]))
 	{
 		if (!ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")))
 			*d_flag = 1;
@@ -26,7 +26,7 @@ void	open_file(int *fd, int argc, char **argv, int *d_flag)
 			fd[0] = open(argv[1], O_RDONLY, S_IRWXU);
 	}
 	fd[1] = STDOUT_FILENO;
-	if (argv[argc - 1] || *(argv[argc - 1]))
+	if (argv[argc - 1] && *(argv[argc - 1]))
 	{
 		if (*d_flag)
 			fd[1] = open(argv[argc - 1], \
@@ -68,7 +68,7 @@ void	check_eof(char *str, int in_fd, int pip_fd)
 	line = 0;
 	while (get_next_line(in_fd, &line) >= 0)
 	{
-		if (!strncmp(line, str, ft_strlen(line)))
+		if (!ft_strncmp(line, str, ft_strlen(line)))
 		{
 			close(pip_fd);
 			free(line);

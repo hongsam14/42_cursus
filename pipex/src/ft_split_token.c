@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/14 12:55:36 by suhong            #+#    #+#             */
-/*   Updated: 2021/07/14 16:46:05 by suhong           ###   ########.fr       */
+/*   Updated: 2021/07/17 16:06:35 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,32 @@ static char	**do_malloc(char const *str, char c, size_t *size)
 	return (tmp);
 }
 
+static void	init_func(size_t *i, char **spot)
+{
+	*i = 0;
+	*spot = 0;
+}
+
 char	**ft_token_split(char *str, char c)
 {
 	char	**token;
 	size_t	size;
 	size_t	i;
 	char	*spot;
-	int		q_flag;
+	int		q;
 
-	i = 0;
-	spot = 0;
+	init_func(&i, &spot);
 	token = do_malloc(str, c, &size);
 	while (i < size && *str >= 0)
 	{
-		q_flag = check_quotes(*str);
+		q = check_quotes(*str);
 		if (*str != c && !ft_strchr("\'\"", *str) && !spot)
 			spot = str;
-		else if (!q_flag && spot && (*str == c \
-			|| ft_strchr("\'\"", *str) || !*str))
+		else if (!q && spot && (*str == c || ft_strchr("\'\"", *str) || !*str))
 		{
-			token[i++] = ft_substr(spot, 0, str - spot);
+			token[i] = ft_substr(spot, 0, str - spot);
+			if (!token[i++])
+				ft_syserror("malloc error");
 			spot = 0;
 		}
 		str++;
