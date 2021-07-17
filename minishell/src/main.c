@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/04 22:52:01 by hjpark            #+#    #+#             */
-/*   Updated: 2021/07/06 11:37:28 by suhong           ###   ########.fr       */
+/*   Updated: 2021/07/13 11:34:29 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ void	minishell(t_list *env_list)
 	list = ft_token_split(g_mini.line);
 	// ft_envswap(list, env_list);
 	ft_free(g_mini.line);
-	ft_del_quotes(list);
+	// ft_del_quotes(list);
 	built = ft_builtndup(list);
 	ft_listclear(&list);
 	ft_put_blank(built);
 	ft_split_built(built, "|;");
 	ft_del_lastblank(built);
+	test_built_list(built);
 	ft_shell(built, &env_list);
 	ft_builtclear(&built);
 }
