@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/29 01:41:47 by suhong            #+#    #+#             */
-/*   Updated: 2021/09/06 20:52:06 by suhong           ###   ########.fr       */
+/*   Updated: 2021/09/13 14:53:23 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,25 @@ int	ft_usleep(int time)
 
 int	ft_printlog(int id, char *status)
 {
-	int		time;
+	int	time;
 
 	time = get_time(g_table.s_time);
+	pthread_mutex_lock(&g_table.print_mutex);
 	if (g_table.philo_dead == false
 		&& g_table.complete_philos < g_table.philo_count)
 	{
-		printf("[%d] philo[%d] %s\n", time, id, status);
+		printf("[%d] philo[%d] %s\n", time, id + 1, status);
+		pthread_mutex_unlock(&g_table.print_mutex);
 		return (SUCCESS);
 	}
+	pthread_mutex_unlock(&g_table.print_mutex);
+	return (ERROR);
+}
+
+int	ft_error_in_thread(void)
+{
+	pthread_mutex_lock(&g_table.mutex);
+	g_table.philo_dead = true;
+	pthread_mutex_unlock(&g_table.mutex);
 	return (ERROR);
 }

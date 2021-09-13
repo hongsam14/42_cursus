@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 17:21:51 by suhong            #+#    #+#             */
-/*   Updated: 2021/09/07 18:08:39 by suhong           ###   ########.fr       */
+/*   Updated: 2021/09/13 14:54:02 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 static int	ft_eat(t_philo *philo)
 {
-	get_fork(philo);
+	if (get_fork(philo) == ERROR)
+		return (ft_error_in_thread());
 	if (gettimeofday(&philo->last_eat, NULL) < 0)
-		return (ERROR);
+		return (ft_error_in_thread());
 	philo->eating = true;
 	if (ft_printlog(philo->id, "is eatting") == ERROR)
 		return (SUCCESS);
-	ft_usleep(g_table.eat_time);
-	release_fork(philo);
+	if (ft_usleep(g_table.eat_time) == ERROR)
+		return (ft_error_in_thread());
+	if (release_fork(philo) == ERROR)
+		return (ft_error_in_thread());
 	philo->eat_count++;
 	if (philo->eat_count == g_table.eat_count)
 	{
@@ -36,7 +39,8 @@ static int	ft_sleep(t_philo *philo)
 {
 	if (ft_printlog(philo->id, "is sleeping") == ERROR)
 		return (SUCCESS);
-	ft_usleep(g_table.sleep_time);
+	if (ft_usleep(g_table.sleep_time) == ERROR)
+		return (ft_error_in_thread());
 	return (SUCCESS);
 }
 
@@ -58,12 +62,11 @@ void	*monitor(void *param)
 		{
 			g_table.philo_dead = true;
 			printf("[%d] philo[%d] died\n",
-				get_time(g_table.s_time), philo->id);
+				get_time(g_table.s_time), philo->id + 1);
 		}
 		pthread_mutex_unlock(&g_table.mutex);
 		usleep(1000);
 	}
-	pthread_mutex_unlock(&g_table.mutex);
 	return (0);
 }
 
@@ -79,9 +82,12 @@ void	*philosopher(void *param)
 	while (g_table.philo_dead == false
 		&& g_table.complete_philos < g_table.philo_count)
 	{
-		ft_eat(philo);
-		ft_sleep(philo);
-		ft_think(philo);
+		if (ft_eat(philo) == ERROR)
+			return (0);
+		if (ft_sleep(philo) == ERROR)
+			return (0);
+		if (ft_think(philo) == ERROR)
+			return (0);
 	}
 	return (0);
 }

@@ -6,11 +6,29 @@
 /*   By: suhong <suhong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 03:43:10 by suhong            #+#    #+#             */
-/*   Updated: 2021/09/07 19:03:47 by suhong           ###   ########.fr       */
+/*   Updated: 2021/09/13 14:46:10 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	clean_table(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	if (!table->philos)
+		return (ERROR);
+	while (i < table->philo_count)
+	{
+		pthread_mutex_destroy(&table->philos[i].fork);
+		i++;
+	}
+	free(table->philos);
+	pthread_mutex_destroy(&g_table.mutex);
+	pthread_mutex_destroy(&g_table.print_mutex);
+	return (SUCCESS);
+}
 
 static t_philo	*init_philo(int philo_count)
 {
@@ -54,35 +72,43 @@ static void	init_fork(t_table *table)
 	}
 }
 
-int	clean_table(t_table *table)
+static int	check_arg(t_table *table, int argc, char **argv)
 {
-	int	i;
-
-	i = 0;
-	if (!table->philos)
+	table->philo_count = ft_atoi(argv[1]);
+	if (table->philo_count <= 0)
 		return (ERROR);
-	while (i < table->philo_count)
+	table->life_time = ft_atoi(argv[2]);
+	if (table->life_time <= 0)
+		return (ERROR);
+	table->eat_time = ft_atoi(argv[3]);
+	if (table->eat_time <= 0)
+		return (ERROR);
+	table->sleep_time = ft_atoi(argv[4]);
+	if (table->sleep_time <= 0)
+		return (ERROR);
+	table->eat_count = -1;
+	if (argc == 6)
 	{
-		pthread_mutex_destroy(&table->philos[i].fork);
-		i++;
+		table->eat_count = ft_atoi(argv[5]);
+		if (table->eat_count < 0)
+			return (ERROR);
 	}
-	free(table->philos);
-	return (ERROR);
+	return (SUCCESS);
 }
 
 int	init_table(t_table *table, int argc, char **argv)
 {
-	table->philo_count = atoi(argv[1]);
-	table->life_time = atoi(argv[2]);
-	table->eat_time = atoi(argv[3]);
-	table->sleep_time = atoi(argv[4]);
-	table->eat_count = -1;
-	if (argc == 6)
-		table->eat_count = atoi(argv[5]);
+	if (check_arg(table, argc, argv) == ERROR)
+	{
+		printf("negative input value\n");
+		return (ERROR);
+	}
 	table->philos = 0;
 	table->philo_dead = false;
 	table->complete_philos = 0;
 	if (pthread_mutex_init(&table->mutex, NULL))
+		return (ERROR);
+	if (pthread_mutex_init(&table->print_mutex, NULL))
 		return (ERROR);
 	table->philos = init_philo(table->philo_count);
 	if (!table->philos)
