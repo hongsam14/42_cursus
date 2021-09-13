@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/13 14:33:39 by suhong            #+#    #+#              #
-#    Updated: 2021/09/13 21:04:33 by suhong           ###   ########.fr        #
+#    Updated: 2021/09/13 22:02:26 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME = philo
 CC = gcc
 
 CFLAG = -Wall -Wextra -Werror
+
+INCLUDE = philosophers.h
 
 LIB = -lpthread
 
@@ -32,7 +34,7 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAG) -o $@ -c $<
+	$(CC) $(CFLAG) -o $@ -c $< -I $(INCLUDE)
 
 $(NAME) : $(OBJ)
 	$(CC) $(CFLAG) $(LIB) -o $@ $^
