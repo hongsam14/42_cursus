@@ -6,11 +6,11 @@
 #    By: suhong <suhong@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/13 14:33:39 by suhong            #+#    #+#              #
-#    Updated: 2021/09/13 14:45:54 by suhong           ###   ########.fr        #
+#    Updated: 2021/09/13 21:04:33 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philosophers
+NAME = philo
 
 CC = gcc
 
