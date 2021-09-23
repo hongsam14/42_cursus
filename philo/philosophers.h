@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 08:17:04 by suhong            #+#    #+#             */
-/*   Updated: 2021/09/12 11:54:29 by suhong           ###   ########.fr       */
+/*   Updated: 2021/09/23 15:35:08 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,6 @@
 
 # define ERROR 1
 # define SUCCESS 0
-
-typedef struct s_node
-{
-	void			*cont;
-	struct s_node	*next;
-}	t_node;
-
-typedef struct s_queue
-{
-	t_node			head;
-	t_node			*tail;
-	int				size;
-	pthread_mutex_t	mutex;
-}	t_queue;
 
 typedef struct s_philo
 {
@@ -66,12 +52,6 @@ typedef struct s_table
 }	t_table;
 
 t_table					g_table;
-
-int		init_queue(t_queue *queue);
-int		del_queue(t_queue *queue);
-int		inqueue(t_queue *queue, void *cont);
-void	*dequeue(t_queue *queue);
-void	*get_head_cont(t_queue *queue);
 
 void	*monitor(void *param);
 void	*philosopher(void *param);
