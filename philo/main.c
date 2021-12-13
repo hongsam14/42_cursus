@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/23 04:00:17 by suhong            #+#    #+#             */
-/*   Updated: 2021/09/13 14:52:40 by suhong           ###   ########.fr       */
+/*   Updated: 2021/09/24 11:20:12 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,6 @@ int	main(int argc, char **argv)
 	}
 	wait_philos();
 	clean_table(&g_table);
+	system("leaks philo");
 	return (0);
 }
