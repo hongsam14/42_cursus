@@ -5,19 +5,20 @@
 #                                                     +:+ +:+         +:+      #
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/12/22 03:51:15 by suhong            #+#    #+#              #
-#    Updated: 2021/12/31 02:19:51 by suhong           ###   ########.fr        #
+#    Created: 2021/12/31 00:21:43 by suhong            #+#    #+#              #
+#    Updated: 2021/12/31 02:19:15 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ZombieHorde
+NAME = violence
 
 CC = clang++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = Zombie.cpp\
-       ZombieHorde.cpp\
+SRCS = HumanA.cpp\
+       HumanB.cpp\
+       Weapon.cpp\
        main.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
@@ -36,6 +37,6 @@ clean :
 fclean : clean
 	rm -rf $(NAME)
 
-re : clean all
+re : fclean all
 
 .PHONY : all clean fclean re

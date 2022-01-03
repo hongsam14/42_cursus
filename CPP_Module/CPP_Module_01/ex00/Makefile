@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/20 15:51:14 by suhong            #+#    #+#              #
-#    Updated: 2021/12/23 01:19:19 by suhong           ###   ########.fr        #
+#    Updated: 2021/12/31 02:20:33 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,15 +23,13 @@ SRCS = main.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 
-INCS = Zombie.hpp
-
 all : $(NAME)
 
 %.o : %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INCS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ -I $(INCS)
+	$(CC) $(CFLAGS) -o $@ $^ -I.
 
 clean :
 	rm -rf $(OBJS)

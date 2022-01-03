@@ -5,30 +5,28 @@
 #                                                     +:+ +:+         +:+      #
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/12/22 03:51:15 by suhong            #+#    #+#              #
-#    Updated: 2021/12/31 02:19:51 by suhong           ###   ########.fr        #
+#    Created: 2022/01/03 15:58:12 by suhong            #+#    #+#              #
+#    Updated: 2022/01/03 17:45:47 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ZombieHorde
+NAME = replace
 
 CC = clang++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = Zombie.cpp\
-       ZombieHorde.cpp\
-       main.cpp\
+SRCS = main.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 
 all : $(NAME)
 
-%.o : %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
-
 $(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ -I.
+	$(CC) $(CFLAGS) -o $@ $^
+
+%.o : %.cpp
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean :
 	rm -rf $(OBJS)
@@ -36,6 +34,6 @@ clean :
 fclean : clean
 	rm -rf $(NAME)
 
-re : clean all
+re : fclean all
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re SS GL IT
