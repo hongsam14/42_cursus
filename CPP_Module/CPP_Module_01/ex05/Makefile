@@ -5,19 +5,19 @@
 #                                                     +:+ +:+         +:+      #
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/01/03 15:58:12 by suhong            #+#    #+#              #
-#    Updated: 2022/01/04 17:36:05 by suhong           ###   ########.fr        #
+#    Created: 2022/01/04 17:25:55 by suhong            #+#    #+#              #
+#    Updated: 2022/01/04 17:37:59 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = replace
+NAME = myKaren
 
 CC = clang++
 
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = main.cpp\
-       Karen.cpp\
+SRCS = Karen.cpp\
+       main.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -29,7 +29,7 @@ $(NAME) : $(OBJS)
 %.o : %.cpp
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-clean :
+clean : 
 	rm -rf $(OBJS)
 
 fclean : clean
@@ -37,4 +37,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY : all clean fclean re SS GL IT
+.PHONY : all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 03:18:57 by suhong            #+#    #+#             */
-/*   Updated: 2022/01/03 17:45:27 by suhong           ###   ########.fr       */
+/*   Updated: 2022/01/04 14:57:37 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	fix_file_by_iterator(std::ifstream &fin, std::ofstream &fout, std::s
 	std::string line;
 	size_t	_pos;
 	size_t	past_pos(0);
-	std::istreambuf_iterator<char>	begin(fin), end;
+	std::istreambuf_iterator<char>	begin(fin), end(0);
 
 	std::cout<<"by iterator. "<<std::endl;
 	line = std::string(begin, end);
