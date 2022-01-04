@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:06:13 by suhong            #+#    #+#             */
-/*   Updated: 2022/01/04 17:50:41 by suhong           ###   ########.fr       */
+/*   Updated: 2022/01/04 18:06:08 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,14 @@ void	customer::Karen::complain(std::string level)
 	Level::iterator	l_ittr(_level.begin());
 	Action::iterator	a_ittr(_action.begin());
 	
-	for ( ;l_ittr != _level.end() - 1 && *l_ittr != level;)
+	for ( ;l_ittr != _level.end() && *l_ittr != level;)
 	{
 	     l_ittr++, a_ittr++;
+	}
+	if (l_ittr == _level.end())
+	{
+		std::cout<<"[" + level + "] is invalid level. "<<std::endl;
+		return ;
 	}
 	std::cout<<"["<<*l_ittr<<"]"<<std::endl;
 	(this->*(*a_ittr))();
