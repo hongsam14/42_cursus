@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 14:06:13 by suhong            #+#    #+#             */
-/*   Updated: 2022/01/04 18:10:49 by suhong           ###   ########.fr       */
+/*   Updated: 2022/01/05 15:57:35 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,26 @@ void	customer::Karen::error(void)
 
 void	customer::Karen::complain(std::string level)
 {
-	typedef std::array<std::string, 4>	Level;
-	typedef	std::array<void	(customer::Karen::*)(void), 4>	Action;
-
-	Level	_level = {"DEBUG", "INFO", "WARNING", "ERROR"};
-	Action	_action = {&customer::Karen::debug,
-			&customer::Karen::info,
-			&customer::Karen::warning,
-			&customer::Karen::error};
+	std::string	_level[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+	enum { DEBUG, INFO, WARNING, ERROR };
+	int	i(0);
 	
-	Level::iterator	l_ittr(_level.begin());
-	Action::iterator	a_ittr(_action.begin());
-	
-	for ( ;l_ittr != _level.end() && *l_ittr != level;)
+	for (; _level[i] != level && i < 4; )
 	{
-	     l_ittr++, a_ittr++;
+	     i++;
 	}
-	if (l_ittr == _level.end())
-		return ;
-	std::cout<<"["<<*l_ittr<<"]"<<std::endl;
-	(this->*(*a_ittr))();
+	switch (i)
+	{
+		case DEBUG:
+			this->debug();
+		case INFO:
+			this->info();
+		case WARNING:
+			this->warning();
+		case ERROR:
+			this->error();
+			break ;
+		default:
+			std::cout<<"[ Probably complaining about insignificant problems ]"<<std::endl;
+	}
 }

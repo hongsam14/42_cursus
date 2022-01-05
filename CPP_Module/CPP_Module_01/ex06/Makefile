@@ -6,11 +6,11 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/04 17:25:55 by suhong            #+#    #+#              #
-#    Updated: 2022/01/04 17:37:59 by suhong           ###   ########.fr        #
+#    Updated: 2022/01/05 15:59:56 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = myKaren
+NAME = karenFilter
 
 CC = clang++
 
