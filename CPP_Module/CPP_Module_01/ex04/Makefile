@@ -6,7 +6,7 @@
 #    By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/03 15:58:12 by suhong            #+#    #+#              #
-#    Updated: 2022/01/04 17:36:05 by suhong           ###   ########.fr        #
+#    Updated: 2022/01/05 17:28:45 by suhong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ CC = clang++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRCS = main.cpp\
-       Karen.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -37,4 +36,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY : all clean fclean re SS GL IT
+.PHONY : all clean fclean re

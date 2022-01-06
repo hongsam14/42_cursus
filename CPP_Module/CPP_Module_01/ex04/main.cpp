@@ -6,7 +6,7 @@
 /*   By: suhong <suhong@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/31 03:18:57 by suhong            #+#    #+#             */
-/*   Updated: 2022/01/04 14:57:37 by suhong           ###   ########.fr       */
+/*   Updated: 2022/01/06 16:33:54 by suhong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 #include <iostream>
 #include <sstream>
 
-#define STATUS 2
+#define STATUS 1
 
 #define SS 0
 #define GL 1
 #define IT 2
+
+static void	my_replace(std::string	&origin, size_t pos, size_t length, std::string s2)
+{
+	origin.erase(pos, length);
+	origin.insert(pos, s2);
+}
 
 #if STATUS == IT
 # define FIX_FILE(x, y, z, k) fix_file_by_iterator(x, y, z, k)
@@ -34,7 +40,8 @@ static void	fix_file_by_iterator(std::ifstream &fin, std::ofstream &fout, std::s
 	line = std::string(begin, end);
 	while ((_pos = line.find(s1, past_pos)) != std::string::npos)
 	{
-		line.replace(_pos, s1.length(), s2);
+		//line.replace(_pos, s1.length(), s2);
+		my_replace(contents, _pos, s1.length(), s2);
 		past_pos = _pos + s2.length();
 	}
 	fout << line;
@@ -54,7 +61,8 @@ static void	fix_file_by_stringstream(std::ifstream &fin, std::ofstream &fout, st
 	line = ss.str();
 	while ((_pos = line.find(s1, past_pos)) != std::string::npos)
 	{
-		line.replace(_pos, s1.length(), s2);
+		//line.replace(_pos, s1.length(), s2);
+		my_replace(contents, _pos, s1.length(), s2);
 		past_pos = _pos + s2.length();
 	}
 	fout << line;
@@ -67,22 +75,21 @@ static void	fix_file_by_getline(std::ifstream &fin, std::ofstream &fout, std::st
 	std::string		line;
 	std::string		contents;
 	size_t	_pos;
-	size_t	past_pos;
+	size_t	past_pos(0);
 	
 	std::cout<<"by getline func. "<<std::endl;
 	while (fin.eof() == false)
 	{
 		std::getline(fin, line);
-		
-		past_pos = 0;
-		while ((_pos = line.find(s1, past_pos)) != std::string::npos)
-		{
-			line.replace(_pos, s1.length(), s2);
-			past_pos = _pos + s2.length();
-		}
 		if (fin.eof() == false)
 			line += '\n';
 		contents += line;
+	}
+	while ((_pos = contents.find(s1, past_pos)) != std::string::npos)
+	{
+		//contents.replace(_pos, s1.length(), s2);
+		my_replace(contents, _pos, s1.length(), s2);
+		past_pos = _pos + s2.length();
 	}
 	fout << contents;
 }
